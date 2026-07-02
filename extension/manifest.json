@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "HN Refined",
+  "version": "0.1.0",
+  "description": "A restrained Safari extension that improves Hacker News readability.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://news.ycombinator.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://news.ycombinator.com/*"],
+      "css": ["generated/themes.css", "content/content.css"],
+      "js": ["content/content-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "HN Refined",
+    "default_popup": "options/options.html"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  }
+}
