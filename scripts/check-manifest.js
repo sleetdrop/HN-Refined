@@ -4,12 +4,23 @@ const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const errors = [];
 const allowedHostPattern = "https://news.ycombinator.com/*";
 const allowedHostLikeFields = new Set(["host_permissions", "optional_host_permissions"]);
+const requiredPermissions = ["storage"];
+const requiredContentScriptCss = ["generated/themes.css", "content/content.css"];
+const requiredContentScriptJs = ["content/content-script.js"];
+
+function equalsArray(actual, expected) {
+  return Array.isArray(actual) && JSON.stringify(actual) === JSON.stringify(expected);
+}
 
 if (manifest.manifest_version !== 3) {
   errors.push("manifest_version must be 3");
 }
 
-if (JSON.stringify(manifest.host_permissions) !== JSON.stringify([allowedHostPattern])) {
+if (!equalsArray(manifest.permissions, requiredPermissions)) {
+  errors.push("permissions must exactly equal storage");
+}
+
+if (!equalsArray(manifest.host_permissions, [allowedHostPattern])) {
   errors.push("host_permissions must be limited to Hacker News");
 }
 
@@ -27,22 +38,30 @@ for (const key of Object.keys(manifest)) {
   }
 }
 
-for (const [index, contentScript] of (manifest.content_scripts || []).entries()) {
-  if (!Array.isArray(contentScript.matches)) {
-    errors.push(`content_scripts[${index}].matches must be an array`);
-    continue;
-  }
+if (!Array.isArray(manifest.content_scripts) || manifest.content_scripts.length === 0) {
+  errors.push("content_scripts must be a non-empty array");
+} else {
+  for (const [index, contentScript] of manifest.content_scripts.entries()) {
+    if (!equalsArray(contentScript.matches, [allowedHostPattern])) {
+      errors.push(`content_scripts[${index}].matches must exactly equal Hacker News`);
+    }
 
-  for (const match of contentScript.matches) {
-    if (match !== allowedHostPattern) {
-      errors.push(`unexpected content script match: ${match}`);
+    if (!equalsArray(contentScript.css, requiredContentScriptCss)) {
+      errors.push(`content_scripts[${index}].css must exactly equal planned stylesheets`);
+    }
+
+    if (!equalsArray(contentScript.js, requiredContentScriptJs)) {
+      errors.push(`content_scripts[${index}].js must exactly equal planned scripts`);
     }
   }
 }
 
-for (const permission of manifest.permissions || []) {
-  if (!["storage"].includes(permission)) {
-    errors.push(`unexpected permission: ${permission}`);
+if (Array.isArray(manifest.permissions)) {
+  for (const permission of manifest.permissions) {
+    if (!requiredPermissions.includes(permission)) {
+      errors.push(`unexpected permission: ${permission}`);
+      continue;
+    }
   }
 }
 
