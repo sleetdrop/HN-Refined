@@ -38,8 +38,8 @@ for (const key of Object.keys(manifest)) {
   }
 }
 
-if (!Array.isArray(manifest.content_scripts) || manifest.content_scripts.length === 0) {
-  errors.push("content_scripts must be a non-empty array");
+if (!Array.isArray(manifest.content_scripts) || manifest.content_scripts.length !== 1) {
+  errors.push("content_scripts must contain exactly one entry");
 } else {
   for (const [index, contentScript] of manifest.content_scripts.entries()) {
     if (!equalsArray(contentScript.matches, [allowedHostPattern])) {

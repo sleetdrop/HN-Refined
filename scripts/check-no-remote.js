@@ -5,9 +5,10 @@ const remoteUrlToken = /\bhttps?:\/\/[^\s"'`<>)\]}]+/gi;
 const protocolRelativeRemoteUrl = /(^|[^\w:])\/\/[^\s"'`<>)\]}]+/;
 const forbiddenImport = /@import\b/i;
 const forbiddenRemoteCssUrl = /url\(\s*['"]?(?:https?:)?\/\//i;
+const manifestPath = path.join("extension", "manifest.json");
+const linkClassifierPath = path.join("extension", "shared", "link-classifier.js");
 const allowedRemoteUrlTokensByPath = new Map([
-  [path.join("extension", "manifest.json"), new Set(["https://news.ycombinator.com/*"])],
-  [path.join("extension", "shared", "link-classifier.js"), new Set(["https://news.ycombinator.com"])]
+  [manifestPath, new Set(["https://news.ycombinator.com/*"])]
 ]);
 const roots = ["extension"];
 const errors = [];
@@ -25,6 +26,14 @@ function findUnexpectedRemoteUrlTokens(filePath, text) {
   return unexpected;
 }
 
+function removeAllowedIntentionalReferences(filePath, text) {
+  if (filePath !== linkClassifierPath) {
+    return text;
+  }
+
+  return text.replace('const HN_ORIGIN = "https://news.ycombinator.com";', "");
+}
+
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
@@ -38,11 +47,15 @@ function walk(dir) {
     }
 
     const text = fs.readFileSync(fullPath, "utf8");
-    const unexpectedRemoteUrlTokens = findUnexpectedRemoteUrlTokens(fullPath, text);
+    const textWithoutIntentionalReferences = removeAllowedIntentionalReferences(fullPath, text);
+    const unexpectedRemoteUrlTokens = findUnexpectedRemoteUrlTokens(
+      fullPath,
+      textWithoutIntentionalReferences
+    );
     if (
-      forbiddenImport.test(text) ||
-      forbiddenRemoteCssUrl.test(text) ||
-      protocolRelativeRemoteUrl.test(text) ||
+      forbiddenImport.test(textWithoutIntentionalReferences) ||
+      forbiddenRemoteCssUrl.test(textWithoutIntentionalReferences) ||
+      protocolRelativeRemoteUrl.test(textWithoutIntentionalReferences) ||
       unexpectedRemoteUrlTokens.length > 0
     ) {
       errors.push(`${fullPath} contains remote content syntax`);
