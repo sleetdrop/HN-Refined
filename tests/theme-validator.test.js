@@ -30,6 +30,22 @@ test("rejects remote or dynamic color values", () => {
   assert.match(validateTheme(theme).join("\n"), /pageBackground/);
 });
 
+test("rejects invalid hex color lengths", () => {
+  for (const value of ["#12345", "#1234567"]) {
+    const theme = structuredClone(validTheme);
+    theme.tokens.pageBackground = value;
+
+    assert.match(validateTheme(theme).join("\n"), /pageBackground/);
+  }
+});
+
+test("rejects rgb channels outside 0 to 255", () => {
+  const theme = structuredClone(validTheme);
+  theme.tokens.pageBackground = "rgb(999 999 999)";
+
+  assert.match(validateTheme(theme).join("\n"), /pageBackground/);
+});
+
 test("rejects unknown token keys", () => {
   const theme = structuredClone(validTheme);
   theme.tokens.hiddenContent = "#ffffff";

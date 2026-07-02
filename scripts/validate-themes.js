@@ -14,8 +14,18 @@ export const REQUIRED_TOKENS = Object.freeze([
   "voteArrow"
 ]);
 
-const STATIC_COLOR_RE =
-  /^(#[0-9a-fA-F]{3,8}|rgb\(\s*\d{1,3}\s+\d{1,3}\s+\d{1,3}\s*(?:\/\s*(0|1|0?\.\d+|[1-9]\d?%|100%))?\s*\))$/;
+const HEX_COLOR_RE = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const RGB_COLOR_RE =
+  /^rgb\(\s*(\d{1,3})\s+(\d{1,3})\s+(\d{1,3})\s*(?:\/\s*(0|1|0?\.\d+|[1-9]\d?%|100%))?\s*\)$/;
+
+function isStaticColor(value) {
+  if (HEX_COLOR_RE.test(value)) {
+    return true;
+  }
+
+  const match = RGB_COLOR_RE.exec(value);
+  return match ? match.slice(1, 4).every((channel) => Number(channel) <= 255) : false;
+}
 
 export function validateTheme(theme) {
   const errors = [];
@@ -47,7 +57,7 @@ export function validateTheme(theme) {
       continue;
     }
 
-    if (typeof value !== "string" || !STATIC_COLOR_RE.test(value)) {
+    if (typeof value !== "string" || !isStaticColor(value)) {
       errors.push(`token ${key} must be a static color`);
     }
   }
