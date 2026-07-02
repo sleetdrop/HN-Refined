@@ -1,0 +1,16 @@
+{
+  "id": "hn-dark",
+  "name": "HN Dark",
+  "mode": "dark",
+  "tokens": {
+    "pageBackground": "#161616",
+    "contentBackground": "#1f1f1a",
+    "topBarBackground": "#b94d00",
+    "textPrimary": "#ece7d5",
+    "textMuted": "#aaa18c",
+    "link": "#f2f0df",
+    "visitedLink": "#b8aa88",
+    "borderSubtle": "#3a3326",
+    "voteArrow": "#aaa18c"
+  }
+}
