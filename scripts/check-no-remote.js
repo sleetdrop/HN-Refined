@@ -2,8 +2,9 @@ import fs from "node:fs";
 import path from "node:path";
 
 const remoteUrlToken = /\bhttps?:\/\/[^\s"'`<>)\]}]+/gi;
+const protocolRelativeRemoteUrl = /(^|[^\w:])\/\/[^\s"'`<>)\]}]+/;
 const forbiddenImport = /@import\b/i;
-const forbiddenRemoteCssUrl = /url\(\s*['"]?https?:\/\//i;
+const forbiddenRemoteCssUrl = /url\(\s*['"]?(?:https?:)?\/\//i;
 const allowedRemoteUrlTokensByPath = new Map([
   [path.join("extension", "manifest.json"), new Set(["https://news.ycombinator.com/*"])],
   [path.join("extension", "shared", "link-classifier.js"), new Set(["https://news.ycombinator.com"])]
@@ -41,6 +42,7 @@ function walk(dir) {
     if (
       forbiddenImport.test(text) ||
       forbiddenRemoteCssUrl.test(text) ||
+      protocolRelativeRemoteUrl.test(text) ||
       unexpectedRemoteUrlTokens.length > 0
     ) {
       errors.push(`${fullPath} contains remote content syntax`);
