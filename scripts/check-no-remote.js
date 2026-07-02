@@ -1,10 +1,23 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const forbidden = /\bhttps?:\/\/|@import\b|url\(\s*['"]?https?:\/\//i;
-const allowedRemoteReferences = /\bhttps:\/\/news\.ycombinator\.com(?:\/\*)?\b/g;
+const remoteReference = /\bhttps?:\/\//i;
+const forbiddenImport = /@import\b/i;
+const forbiddenRemoteCssUrl = /url\(\s*['"]?https?:\/\//i;
+const allowedRemoteReferencesByPath = new Map([
+  [path.join("extension", "manifest.json"), ["https://news.ycombinator.com/*"]],
+  [path.join("extension", "shared", "link-classifier.js"), ["https://news.ycombinator.com"]]
+]);
 const roots = ["extension"];
 const errors = [];
+
+function removeAllowedRemoteReferences(filePath, text) {
+  let result = text;
+  for (const reference of allowedRemoteReferencesByPath.get(filePath) || []) {
+    result = result.split(reference).join("");
+  }
+  return result;
+}
 
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -18,8 +31,13 @@ function walk(dir) {
       continue;
     }
 
-    const text = fs.readFileSync(fullPath, "utf8").replace(allowedRemoteReferences, "");
-    if (forbidden.test(text) && fullPath !== path.join("extension", "manifest.json")) {
+    const text = fs.readFileSync(fullPath, "utf8");
+    const textWithoutAllowedReferences = removeAllowedRemoteReferences(fullPath, text);
+    if (
+      forbiddenImport.test(text) ||
+      forbiddenRemoteCssUrl.test(text) ||
+      remoteReference.test(textWithoutAllowedReferences)
+    ) {
       errors.push(`${fullPath} contains remote content syntax`);
     }
   }
