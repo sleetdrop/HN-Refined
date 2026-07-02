@@ -29,14 +29,14 @@ export async function writePreferences(preferences) {
   const normalized = normalizePreferences(preferences);
 
   if (!api?.storage?.local) {
-    return { preferences: normalized, persisted: false };
+    return { preferences: DEFAULT_PREFERENCES, persisted: false };
   }
 
   try {
     await api.storage.local.set({ [STORAGE_KEY]: normalized });
     return { preferences: normalized, persisted: true };
   } catch {
-    return { preferences: normalized, persisted: false };
+    return { preferences: DEFAULT_PREFERENCES, persisted: false };
   }
 }
 
