@@ -56,3 +56,7 @@ test("normalizePreferences falls back for invalid or missing values", () => {
     }
   );
 });
+
+test("normalizePreferences treats null as missing preferences", () => {
+  assert.deepEqual(normalizePreferences(null), DEFAULT_PREFERENCES);
+});

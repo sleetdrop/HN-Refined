@@ -27,15 +27,18 @@ function enumOrDefault(key, value) {
 }
 
 export function normalizePreferences(raw = {}) {
+  const preferences =
+    raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+
   return {
-    theme: enumOrDefault("theme", raw.theme),
-    fontPreset: enumOrDefault("fontPreset", raw.fontPreset),
-    desktopDensity: enumOrDefault("desktopDensity", raw.desktopDensity),
-    readingWidth: enumOrDefault("readingWidth", raw.readingWidth),
-    mobileLayout: enumOrDefault("mobileLayout", raw.mobileLayout),
+    theme: enumOrDefault("theme", preferences.theme),
+    fontPreset: enumOrDefault("fontPreset", preferences.fontPreset),
+    desktopDensity: enumOrDefault("desktopDensity", preferences.desktopDensity),
+    readingWidth: enumOrDefault("readingWidth", preferences.readingWidth),
+    mobileLayout: enumOrDefault("mobileLayout", preferences.mobileLayout),
     openStoryLinksInNewTabs:
-      typeof raw.openStoryLinksInNewTabs === "boolean"
-        ? raw.openStoryLinksInNewTabs
+      typeof preferences.openStoryLinksInNewTabs === "boolean"
+        ? preferences.openStoryLinksInNewTabs
         : DEFAULT_PREFERENCES.openStoryLinksInNewTabs
   };
 }
