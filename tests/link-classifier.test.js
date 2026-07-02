@@ -40,6 +40,32 @@ test("external story links are only title links", () => {
   );
 });
 
+test("malformed story link class information is not external story link", () => {
+  assert.equal(
+    isExternalStoryLink({
+      href: "https://example.com/article",
+      className: "titleline"
+    }),
+    false
+  );
+  assert.equal(
+    isExternalStoryLink({
+      href: "https://example.com/article",
+      className: "titleline",
+      closestClassNames: null
+    }),
+    false
+  );
+  assert.equal(
+    isExternalStoryLink({
+      href: "https://example.com/article",
+      className: "titleline",
+      closestClassNames: "not-titleline"
+    }),
+    false
+  );
+});
+
 test("new-tab behavior is opt-in", () => {
   const story = {
     href: "https://example.com/article",
@@ -49,4 +75,15 @@ test("new-tab behavior is opt-in", () => {
 
   assert.equal(shouldForceNewTab(story, { openStoryLinksInNewTabs: false }), false);
   assert.equal(shouldForceNewTab(story, { openStoryLinksInNewTabs: true }), true);
+});
+
+test("new-tab behavior treats missing preferences as disabled", () => {
+  const story = {
+    href: "https://example.com/article",
+    className: "",
+    closestClassNames: ["titleline"]
+  };
+
+  assert.equal(shouldForceNewTab(story, null), false);
+  assert.equal(shouldForceNewTab(story, undefined), false);
 });

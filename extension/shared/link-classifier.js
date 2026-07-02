@@ -14,11 +14,15 @@ export function isExternalStoryLink(linkInfo) {
     return false;
   }
 
+  if (!Array.isArray(linkInfo.closestClassNames)) {
+    return false;
+  }
+
   return linkInfo.closestClassNames.includes("titleline");
 }
 
 export function shouldForceNewTab(linkInfo, preferences) {
   return Boolean(
-    preferences.openStoryLinksInNewTabs && isExternalStoryLink(linkInfo)
+    preferences?.openStoryLinksInNewTabs === true && isExternalStoryLink(linkInfo)
   );
 }
