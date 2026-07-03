@@ -9,7 +9,18 @@ import Cocoa
 import SafariServices
 import WebKit
 
-let extensionBundleIdentifier = "com.local.HNRefined.Extension"
+private func extensionBundleIdentifier() -> String {
+    guard let plugInsURL = Bundle.main.builtInPlugInsURL,
+          let extensionURL = try? FileManager.default.contentsOfDirectory(
+            at: plugInsURL,
+            includingPropertiesForKeys: nil
+          ).first(where: { $0.pathExtension == "appex" }),
+          let extensionBundleIdentifier = Bundle(url: extensionURL)?.bundleIdentifier else {
+        preconditionFailure("HNRefined Extension bundle identifier is unavailable.")
+    }
+
+    return extensionBundleIdentifier
+}
 
 class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
@@ -26,7 +37,7 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
+        SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier()) { (state, error) in
             guard let state = state, error == nil else {
                 // Insert code to inform the user that something went wrong.
                 return
@@ -47,7 +58,7 @@ class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHan
             return;
         }
 
-        SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier) { error in
+        SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier()) { error in
             DispatchQueue.main.async {
                 NSApplication.shared.terminate(nil)
             }
