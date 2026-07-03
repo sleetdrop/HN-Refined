@@ -11,29 +11,58 @@
     <center>
       <table id="hnmain">
         <tr>
-          <td class="pagetop">
-            <span class="hnname"><a href="news">Hacker News</a></span>
-            <a href="newest">new</a> |
-            <a href="front">past</a> |
-            <a href="comments">comments</a> |
-            <a href="ask">ask</a> |
-            <a href="show">show</a> |
-            <a href="jobs">jobs</a> |
-            <a href="submit">submit</a>
+          <td bgcolor="#ff6600">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+              <tr>
+                <td style="width:18px;padding-right:4px">
+                  <a href="news"><img width="18" height="18" style="border:1px white solid;" alt=""></a>
+                </td>
+                <td style="line-height:12pt; height:10px;">
+                  <span class="pagetop">
+                    <b class="hnname"><a href="news">Hacker News</a></b>
+                    <a href="newest">new</a> |
+                    <a href="front">past</a> |
+                    <a href="comments">comments</a> |
+                    <a href="ask">ask</a> |
+                    <a href="show">show</a> |
+                    <a href="jobs">jobs</a> |
+                    <a href="submit">submit</a>
+                  </span>
+                </td>
+                <td style="text-align:right;padding-right:4px;">
+                  <span class="pagetop"><a href="login">login</a></span>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
-        <tr><td class="title"><span class="titleline"><a href="https://example.com/a">Example story</a></span></td></tr>
-        <tr><td class="subtext">123 points by user 1 hour ago | <a href="item?id=1">42 comments</a></td></tr>
-        <tr class="spacer" style="height:5px"></tr>
-        <tr>
+        <tr class="athing" id="1">
+          <td align="right" class="title" valign="top"><span class="rank">1.</span></td>
+          <td valign="top" class="votelinks">
+            <center><a id="up_1" href="vote?id=1&amp;how=up&amp;goto=news"><div class="votearrow" title="upvote"></div></a></center>
+          </td>
           <td class="title">
-            <span class="rank">2.</span>
+            <span class="titleline"><a href="https://example.com/a">Example story</a></span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td class="subtext">123 points by user 1 hour ago | <a href="item?id=1">42 comments</a></td>
+        </tr>
+        <tr class="spacer" style="height:5px"></tr>
+        <tr class="athing" id="2">
+          <td align="right" class="title" valign="top"><span class="rank">2.</span></td>
+          <td valign="top" class="votelinks">
+            <center><a id="up_2" href="vote?id=2&amp;how=up&amp;goto=news"><div class="votearrow" title="upvote"></div></a></center>
+          </td>
+          <td class="title">
             <span class="titleline">
               <a href="item?id=2">Ask HN: How do you keep a small personal tool maintainable?</a>
             </span>
           </td>
         </tr>
         <tr>
+          <td colspan="2"></td>
           <td class="subtext">
             <span class="score">87 points</span> by <a class="hnuser" href="user?id=reader">reader</a>
             <span class="age">2 hours ago</span> |
@@ -41,9 +70,12 @@
           </td>
         </tr>
         <tr class="spacer" style="height:5px"></tr>
-        <tr>
+        <tr class="athing" id="3">
+          <td align="right" class="title" valign="top"><span class="rank">3.</span></td>
+          <td valign="top" class="votelinks">
+            <center><a id="up_3" href="vote?id=3&amp;how=up&amp;goto=news"><div class="votearrow" title="upvote"></div></a></center>
+          </td>
           <td class="title">
-            <span class="rank">3.</span>
             <span class="titleline">
               <a href="https://example.com/b">A longer title that wraps on narrow screens without turning the feed into cards</a>
               <span class="sitebit comhead"> (<span class="sitestr">example.com</span>)</span>
@@ -51,6 +83,7 @@
           </td>
         </tr>
         <tr>
+          <td colspan="2"></td>
           <td class="subtext">
             <span class="score">45 points</span> by <a class="hnuser" href="user?id=maintainer">maintainer</a>
             <span class="age">3 hours ago</span> |
@@ -59,6 +92,7 @@
         </tr>
         <tr class="spacer" style="height:16px"></tr>
         <tr>
+          <td colspan="2"></td>
           <td class="title">
             <span class="titleline">
               <a href="https://example.com/a">Example story</a>
@@ -67,6 +101,7 @@
           </td>
         </tr>
         <tr>
+          <td colspan="2"></td>
           <td class="subtext">
             <span class="score">123 points</span> by <a class="hnuser" href="user?id=user">user</a>
             <span class="age">1 hour ago</span> |
@@ -75,7 +110,7 @@
         </tr>
         <tr class="spacer" style="height:10px"></tr>
         <tr class="athing comtr" id="comment-1">
-          <td>
+          <td colspan="3">
             <table>
               <tr>
                 <td class="ind"><img height="1" width="0" alt=""></td>
@@ -96,7 +131,7 @@
           </td>
         </tr>
         <tr class="athing comtr" id="comment-2">
-          <td>
+          <td colspan="3">
             <table>
               <tr>
                 <td class="ind"><img height="1" width="40" alt=""></td>
@@ -117,7 +152,7 @@
           </td>
         </tr>
         <tr class="athing comtr" id="comment-3">
-          <td>
+          <td colspan="3">
             <table>
               <tr>
                 <td class="ind"><img height="1" width="80" alt=""></td>
