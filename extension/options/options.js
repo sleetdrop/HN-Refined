@@ -1,4 +1,5 @@
 import { readPreferences, writePreferences } from "../shared/preference-store.js";
+import { notifyActiveTabPreferencesChanged } from "../shared/preference-messages.js";
 
 const fields = {
   theme: document.querySelector("#theme"),
@@ -47,5 +48,6 @@ for (const field of Object.values(fields)) {
     const result = await writePreferences(readForm());
     render(result.preferences);
     setStatus(result.persisted);
+    await notifyActiveTabPreferencesChanged(result.preferences);
   });
 }

@@ -9,6 +9,7 @@ const DEFAULT_PREFERENCES = {
 
 const STORAGE_KEY = "hnRefinedPreferences";
 const HN_HOSTNAME = "news.ycombinator.com";
+const PREFERENCES_CHANGED_MESSAGE_TYPE = "hn-refined:preferences-changed";
 
 const ALLOWED = {
   theme: ["system", "light", "dark"],
@@ -185,6 +186,15 @@ function observePreferences() {
     }
 
     applyPreferences(changes[STORAGE_KEY].newValue || DEFAULT_PREFERENCES);
+    updateStoryTargets();
+  });
+
+  api?.runtime?.onMessage?.addListener?.((message) => {
+    if (message?.type !== PREFERENCES_CHANGED_MESSAGE_TYPE) {
+      return;
+    }
+
+    applyPreferences(message.preferences || DEFAULT_PREFERENCES);
     updateStoryTargets();
   });
 }
