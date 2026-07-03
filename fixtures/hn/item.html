@@ -32,80 +32,91 @@
             </table>
           </td>
         </tr>
-        <tr>
-          <td class="title">
-            <span class="titleline">
-              <a href="https://example.com/a">Example story</a>
-              <span class="sitebit comhead"> (<span class="sitestr">example.com</span>)</span>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td class="subtext">
-            <span class="score">123 points</span> by <a class="hnuser" href="user?id=user">user</a>
-            <span class="age">1 hour ago</span> |
-            <a href="item?id=1">42 comments</a>
-          </td>
-        </tr>
-        <tr class="spacer" style="height:10px"></tr>
-        <tr class="athing comtr" id="comment-1">
+        <tr id="bigbox">
           <td>
-            <table>
-              <tr>
-                <td class="ind"><img height="1" width="0" alt=""></td>
-                <td class="default">
-                  <div class="comhead">
-                    <a class="hnuser" href="user?id=first">first</a>
-                    <span class="age">24 minutes ago</span> | <a href="item?id=comment-1">parent</a>
-                  </div>
-                  <div class="comment">
-                    <span class="commtext">
-                      This top-level comment is long enough to show the reading width and line height.
-                      It should remain dense, but it should not become a wall of tiny text.
-                    </span>
-                  </div>
+            <table border="0" cellpadding="0" cellspacing="0" class="fatitem">
+              <tr class="athing" id="1">
+                <td align="right" class="title" valign="top"><span class="rank">1.</span></td>
+                <td valign="top" class="votelinks">
+                  <center><a id="up_1" href="vote?id=1&amp;how=up&amp;goto=item%3Fid%3D1"><div class="votearrow" title="upvote"></div></a></center>
+                </td>
+                <td class="title">
+                  <span class="titleline">
+                    <a href="https://example.com/a">Example story</a>
+                    <span class="sitebit comhead"> (<span class="sitestr">example.com</span>)</span>
+                  </span>
                 </td>
               </tr>
-            </table>
-          </td>
-        </tr>
-        <tr class="athing comtr" id="comment-2">
-          <td>
-            <table>
               <tr>
-                <td class="ind"><img height="1" width="40" alt=""></td>
-                <td class="default">
-                  <div class="comhead">
-                    <a class="hnuser" href="user?id=second">second</a>
-                    <span class="age">18 minutes ago</span> | <a href="item?id=comment-2">parent</a>
-                  </div>
-                  <div class="comment">
-                    <span class="commtext">
-                      A nested reply uses the same HN indentation pattern, including an image width
-                      on the indentation cell.
-                    </span>
-                  </div>
+                <td colspan="2"></td>
+                <td class="subtext">
+                  <span class="score">123 points</span> by <a class="hnuser" href="user?id=user">user</a>
+                  <span class="age">1 hour ago</span> |
+                  <a href="item?id=1">42 comments</a>
                 </td>
               </tr>
-            </table>
-          </td>
-        </tr>
-        <tr class="athing comtr" id="comment-3">
-          <td>
-            <table>
-              <tr>
-                <td class="ind"><img height="1" width="80" alt=""></td>
-                <td class="default">
-                  <div class="comhead">
-                    <a class="hnuser" href="user?id=third">third</a>
-                    <span class="age">8 minutes ago</span> | <a href="item?id=comment-3">parent</a>
-                  </div>
-                  <div class="comment">
-                    <span class="commtext">
-                      This deeper nested comment includes a very-long-unbroken-token-that-should-wrap-on-mobile
-                      so the mobile rule can be inspected locally.
-                    </span>
-                  </div>
+              <tr class="spacer" style="height:10px"></tr>
+              <tr class="athing comtr" id="comment-1">
+                <td colspan="3">
+                  <table border="0">
+                    <tr>
+                      <td class="ind"><img height="1" width="0" alt=""></td>
+                      <td class="default">
+                        <div class="comhead">
+                          <a class="hnuser" href="user?id=first">first</a>
+                          <span class="age">24 minutes ago</span> | <a href="item?id=comment-1">parent</a>
+                        </div>
+                        <div class="comment">
+                          <span class="commtext">
+                            This top-level comment is long enough to show the reading width and line height.
+                            It should remain dense, but it should not become a wall of tiny text.
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr class="athing comtr" id="comment-2">
+                <td colspan="3">
+                  <table border="0">
+                    <tr>
+                      <td class="ind"><img height="1" width="40" alt=""></td>
+                      <td class="default">
+                        <div class="comhead">
+                          <a class="hnuser" href="user?id=second">second</a>
+                          <span class="age">18 minutes ago</span> | <a href="item?id=comment-2">parent</a>
+                        </div>
+                        <div class="comment">
+                          <span class="commtext">
+                            A nested reply uses the same HN indentation pattern, including an image width
+                            on the indentation cell.
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr class="athing comtr" id="comment-3">
+                <td colspan="3">
+                  <table border="0">
+                    <tr>
+                      <td class="ind"><img height="1" width="80" alt=""></td>
+                      <td class="default">
+                        <div class="comhead">
+                          <a class="hnuser" href="user?id=third">third</a>
+                          <span class="age">8 minutes ago</span> | <a href="item?id=comment-3">parent</a>
+                        </div>
+                        <div class="comment">
+                          <span class="commtext">
+                            This deeper nested comment includes a very-long-unbroken-token-that-should-wrap-on-mobile
+                            so the mobile rule can be inspected locally.
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
             </table>
