@@ -20,6 +20,32 @@ function restoreBrowserApi(originalBrowser, originalChrome) {
   globalThis.chrome = originalChrome;
 }
 
+test("readPreferences calls strict promise-style storage get without callbacks", async () => {
+  const originalBrowser = globalThis.browser;
+  const originalChrome = globalThis.chrome;
+  globalThis.browser = {
+    storage: {
+      local: {
+        async get(key) {
+          assert.equal(arguments.length, 1);
+          assert.equal(key, "hnRefinedPreferences");
+          return { hnRefinedPreferences: customPreferences };
+        }
+      }
+    }
+  };
+  globalThis.chrome = undefined;
+
+  try {
+    assert.deepEqual(await readPreferences(), {
+      preferences: customPreferences,
+      persisted: true
+    });
+  } finally {
+    restoreBrowserApi(originalBrowser, originalChrome);
+  }
+});
+
 test("writePreferences falls back to defaults when storage is unavailable", async () => {
   const originalBrowser = globalThis.browser;
   const originalChrome = globalThis.chrome;
@@ -55,6 +81,33 @@ test("writePreferences falls back to defaults when storage write fails", async (
       preferences: DEFAULT_PREFERENCES,
       persisted: false
     });
+  } finally {
+    restoreBrowserApi(originalBrowser, originalChrome);
+  }
+});
+
+test("writePreferences calls strict promise-style storage set without callbacks", async () => {
+  const originalBrowser = globalThis.browser;
+  const originalChrome = globalThis.chrome;
+  const writes = [];
+  globalThis.browser = {
+    storage: {
+      local: {
+        async set(value) {
+          assert.equal(arguments.length, 1);
+          writes.push(value);
+        }
+      }
+    }
+  };
+  globalThis.chrome = undefined;
+
+  try {
+    assert.deepEqual(await writePreferences(customPreferences), {
+      preferences: customPreferences,
+      persisted: true
+    });
+    assert.deepEqual(writes, [{ hnRefinedPreferences: customPreferences }]);
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
   }

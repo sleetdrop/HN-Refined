@@ -22,78 +22,70 @@ function getLastError(api) {
     : new Error(lastError.message || String(lastError));
 }
 
-function getStorageValue(api, key) {
-  return new Promise((resolve, reject) => {
-    let settled = false;
-    const settle = (settleWith, value) => {
-      if (settled) {
-        return;
-      }
+function isPromiseStorageApi(api) {
+  return api === globalThis.browser;
+}
 
-      settled = true;
-      settleWith(value);
-    };
-    const callback = (result) => {
+function promiseStorageGet(api, key) {
+  const result = api.storage.local.get(key);
+
+  if (!isThenable(result)) {
+    return Promise.reject(new Error("storage.local.get did not return a Promise"));
+  }
+
+  return result;
+}
+
+function promiseStorageSet(api, value) {
+  const result = api.storage.local.set(value);
+
+  if (!isThenable(result)) {
+    return Promise.reject(new Error("storage.local.set did not return a Promise"));
+  }
+
+  return result;
+}
+
+function callbackStorageGet(api, key) {
+  return new Promise((resolve, reject) => {
+    api.storage.local.get(key, (result) => {
       const lastError = getLastError(api);
 
       if (lastError) {
-        settle(reject, lastError);
+        reject(lastError);
         return;
       }
 
-      settle(resolve, result);
-    };
-
-    try {
-      const result = api.storage.local.get(key, callback);
-
-      if (isThenable(result)) {
-        result.then(
-          (value) => settle(resolve, value),
-          (error) => settle(reject, error)
-        );
-      }
-    } catch (error) {
-      settle(reject, error);
-    }
+      resolve(result);
+    });
   });
 }
 
-function setStorageValue(api, value) {
+function callbackStorageSet(api, value) {
   return new Promise((resolve, reject) => {
-    let settled = false;
-    const settle = (settleWith, value) => {
-      if (settled) {
-        return;
-      }
-
-      settled = true;
-      settleWith(value);
-    };
-    const callback = () => {
+    api.storage.local.set(value, () => {
       const lastError = getLastError(api);
 
       if (lastError) {
-        settle(reject, lastError);
+        reject(lastError);
         return;
       }
 
-      settle(resolve);
-    };
-
-    try {
-      const result = api.storage.local.set(value, callback);
-
-      if (isThenable(result)) {
-        result.then(
-          () => settle(resolve),
-          (error) => settle(reject, error)
-        );
-      }
-    } catch (error) {
-      settle(reject, error);
-    }
+      resolve();
+    });
   });
+}
+
+function getStorageValue(api, key) {
+  return isPromiseStorageApi(api)
+    ? promiseStorageGet(api, key)
+    : callbackStorageGet(api, key);
+}
+
+function setStorageValue(api, value) {
+  return isPromiseStorageApi(api)
+    ? promiseStorageSet(api, value)
+    : callbackStorageSet(api, value);
 }
 
 export async function readPreferences() {
