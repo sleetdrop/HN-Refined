@@ -24,6 +24,30 @@ function browserApi() {
   return globalThis.browser || globalThis.chrome;
 }
 
+function getStorageValue(api, key) {
+  if (api === globalThis.browser) {
+    const result = api.storage.local.get(key);
+    if (result && typeof result.then === "function") {
+      return result;
+    }
+
+    return Promise.reject(new Error("storage.local.get did not return a Promise"));
+  }
+
+  return new Promise((resolve, reject) => {
+    api.storage.local.get(key, (result) => {
+      const lastError = api?.runtime?.lastError;
+
+      if (lastError) {
+        reject(new Error(lastError.message || String(lastError)));
+        return;
+      }
+
+      resolve(result);
+    });
+  });
+}
+
 function enumOrDefault(key, value) {
   return ALLOWED[key].includes(value) ? value : DEFAULT_PREFERENCES[key];
 }
@@ -73,6 +97,55 @@ function isExternalStoryAnchor(anchor) {
   );
 }
 
+function hasOriginalValue(anchor, key) {
+  return Object.prototype.hasOwnProperty.call(anchor.dataset, key);
+}
+
+function rememberAttribute(anchor, attributeName, dataKey) {
+  if (anchor.hasAttribute(attributeName)) {
+    anchor.dataset[dataKey] = anchor.getAttribute(attributeName);
+  }
+}
+
+function restoreAttribute(anchor, attributeName, dataKey) {
+  if (hasOriginalValue(anchor, dataKey)) {
+    anchor.setAttribute(attributeName, anchor.dataset[dataKey]);
+  } else {
+    anchor.removeAttribute(attributeName);
+  }
+
+  delete anchor.dataset[dataKey];
+}
+
+function rememberStoryTarget(anchor) {
+  if (anchor.dataset.hnrTargetManaged) {
+    return;
+  }
+
+  anchor.dataset.hnrTargetManaged = "true";
+  rememberAttribute(anchor, "target", "hnrOriginalTarget");
+  rememberAttribute(anchor, "rel", "hnrOriginalRel");
+}
+
+function addRequiredRelTokens(anchor) {
+  const relTokens = new Set(anchor.rel.split(/\s+/).filter(Boolean));
+
+  relTokens.add("noopener");
+  relTokens.add("noreferrer");
+
+  anchor.rel = [...relTokens].join(" ");
+}
+
+function restoreStoryTarget(anchor) {
+  if (!anchor.dataset.hnrTargetManaged) {
+    return;
+  }
+
+  restoreAttribute(anchor, "target", "hnrOriginalTarget");
+  restoreAttribute(anchor, "rel", "hnrOriginalRel");
+  delete anchor.dataset.hnrTargetManaged;
+}
+
 function updateStoryTargets() {
   for (const anchor of document.querySelectorAll(".titleline a[href]")) {
     if (!isExternalStoryAnchor(anchor)) {
@@ -80,11 +153,11 @@ function updateStoryTargets() {
     }
 
     if (preferences.openStoryLinksInNewTabs) {
+      rememberStoryTarget(anchor);
       anchor.target = "_blank";
-      anchor.rel = "noopener noreferrer";
+      addRequiredRelTokens(anchor);
     } else {
-      anchor.removeAttribute("target");
-      anchor.removeAttribute("rel");
+      restoreStoryTarget(anchor);
     }
   }
 }
@@ -97,7 +170,7 @@ async function loadPreferences() {
   }
 
   try {
-    const result = await api.storage.local.get(STORAGE_KEY);
+    const result = await getStorageValue(api, STORAGE_KEY);
     applyPreferences(result?.[STORAGE_KEY] || DEFAULT_PREFERENCES);
   } catch {
     applyPreferences(DEFAULT_PREFERENCES);
