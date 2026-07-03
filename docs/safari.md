@@ -13,7 +13,7 @@ npm run check
 The Safari wrapper in `HNRefined/` was generated locally with:
 
 ```bash
-xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier com.local.HNRefined --macos-only --no-open --no-prompt
+xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier org.hnrefined.HNRefined --macos-only --no-open --no-prompt
 ```
 
 The converter is supplied by Xcode:
