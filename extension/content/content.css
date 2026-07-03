@@ -19,7 +19,7 @@ td,
 }
 
 #hnmain {
-  width: min(100%, 1120px);
+  width: 100%;
   background: var(--hnr-content-background, #f6f6ef);
 }
 
