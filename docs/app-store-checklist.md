@@ -4,6 +4,7 @@ Use this checklist before preparing App Store submission materials. It is not a 
 
 - Keep extension permissions narrow and limited to Hacker News.
 - Confirm the manifest and host permissions match the first-version scope.
+- Confirm `activeTab` is used only for user-initiated popup preference updates on the current Hacker News tab.
 - Verify the extension does not load remote code, remote configuration, remote themes, analytics, or third-party runtime resources.
 - Confirm preferences are local extension preferences only.
 - Prepare privacy labels and review copy that match `docs/privacy.md`.

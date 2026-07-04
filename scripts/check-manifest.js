@@ -4,7 +4,7 @@ const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const errors = [];
 const allowedHostPattern = "https://news.ycombinator.com/*";
 const allowedHostLikeFields = new Set(["host_permissions", "optional_host_permissions"]);
-const requiredPermissions = ["storage"];
+const requiredPermissions = ["storage", "activeTab"];
 const requiredContentScriptCss = ["generated/themes.css", "content/content.css"];
 const requiredContentScriptJs = ["content/content-script.js"];
 
@@ -17,7 +17,7 @@ if (manifest.manifest_version !== 3) {
 }
 
 if (!equalsArray(manifest.permissions, requiredPermissions)) {
-  errors.push("permissions must exactly equal storage");
+  errors.push("permissions must exactly equal storage and activeTab");
 }
 
 if (!equalsArray(manifest.host_permissions, [allowedHostPattern])) {
