@@ -170,6 +170,11 @@ a:visited {
   color: var(--hnr-text-primary, #000);
 }
 
+#hnmain .pagetop a:link,
+#hnmain .pagetop a:visited {
+  color: inherit;
+}
+
 #hnmain > tbody > tr:first-child > td[bgcolor="#ff6600" i] table,
 #hnmain > tr:first-child > td[bgcolor="#ff6600" i] table {
   background: transparent;

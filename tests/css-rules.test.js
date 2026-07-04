@@ -11,6 +11,13 @@ test("content CSS overrides Hacker News title link colors", () => {
   assert.match(css, /#hnmain\s+\.titleline\s+\.sitestr/);
 });
 
+test("content CSS keeps top navigation links on the active header color", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /#hnmain\s+\.pagetop\s+a:link/);
+  assert.match(css, /#hnmain\s+\.pagetop\s+a:visited/);
+});
+
 test("content CSS overrides Hacker News footer link colors", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
