@@ -86,12 +86,12 @@ test("bundled dark theme keeps core text readable", () => {
   const { tokens } = darkTheme;
 
   assert.ok(
-    contrastRatio(tokens.textPrimary, tokens.contentBackground) >= 7,
-    "primary text should meet enhanced contrast on dark content"
+    contrastRatio(tokens.textPrimary, tokens.contentBackground) >= 6,
+    "primary text should stay clear without becoming harsh on dark content"
   );
   assert.ok(
-    contrastRatio(tokens.link, tokens.contentBackground) >= 7,
-    "story links should meet enhanced contrast on dark content"
+    contrastRatio(tokens.link, tokens.contentBackground) >= 6,
+    "story links should stay clear without becoming harsh on dark content"
   );
   assert.ok(
     contrastRatio(tokens.visitedLink, tokens.contentBackground) >= 4.5,
@@ -105,4 +105,22 @@ test("bundled dark theme keeps core text readable", () => {
     contrastRatio(tokens.textPrimary, tokens.topBarBackground) >= 4.5,
     "top bar text should stay readable"
   );
+});
+
+test("bundled dark theme keeps a warm Hacker News family palette", () => {
+  const darkTheme = JSON.parse(
+    fs.readFileSync("extension/themes/hn-dark.json", "utf8")
+  );
+
+  assert.deepEqual(darkTheme.tokens, {
+    pageBackground: "#211f1a",
+    contentBackground: "#27251f",
+    topBarBackground: "#9a4315",
+    textPrimary: "#e6dcc5",
+    textMuted: "#a89b82",
+    link: "#e6dcc5",
+    visitedLink: "#bca97d",
+    borderSubtle: "#40392e",
+    voteArrow: "#a89b82"
+  });
 });

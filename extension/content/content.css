@@ -100,6 +100,12 @@ a:visited {
   color: inherit;
 }
 
+#hnmain .yclinks,
+#hnmain .yclinks a:link,
+#hnmain .yclinks a:visited {
+  color: var(--hnr-text-muted, #828282);
+}
+
 #hnmain > tbody > tr:first-child > td[bgcolor="#ff6600" i],
 #hnmain > tr:first-child > td[bgcolor="#ff6600" i] {
   background: var(--hnr-top-bar-background, #ff6600);

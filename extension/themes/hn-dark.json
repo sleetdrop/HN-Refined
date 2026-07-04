@@ -3,14 +3,14 @@
   "name": "HN Dark",
   "mode": "dark",
   "tokens": {
-    "pageBackground": "#0f1115",
-    "contentBackground": "#17191d",
-    "topBarBackground": "#7a3412",
-    "textPrimary": "#eceff4",
-    "textMuted": "#a8b0ba",
-    "link": "#f2f4f8",
-    "visitedLink": "#c7b88a",
-    "borderSubtle": "#303640",
-    "voteArrow": "#a8b0ba"
+    "pageBackground": "#211f1a",
+    "contentBackground": "#27251f",
+    "topBarBackground": "#9a4315",
+    "textPrimary": "#e6dcc5",
+    "textMuted": "#a89b82",
+    "link": "#e6dcc5",
+    "visitedLink": "#bca97d",
+    "borderSubtle": "#40392e",
+    "voteArrow": "#a89b82"
   }
 }
