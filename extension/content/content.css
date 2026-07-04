@@ -153,6 +153,13 @@ td.pagetop {
     line-height: 1.42;
   }
 
+  html[data-hnr-mobile="auto"] .sitebit {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
   html[data-hnr-mobile="auto"] .subtext,
   html[data-hnr-mobile="auto"] .comhead {
     font-size: 13px;
@@ -167,6 +174,12 @@ td.pagetop {
     min-height: 32px;
   }
 
+  html[data-hnr-mobile="auto"] .subtext a,
+  html[data-hnr-mobile="auto"] .comhead a {
+    min-height: auto;
+    padding-block: 4px;
+  }
+
   html[data-hnr-mobile="auto"] .pagetop {
     font-size: 14px;
     line-height: 1.6;
@@ -176,6 +189,10 @@ td.pagetop {
   html[data-hnr-mobile="auto"] .commtext {
     font-size: 14px;
     line-height: 1.55;
+  }
+
+  html[data-hnr-mobile="auto"] .commtext {
+    line-height: 1.6;
   }
 
   html[data-hnr-mobile="auto"] .comment {
