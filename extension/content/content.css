@@ -70,6 +70,19 @@ a:visited {
   color: var(--hnr-visited-link, #828282);
 }
 
+#hnmain .titleline > a:link {
+  color: var(--hnr-link, #000);
+}
+
+#hnmain .titleline > a:visited {
+  color: var(--hnr-visited-link, #828282);
+}
+
+#hnmain .titleline .sitebit,
+#hnmain .titleline .sitestr {
+  color: var(--hnr-text-muted, #828282);
+}
+
 .subtext,
 .comhead,
 .score,
