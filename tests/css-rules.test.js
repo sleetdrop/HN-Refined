@@ -17,3 +17,13 @@ test("content CSS overrides Hacker News footer link colors", () => {
   assert.match(css, /#hnmain\s+\.yclinks\s+a:link/);
   assert.match(css, /#hnmain\s+\.yclinks\s+a:visited/);
 });
+
+test("mobile CSS raises reading size and touch targets", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.titleline\s*{[^}]*font-size:\s*16px/s);
+  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.subtext,[\s\S]*?font-size:\s*13px/s);
+  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.comment,[\s\S]*?font-size:\s*14px/s);
+  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.titleline\s+a,[\s\S]*?min-height:\s*32px/s);
+  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.pagetop\s*{[^}]*font-size:\s*14px/s);
+});

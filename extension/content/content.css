@@ -148,14 +148,14 @@ td.pagetop {
 
   html[data-hnr-mobile="auto"] .titleline {
     display: inline-block;
-    padding-block: 5px;
-    font-size: 14px;
-    line-height: 1.45;
+    padding-block: 7px;
+    font-size: 16px;
+    line-height: 1.42;
   }
 
   html[data-hnr-mobile="auto"] .subtext,
   html[data-hnr-mobile="auto"] .comhead {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.5;
   }
 
@@ -164,11 +164,18 @@ td.pagetop {
   html[data-hnr-mobile="auto"] .comhead a,
   html[data-hnr-mobile="auto"] .pagetop a {
     display: inline-block;
-    min-height: 24px;
+    min-height: 32px;
   }
 
   html[data-hnr-mobile="auto"] .pagetop {
+    font-size: 14px;
     line-height: 1.6;
+  }
+
+  html[data-hnr-mobile="auto"] .comment,
+  html[data-hnr-mobile="auto"] .commtext {
+    font-size: 14px;
+    line-height: 1.55;
   }
 
   html[data-hnr-mobile="auto"] .comment {
