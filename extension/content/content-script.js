@@ -178,6 +178,10 @@ async function loadPreferences() {
   }
 }
 
+function refreshPreferences() {
+  return loadPreferences().then(updateStoryTargets);
+}
+
 function observePreferences() {
   const api = browserApi();
   api?.storage?.onChanged?.addListener?.((changes, areaName) => {
@@ -199,9 +203,20 @@ function observePreferences() {
   });
 }
 
+function observePageActivation() {
+  window.addEventListener("focus", refreshPreferences);
+  window.addEventListener("pageshow", refreshPreferences);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      refreshPreferences();
+    }
+  });
+}
+
 function start() {
-  loadPreferences().then(updateStoryTargets);
+  refreshPreferences();
   observePreferences();
+  observePageActivation();
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", updateStoryTargets, { once: true });
