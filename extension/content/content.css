@@ -14,7 +14,11 @@ td,
 .subtext,
 .comment,
 .commtext,
-.comhead {
+.comhead,
+.admin,
+input,
+select,
+textarea {
   color: var(--hnr-text-primary, #000);
 }
 
@@ -72,6 +76,7 @@ html[data-hnr-density="comfortable"] .subtext {
 }
 
 html[data-hnr-density="comfortable"] .comment {
+  font-size: 14px;
   max-width: 72ch;
   line-height: 1.58;
 }
@@ -85,6 +90,14 @@ a:link {
 }
 
 a:visited {
+  color: var(--hnr-visited-link, #828282);
+}
+
+#hnmain td a:link {
+  color: var(--hnr-link, #000);
+}
+
+#hnmain td a:visited {
   color: var(--hnr-visited-link, #828282);
 }
 
@@ -113,9 +126,33 @@ a:visited {
 
 .subtext a:link,
 .comhead a:link,
+.reply a:link,
+.admin a:link,
 .pagetop a:link,
 .pagetop a:visited {
   color: inherit;
+}
+
+.subtext a:visited,
+.comhead a:visited,
+.reply a:visited,
+.admin a:visited {
+  color: var(--hnr-text-muted, #828282);
+}
+
+.default a:link,
+.commtext a:link {
+  color: var(--hnr-link, #000);
+}
+
+.default a:visited,
+.commtext a:visited {
+  color: var(--hnr-visited-link, #828282);
+}
+
+.default .comhead a:link,
+.default .comhead a:visited {
+  color: var(--hnr-text-muted, #828282);
 }
 
 #hnmain .yclinks,
@@ -148,6 +185,10 @@ td.pagetop {
   border-bottom-color: var(--hnr-vote-arrow, #828282);
 }
 
+.comtr .default {
+  padding-bottom: 10px;
+}
+
 .comment {
   max-width: 78ch;
   line-height: 1.5;
@@ -156,6 +197,61 @@ td.pagetop {
 .comment,
 .commtext {
   overflow-wrap: break-word;
+}
+
+.commtext.c00 {
+  color: var(--hnr-text-primary, #000);
+}
+
+.commtext.c5a,
+.commtext.c73,
+.commtext.c82,
+.commtext.c88,
+.commtext.c9c,
+.commtext.cae,
+.commtext.cbe {
+  color: var(--hnr-text-muted, #828282);
+}
+
+.commtext p {
+  margin: 0.6em 0;
+}
+
+.reply {
+  margin-top: 4px;
+}
+
+.reply a:link,
+.reply a:visited {
+  color: var(--hnr-text-muted, #828282);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+select,
+textarea {
+  color: var(--hnr-text-primary, #000);
+  background: var(--hnr-content-background, #f6f6ef);
+  border: 1px solid var(--hnr-border-subtle, #d9d0b1);
+}
+
+input[type="submit"] {
+  color: var(--hnr-text-primary, #000);
+  background: var(--hnr-content-background, #f6f6ef);
+  border: 1px solid var(--hnr-border-subtle, #d9d0b1);
+  border-radius: 3px;
+}
+
+textarea {
+  max-width: 100%;
+  line-height: 1.45;
+}
+
+html[data-hnr-density="comfortable"] .comtr {
+  height: auto;
 }
 
 @media (max-width: 700px) {
@@ -198,6 +294,12 @@ td.pagetop {
     padding-block: 4px;
   }
 
+  html[data-hnr-mobile="auto"] .reply a {
+    display: inline-block;
+    padding-block: 6px;
+    min-height: 32px;
+  }
+
   html[data-hnr-mobile="auto"] .pagetop {
     font-size: 14px;
     line-height: 1.6;
@@ -220,6 +322,22 @@ td.pagetop {
 
   html[data-hnr-mobile="auto"] .ind img {
     max-width: 32px;
+  }
+
+  html[data-hnr-mobile="auto"] input[type="text"],
+  html[data-hnr-mobile="auto"] input[type="email"],
+  html[data-hnr-mobile="auto"] input[type="password"],
+  html[data-hnr-mobile="auto"] input[type="search"],
+  html[data-hnr-mobile="auto"] input[type="url"],
+  html[data-hnr-mobile="auto"] select,
+  html[data-hnr-mobile="auto"] textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  html[data-hnr-mobile="auto"] textarea {
+    width: 100%;
   }
 }
 

@@ -1,0 +1,103 @@
+<!doctype html>
+<html data-hnr-theme="light" data-hnr-font="system-sans" data-hnr-density="comfortable" data-hnr-width="comfortable" data-hnr-mobile="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HN Refined Page Coverage Fixture</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="../../extension/generated/themes.css">
+    <link rel="stylesheet" href="../../extension/content/content.css">
+    <style>
+      body { margin: 0; }
+      .coverage-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        gap: 12px;
+        padding: 10px 14px;
+        background: #ffffff;
+        border-bottom: 1px solid #ddd;
+        font: 13px system-ui, sans-serif;
+      }
+      .coverage-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        padding: 18px;
+      }
+      .coverage-panel {
+        min-width: 0;
+      }
+      .coverage-panel h1 {
+        margin: 0 0 8px;
+        font: 600 14px system-ui, sans-serif;
+      }
+      .coverage-panel.dark {
+        color: #eee;
+        background: #141414;
+      }
+      .coverage-panel.dark > h1 {
+        color: #eee;
+      }
+      .coverage-panel.dark .coverage-scope {
+        color-scheme: dark;
+      }
+      .coverage-scope {
+        display: block;
+      }
+      @media (max-width: 900px) {
+        .coverage-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="coverage-nav">
+      <strong>HN Refined coverage fixture</strong>
+      <span>Light and dark panels share the same HN-like markup.</span>
+    </div>
+    <div class="coverage-grid">
+      <section class="coverage-panel">
+        <h1>Light</h1>
+        <div class="coverage-scope">
+          <center>
+            <table id="hnmain">
+              <tr>
+                <td bgcolor="#ff6600">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+                    <tr>
+                      <td style="width:18px;padding-right:4px"><a href="news"><img width="18" height="18" alt=""></a></td>
+                      <td><span class="pagetop"><b class="hnname"><a href="news">Hacker News</a></b> <a href="newest">new</a> | <a href="comments">comments</a> | <a href="ask">ask</a> | <a href="submit">submit</a></span></td>
+                      <td style="text-align:right"><span class="pagetop"><a href="login">login</a></span></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr><td><table class="itemlist" border="0" cellspacing="0" cellpadding="0">
+                <tr class="athing"><td class="title" align="right"><span class="rank">1.</span></td><td class="votelinks"><center><div class="votearrow"></div></center></td><td class="title"><span class="titleline"><a href="https://example.com">Story title with a source</a><span class="sitebit comhead"> (<span class="sitestr">example.com</span>)</span></span></td></tr>
+                <tr><td colspan="2"></td><td class="subtext"><span class="score">123 points</span> by <a class="hnuser" href="user?id=reader">reader</a> <span class="age">1 hour ago</span> | <a href="item?id=1">42 comments</a></td></tr>
+                <tr class="spacer" style="height:12px"></tr>
+                <tr class="athing comtr"><td colspan="3"><table border="0"><tr><td class="ind"><img height="1" width="0" alt=""></td><td class="default"><div class="comhead"><a class="hnuser" href="user?id=first">first</a> <span class="age">24 minutes ago</span> | <a href="item?id=1">parent</a></div><div class="comment"><span class="commtext c00"><p>This comment paragraph should be readable in both themes and keep the HN comment shape.</p><p>It includes a <a href="https://example.com/reference">reference link</a> and a very-long-unbroken-token-that-should-wrap-instead-of-breaking-the-page.</p></span></div><div class="reply"><p><a href="reply?id=1">reply</a></p></div></td></tr></table></td></tr>
+                <tr class="athing comtr"><td colspan="3"><table border="0"><tr><td class="ind"><img height="1" width="80" alt=""></td><td class="default"><div class="comhead"><a class="hnuser" href="user?id=nested">nested</a> <span class="age">8 minutes ago</span></div><div class="comment"><span class="commtext c5a">A faded nested reply keeps indentation and downvoted-comment tone without becoming unreadable.</span></div></td></tr></table></td></tr>
+                <tr class="spacer" style="height:14px"></tr>
+                <tr><td colspan="2"></td><td class="title">Submit</td></tr>
+                <tr><td colspan="2"></td><td><form><input type="text" value="A submission title"><br><input type="url" value="https://example.com/article"><br><textarea rows="4" cols="50">Comment form text should follow theme colors.</textarea><br><select><option>no</option><option>yes</option></select><br><input type="submit" value="add comment"></form></td></tr>
+                <tr class="spacer" style="height:14px"></tr>
+                <tr><td colspan="2"></td><td class="admin">Static page text with <a href="newsfaq.html">FAQ link</a> and <a href="newsguidelines.html">guidelines link</a>.</td></tr>
+                <tr><td colspan="2"></td><td class="yclinks"><a href="newsguidelines.html">Guidelines</a> | <a href="newsfaq.html">FAQ</a> | <a href="lists">Lists</a> | <a href="security.html">Security</a></td></tr>
+              </table></td></tr>
+            </table>
+          </center>
+        </div>
+      </section>
+      <section class="coverage-panel dark">
+        <h1>Dark</h1>
+        <div class="coverage-scope">
+          <iframe title="Dark coverage preview" srcdoc='<!doctype html><html data-hnr-theme="dark" data-hnr-font="system-sans" data-hnr-density="comfortable" data-hnr-width="comfortable" data-hnr-mobile="auto"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="../../extension/generated/themes.css"><link rel="stylesheet" href="../../extension/content/content.css"></head><body><center><table id="hnmain"><tr><td bgcolor="#ff6600"><table width="100%" style="padding:2px"><tr><td><span class="pagetop"><b class="hnname"><a href="news">Hacker News</a></b> <a href="newest">new</a> | <a href="comments">comments</a> | <a href="submit">submit</a></span></td><td style="text-align:right"><span class="pagetop"><a href="login">login</a></span></td></tr></table></td></tr><tr><td><table class="itemlist" width="100%"><tr class="athing"><td class="title" align="right"><span class="rank">1.</span></td><td class="votelinks"><center><div class="votearrow"></div></center></td><td class="title"><span class="titleline"><a href="https://example.com">Story title with a source</a><span class="sitebit comhead"> (<span class="sitestr">example.com</span>)</span></span></td></tr><tr><td colspan="2"></td><td class="subtext"><span class="score">123 points</span> by <a class="hnuser" href="user?id=reader">reader</a> <span class="age">1 hour ago</span> | <a href="item?id=1">42 comments</a></td></tr><tr class="spacer" style="height:12px"></tr><tr class="athing comtr"><td colspan="3"><table><tr><td class="ind"><img height="1" width="0" alt=""></td><td class="default"><div class="comhead"><a class="hnuser" href="user?id=first">first</a> <span class="age">24 minutes ago</span> | <a href="item?id=1">parent</a></div><div class="comment"><span class="commtext c00"><p>This comment paragraph should be readable in both themes and keep the HN comment shape.</p><p>It includes a <a href="https://example.com/reference">reference link</a> and a very-long-unbroken-token-that-should-wrap-instead-of-breaking-the-page.</p></span></div><div class="reply"><p><a href="reply?id=1">reply</a></p></div></td></tr></table></td></tr><tr class="athing comtr"><td colspan="3"><table><tr><td class="ind"><img height="1" width="80" alt=""></td><td class="default"><div class="comhead"><a class="hnuser" href="user?id=nested">nested</a> <span class="age">8 minutes ago</span></div><div class="comment"><span class="commtext c5a">A faded nested reply keeps indentation and downvoted-comment tone without becoming unreadable.</span></div></td></tr></table></td></tr><tr class="spacer" style="height:14px"></tr><tr><td colspan="2"></td><td class="title">Submit</td></tr><tr><td colspan="2"></td><td><form><input type="text" value="A submission title"><br><input type="url" value="https://example.com/article"><br><textarea rows="4" cols="50">Comment form text should follow theme colors.</textarea><br><select><option>no</option><option>yes</option></select><br><input type="submit" value="add comment"></form></td></tr><tr class="spacer" style="height:14px"></tr><tr><td colspan="2"></td><td class="admin">Static page text with <a href="newsfaq.html">FAQ link</a> and <a href="newsguidelines.html">guidelines link</a>.</td></tr><tr><td colspan="2"></td><td class="yclinks"><a href="newsguidelines.html">Guidelines</a> | <a href="newsfaq.html">FAQ</a> | <a href="lists">Lists</a> | <a href="security.html">Security</a></td></tr></table></td></tr></table></center></body></html>' style="width:100%;height:680px;border:0;background:#211f1a"></iframe>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
