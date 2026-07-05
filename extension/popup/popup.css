@@ -1,0 +1,107 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+body {
+  margin: 0;
+  min-width: 260px;
+  color: CanvasText;
+  background: Canvas;
+}
+
+main {
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+}
+
+header {
+  display: grid;
+  gap: 6px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.status {
+  margin: 0;
+  color: color-mix(in srgb, CanvasText 72%, transparent);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  margin: 0 0 6px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: color-mix(in srgb, CanvasText 70%, transparent);
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, CanvasText 22%, transparent);
+  border-radius: 7px;
+  background: color-mix(in srgb, Canvas 92%, CanvasText);
+}
+
+.segmented-control label {
+  position: relative;
+  min-width: 0;
+}
+
+.segmented-control label + label {
+  border-left: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+}
+
+.segmented-control input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.segmented-control span {
+  display: block;
+  padding: 7px 8px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.segmented-control input:checked + span {
+  color: Canvas;
+  background: CanvasText;
+}
+
+.segmented-control input:focus-visible + span {
+  outline: 2px solid Highlight;
+  outline-offset: -2px;
+}
+
+button {
+  width: 100%;
+  min-height: 32px;
+  border: 1px solid color-mix(in srgb, CanvasText 24%, transparent);
+  border-radius: 7px;
+  color: CanvasText;
+  background: Canvas;
+  font: inherit;
+}
+
+button:active {
+  background: color-mix(in srgb, CanvasText 10%, Canvas);
+}

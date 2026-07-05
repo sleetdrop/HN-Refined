@@ -15,10 +15,10 @@
   ],
   "action": {
     "default_title": "HN Refined",
-    "default_popup": "options/options.html"
+    "default_popup": "popup/popup.html"
   },
   "options_ui": {
     "page": "options/options.html",
-    "open_in_tab": false
+    "open_in_tab": true
   }
 }

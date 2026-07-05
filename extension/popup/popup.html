@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HN Refined</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>HN Refined</h1>
+        <p id="storage-status" class="status" hidden></p>
+      </header>
+
+      <fieldset>
+        <legend>Theme</legend>
+        <div class="segmented-control" role="radiogroup" aria-label="Theme">
+          <label>
+            <input type="radio" name="theme" value="system">
+            <span>System</span>
+          </label>
+          <label>
+            <input type="radio" name="theme" value="light">
+            <span>Light</span>
+          </label>
+          <label>
+            <input type="radio" name="theme" value="dark">
+            <span>Dark</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <button id="open-settings" type="button">Open Settings</button>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
