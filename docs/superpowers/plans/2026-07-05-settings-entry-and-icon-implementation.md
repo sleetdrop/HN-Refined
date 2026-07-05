@@ -18,7 +18,7 @@ Modify or create these files:
 - Create `extension/popup/popup.css`: small native-feeling popup styling.
 - Create `extension/popup/popup.js`: read/write only `theme`, notify active Hacker News tab, open full settings page.
 - Create `extension/shared/extension-navigation.js`: tiny helper for opening the options page with Safari-compatible fallbacks.
-- Create `tests/extension-navigation.test.js`: tests for `openOptionsPage` and `tabs.create` fallback behavior.
+- Create `tests/extension-navigation.test.js`: tests for preferred `tabs.create` behavior and `openOptionsPage` fallback behavior.
 - Modify `extension/manifest.json`: point `action.default_popup` to `popup/popup.html`, make `options_ui.open_in_tab` true, add generated extension icons.
 - Modify `extension/options/options.html`: keep complete settings but group them by purpose.
 - Modify `extension/options/options.css`: tab-page settings layout rather than cramped popup layout.
@@ -52,7 +52,43 @@ function restoreBrowserApi(originalBrowser, originalChrome) {
   globalThis.chrome = originalChrome;
 }
 
-test("opens the extension options page when runtime.openOptionsPage is available", async () => {
+test("opens options.html in a new tab when tab APIs are available", async () => {
+  const originalBrowser = globalThis.browser;
+  const originalChrome = globalThis.chrome;
+  const calls = [];
+
+  globalThis.browser = {
+    runtime: {
+      getURL(path) {
+        assert.equal(path, "options/options.html");
+        return `safari-web-extension://example/${path}`;
+      },
+      async openOptionsPage() {
+        calls.push("openOptionsPage");
+      }
+    },
+    tabs: {
+      async create(tab) {
+        calls.push(["tabs.create", tab]);
+      }
+    }
+  };
+  globalThis.chrome = undefined;
+
+  try {
+    assert.equal(await openFullSettingsPage(), true);
+    assert.deepEqual(calls, [
+      [
+        "tabs.create",
+        { url: "safari-web-extension://example/options/options.html" }
+      ]
+    ]);
+  } finally {
+    restoreBrowserApi(originalBrowser, originalChrome);
+  }
+});
+
+test("falls back to runtime.openOptionsPage when tab APIs are unavailable", async () => {
   const originalBrowser = globalThis.browser;
   const originalChrome = globalThis.chrome;
   const calls = [];
@@ -69,36 +105,6 @@ test("opens the extension options page when runtime.openOptionsPage is available
   try {
     assert.equal(await openFullSettingsPage(), true);
     assert.deepEqual(calls, ["openOptionsPage"]);
-  } finally {
-    restoreBrowserApi(originalBrowser, originalChrome);
-  }
-});
-
-test("falls back to opening options.html in a new tab", async () => {
-  const originalBrowser = globalThis.browser;
-  const originalChrome = globalThis.chrome;
-  const openedTabs = [];
-
-  globalThis.browser = {
-    runtime: {
-      getURL(path) {
-        assert.equal(path, "options/options.html");
-        return `safari-web-extension://example/${path}`;
-      }
-    },
-    tabs: {
-      async create(tab) {
-        openedTabs.push(tab);
-      }
-    }
-  };
-  globalThis.chrome = undefined;
-
-  try {
-    assert.equal(await openFullSettingsPage(), true);
-    assert.deepEqual(openedTabs, [
-      { url: "safari-web-extension://example/options/options.html" }
-    ]);
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
   }
@@ -146,15 +152,15 @@ export async function openFullSettingsPage() {
   const api = browserApi();
 
   try {
-    if (api?.runtime?.openOptionsPage) {
-      await callMaybePromise(() => api.runtime.openOptionsPage());
-      return true;
-    }
-
     if (api?.tabs?.create && api?.runtime?.getURL) {
       await callMaybePromise(() =>
         api.tabs.create({ url: api.runtime.getURL("options/options.html") })
       );
+      return true;
+    }
+
+    if (api?.runtime?.openOptionsPage) {
+      await callMaybePromise(() => api.runtime.openOptionsPage());
       return true;
     }
   } catch {
