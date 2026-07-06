@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="HN Refined toolbar icon">
+  <rect width="1024" height="1024" rx="224" fill="#ff6600"/>
+  <g transform="translate(250 280) rotate(-2 262 224)">
+    <rect width="500" height="430" rx="84" fill="#fff8ea"/>
+    <text x="78" y="272"
+      fill="#1b1814"
+      font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif"
+      font-size="220"
+      font-weight="850"
+      letter-spacing="-14">HN</text>
+  </g>
+  <g transform="translate(746 274)">
+    <circle cx="0" cy="0" r="122" fill="#3a342d"/>
+    <text x="-37" y="50"
+      fill="#fff8ea"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="176"
+      font-style="italic"
+      font-weight="700">e</text>
+  </g>
+</svg>

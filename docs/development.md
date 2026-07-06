@@ -16,6 +16,15 @@ Build theme CSS:
 make build-themes
 ```
 
+Regenerate app and extension icon PNGs:
+
+```bash
+make build-icons
+```
+
+Icon generation uses the committed SVG sources in `assets/icon/` and requires
+`rsvg-convert` from `librsvg`.
+
 Run tests:
 
 ```bash

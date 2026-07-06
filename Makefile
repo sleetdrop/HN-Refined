@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help check test build-themes safari-build safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
+.PHONY: help check test build-themes build-icons safari-build safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
 
 help:
 	@printf '%s\n' \
@@ -9,6 +9,7 @@ help:
 		'  make check              Run all local validation and tests' \
 		'  make test               Run the Node test suite only' \
 		'  make build-themes       Rebuild generated theme CSS' \
+		'  make build-icons        Regenerate app and extension icon PNGs' \
 		'' \
 		'  make safari-reinstall   Build, install, register, and open HN in Safari' \
 		'  make safari-build       Build the signed local Safari host app' \
@@ -26,6 +27,9 @@ test:
 
 build-themes:
 	npm run build:themes
+
+build-icons:
+	npm run build:icons
 
 safari-build:
 	npm run safari:build

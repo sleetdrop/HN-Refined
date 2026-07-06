@@ -11,6 +11,7 @@ test("Makefile exposes stable top-level development targets", () => {
     "check",
     "test",
     "build-themes",
+    "build-icons",
     "safari-build",
     "safari-install",
     "safari-reinstall",

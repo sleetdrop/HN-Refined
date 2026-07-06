@@ -19,6 +19,8 @@ test("Safari development workflow uses stable local paths", () => {
   assert.match(script, /codesign --verify --deep --strict/);
   assert.match(script, /pluginkit -r/);
   assert.match(script, /pluginkit -a "\$INSTALL_APP_PATH"/);
+  assert.match(script, /icons\/icon-16\.png/);
+  assert.match(script, /icons\/icon-128\.png/);
   assert.match(script, /pgrep -fl HNRefined/);
   assert.match(script, /-quiet/);
   assert.match(script, /open -a Safari https:\/\/news\.ycombinator\.com\/news/);

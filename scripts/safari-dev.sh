@@ -181,8 +181,14 @@ doctor() {
   test -f "$resources/popup/popup.html"
   test -f "$resources/options/options.html"
   test -f "$resources/content/content-script.js"
+  test -f "$resources/icons/icon-16.png"
+  test -f "$resources/icons/icon-19.png"
+  test -f "$resources/icons/icon-32.png"
+  test -f "$resources/icons/icon-38.png"
+  test -f "$resources/icons/icon-48.png"
+  test -f "$resources/icons/icon-128.png"
   node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync(process.argv[1], 'utf8')); if (m.action.default_popup !== 'popup/popup.html') process.exit(1);" "$resources/manifest.json"
-  log "Package has manifest, popup, options, and content resources"
+  log "Package has manifest, popup, options, content, and icon resources"
 }
 
 open_safari() {

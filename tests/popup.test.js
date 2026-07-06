@@ -36,3 +36,8 @@ test("Xcode packages toolbar popup resources into the Safari extension", () => {
   assert.match(xcodeProject, /\/\* popup \*\//);
   assert.match(xcodeProject, /\/\* popup in Resources \*\//);
 });
+
+test("Xcode packages icon resources into the Safari extension", () => {
+  assert.match(xcodeProject, /\/\* icons \*\//);
+  assert.match(xcodeProject, /\/\* icons in Resources \*\//);
+});
