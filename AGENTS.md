@@ -26,9 +26,16 @@ For Safari runtime behavior, do not claim the work is fixed until the relevant
 automated checks pass and the installed Safari extension is refreshed with
 `make safari-reinstall`.
 
+Maintain the project harness continuously. When a change affects product
+behavior, Safari behavior, permissions, signing/build workflow, verification
+commands, known regressions, or next-work guidance, update the relevant docs and
+tests in the same change instead of waiting for a later documentation pass.
+Check at least `AGENTS.md`, `docs/project-status.md`, `docs/development.md`,
+`docs/privacy.md`, `docs/app-store-checklist.md`, and the workflow/handoff tests
+before finishing.
+
 Keep the Safari popup preference refresh guard intact:
 
 - Popup preference changes notify all current-window Hacker News tabs.
 - Content scripts tolerate Safari storage change events without `areaName`.
 - The visible-page preference refresh fallback is intentional.
-

@@ -81,6 +81,14 @@ make safari-doctor
 Then have the user test the real Safari extension when the behavior depends on
 Safari UI or extension lifecycle behavior.
 
+## Continuous Maintenance Rule
+
+Future agents should keep this file and the project harness current as part of
+normal development. Do not wait for a separate documentation sync. If a change
+alters behavior, workflow, permissions, signing, Safari runtime assumptions,
+verification commands, known regressions, or remaining-work guidance, update the
+relevant docs and tests in the same change.
+
 ## Remaining Work Candidates
 
 These are not all required for the next task, but they are useful starting
@@ -105,4 +113,3 @@ Files under `docs/superpowers/` are historical specs and implementation plans.
 They explain product decisions, but some commands and checklist items predate
 the current Makefile workflow. Treat `docs/project-status.md` and
 `docs/development.md` as the current operational source of truth.
-

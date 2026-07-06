@@ -41,3 +41,16 @@ test("docs preserve the Safari popup refresh regression guard", () => {
   assert.match(privacy, /Hacker News tabs in the current Safari window/);
   assert.doesNotMatch(privacy, /currently open Hacker News tab/);
 });
+
+test("agent docs require continuous docs and harness maintenance", () => {
+  const agents = read("AGENTS.md");
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+
+  for (const doc of [agents, development, status]) {
+    assert.match(doc, /harness/i);
+    assert.match(doc, /same change/);
+  }
+
+  assert.match(development, /docs-and-harness impact check/);
+});

@@ -31,6 +31,26 @@ Run tests:
 make test
 ```
 
+## Continuous Harness Maintenance
+
+Do not treat handoff docs, workflow docs, and tests as occasional cleanup work.
+Every change should include a quick docs-and-harness impact check.
+
+Update the relevant files in the same change when work affects:
+
+- Product behavior or first-version scope.
+- Safari runtime behavior, signing, registration, or local install workflow.
+- Permissions, privacy posture, App Store review posture, or remote-resource
+  safety.
+- Generated assets, build commands, test commands, or CI behavior.
+- Known regressions or rules that future agents must preserve.
+- Remaining-work guidance that a fresh agent would use to pick up the project.
+
+Common files to review are `AGENTS.md`, `docs/project-status.md`,
+`docs/development.md`, `docs/privacy.md`, `docs/app-store-checklist.md`,
+`docs/safari.md`, `.github/workflows/ci.yml`, and tests that lock workflow or
+handoff behavior.
+
 ## Safari Local Development
 
 Use one workflow for local Safari testing:
