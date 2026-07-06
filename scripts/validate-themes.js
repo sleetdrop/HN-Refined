@@ -11,7 +11,7 @@ export const REQUIRED_TOKENS = Object.freeze([
   "link",
   "visitedLink",
   "borderSubtle",
-  "voteArrow"
+  "voteArrow",
 ]);
 
 const HEX_COLOR_RE = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;

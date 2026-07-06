@@ -8,7 +8,7 @@ const forbiddenRemoteCssUrl = /url\(\s*['"]?(?:https?:)?\/\//i;
 const manifestPath = path.join("extension", "manifest.json");
 const linkClassifierPath = path.join("extension", "shared", "link-classifier.js");
 const allowedRemoteUrlTokensByPath = new Map([
-  [manifestPath, new Set(["https://news.ycombinator.com/*"])]
+  [manifestPath, new Set(["https://news.ycombinator.com/*"])],
 ]);
 const roots = ["extension"];
 const errors = [];
@@ -50,7 +50,7 @@ function walk(dir) {
     const textWithoutIntentionalReferences = removeAllowedIntentionalReferences(fullPath, text);
     const unexpectedRemoteUrlTokens = findUnexpectedRemoteUrlTokens(
       fullPath,
-      textWithoutIntentionalReferences
+      textWithoutIntentionalReferences,
     );
     if (
       forbiddenImport.test(textWithoutIntentionalReferences) ||

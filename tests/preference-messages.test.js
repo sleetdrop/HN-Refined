@@ -1,9 +1,9 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import {
-  PREFERENCES_CHANGED_MESSAGE_TYPE,
   isPreferencesChangedMessage,
-  notifyActiveTabPreferencesChanged
+  notifyActiveTabPreferencesChanged,
+  PREFERENCES_CHANGED_MESSAGE_TYPE,
 } from "../extension/shared/preference-messages.js";
 
 const preferences = {
@@ -12,7 +12,7 @@ const preferences = {
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
   mobileLayout: "auto",
-  openStoryLinksInNewTabs: false
+  openStoryLinksInNewTabs: false,
 };
 
 function restoreBrowserApi(originalBrowser, originalChrome) {
@@ -24,9 +24,9 @@ test("recognizes only HN Refined preference change messages", () => {
   assert.equal(
     isPreferencesChangedMessage({
       type: PREFERENCES_CHANGED_MESSAGE_TYPE,
-      preferences
+      preferences,
     }),
-    true
+    true,
   );
   assert.equal(isPreferencesChangedMessage({ type: "other", preferences }), false);
   assert.equal(isPreferencesChangedMessage(null), false);
@@ -42,14 +42,14 @@ test("notifies matching Hacker News tabs after preferences change", async () => 
       async query(query) {
         assert.deepEqual(query, {
           currentWindow: true,
-          url: "https://news.ycombinator.com/*"
+          url: "https://news.ycombinator.com/*",
         });
         return [{ id: 42 }, { id: 43 }];
       },
       async sendMessage(tabId, message) {
         sentMessages.push({ tabId, message });
-      }
-    }
+      },
+    },
   };
   globalThis.chrome = undefined;
 
@@ -60,16 +60,16 @@ test("notifies matching Hacker News tabs after preferences change", async () => 
         tabId: 42,
         message: {
           type: PREFERENCES_CHANGED_MESSAGE_TYPE,
-          preferences
-        }
+          preferences,
+        },
       },
       {
         tabId: 43,
         message: {
           type: PREFERENCES_CHANGED_MESSAGE_TYPE,
-          preferences
-        }
-      }
+          preferences,
+        },
+      },
     ]);
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);

@@ -1,6 +1,6 @@
-import { readPreferences, writePreferences } from "../shared/preference-store.js";
-import { notifyActiveTabPreferencesChanged } from "../shared/preference-messages.js";
 import { openFullSettingsPage } from "../shared/extension-navigation.js";
+import { notifyActiveTabPreferencesChanged } from "../shared/preference-messages.js";
+import { readPreferences, writePreferences } from "../shared/preference-store.js";
 
 const status = document.querySelector("#storage-status");
 const themeControls = [...document.querySelectorAll('input[name="theme"]')];
@@ -10,9 +10,7 @@ let current = await readPreferences();
 
 function setStatus(persisted) {
   status.hidden = persisted;
-  status.textContent = persisted
-    ? ""
-    : "Settings may not be saved in this browsing environment.";
+  status.textContent = persisted ? "" : "Settings may not be saved in this browsing environment.";
 }
 
 function render(preferences) {

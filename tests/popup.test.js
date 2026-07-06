@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 
 const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const popupHtml = fs.readFileSync("extension/popup/popup.html", "utf8");
@@ -26,7 +26,7 @@ test("popup exposes only theme choice and full settings entry", () => {
     "desktopDensity",
     "readingWidth",
     "mobileLayout",
-    "openStoryLinksInNewTabs"
+    "openStoryLinksInNewTabs",
   ]) {
     assert.doesNotMatch(popupHtml, new RegExp(`id="${fullSettingsId}"`));
   }

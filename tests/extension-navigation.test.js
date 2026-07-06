@@ -1,5 +1,5 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import { openFullSettingsPage } from "../extension/shared/extension-navigation.js";
 
 function restoreBrowserApi(originalBrowser, originalChrome) {
@@ -20,23 +20,20 @@ test("opens options.html in a new tab when tab APIs are available", async () => 
       },
       async openOptionsPage() {
         calls.push("openOptionsPage");
-      }
+      },
     },
     tabs: {
       async create(tab) {
         calls.push(["tabs.create", tab]);
-      }
-    }
+      },
+    },
   };
   globalThis.chrome = undefined;
 
   try {
     assert.equal(await openFullSettingsPage(), true);
     assert.deepEqual(calls, [
-      [
-        "tabs.create",
-        { url: "safari-web-extension://example/options/options.html" }
-      ]
+      ["tabs.create", { url: "safari-web-extension://example/options/options.html" }],
     ]);
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
@@ -52,8 +49,8 @@ test("falls back to runtime.openOptionsPage when tab APIs are unavailable", asyn
     runtime: {
       async openOptionsPage() {
         calls.push("openOptionsPage");
-      }
-    }
+      },
+    },
   };
   globalThis.chrome = undefined;
 

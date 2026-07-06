@@ -1,12 +1,14 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help check test build-themes build-icons safari-build safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
+.PHONY: help check format lint test build-themes build-icons safari-build safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
 
 help:
 	@printf '%s\n' \
 		'HN Refined development targets:' \
 		'' \
 		'  make check              Run all local validation and tests' \
+		'  make format             Format JS, CSS, JSON, Markdown, HTML, and YAML' \
+		'  make lint               Check formatting and lint rules without writing' \
 		'  make test               Run the Node test suite only' \
 		'  make build-themes       Rebuild generated theme CSS' \
 		'  make build-icons        Regenerate app and extension icon PNGs' \
@@ -21,6 +23,12 @@ help:
 
 check:
 	npm run check
+
+format:
+	npm run format
+
+lint:
+	npm run lint
 
 test:
 	npm test

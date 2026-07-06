@@ -1,5 +1,5 @@
-import { readPreferences, writePreferences } from "../shared/preference-store.js";
 import { notifyActiveTabPreferencesChanged } from "../shared/preference-messages.js";
+import { readPreferences, writePreferences } from "../shared/preference-store.js";
 
 const fields = {
   theme: document.querySelector("#theme"),
@@ -7,16 +7,14 @@ const fields = {
   desktopDensity: document.querySelector("#desktopDensity"),
   readingWidth: document.querySelector("#readingWidth"),
   mobileLayout: document.querySelector("#mobileLayout"),
-  openStoryLinksInNewTabs: document.querySelector("#openStoryLinksInNewTabs")
+  openStoryLinksInNewTabs: document.querySelector("#openStoryLinksInNewTabs"),
 };
 
 const status = document.querySelector("#storage-status");
 
 function setStatus(persisted) {
   status.hidden = persisted;
-  status.textContent = persisted
-    ? ""
-    : "Settings may not be saved in this browsing environment.";
+  status.textContent = persisted ? "" : "Settings may not be saved in this browsing environment.";
 }
 
 function render(preferences) {
@@ -35,7 +33,7 @@ function readForm() {
     desktopDensity: fields.desktopDensity.value,
     readingWidth: fields.readingWidth.value,
     mobileLayout: fields.mobileLayout.value,
-    openStoryLinksInNewTabs: fields.openStoryLinksInNewTabs.checked
+    openStoryLinksInNewTabs: fields.openStoryLinksInNewTabs.checked,
   };
 }
 

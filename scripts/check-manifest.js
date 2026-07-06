@@ -60,7 +60,6 @@ if (Array.isArray(manifest.permissions)) {
   for (const permission of manifest.permissions) {
     if (!requiredPermissions.includes(permission)) {
       errors.push(`unexpected permission: ${permission}`);
-      continue;
     }
   }
 }

@@ -17,9 +17,7 @@ function getLastError(api) {
     return null;
   }
 
-  return lastError instanceof Error
-    ? lastError
-    : new Error(lastError.message || String(lastError));
+  return lastError instanceof Error ? lastError : new Error(lastError.message || String(lastError));
 }
 
 function isPromiseStorageApi(api) {
@@ -77,15 +75,11 @@ function callbackStorageSet(api, value) {
 }
 
 function getStorageValue(api, key) {
-  return isPromiseStorageApi(api)
-    ? promiseStorageGet(api, key)
-    : callbackStorageGet(api, key);
+  return isPromiseStorageApi(api) ? promiseStorageGet(api, key) : callbackStorageGet(api, key);
 }
 
 function setStorageValue(api, value) {
-  return isPromiseStorageApi(api)
-    ? promiseStorageSet(api, value)
-    : callbackStorageSet(api, value);
+  return isPromiseStorageApi(api) ? promiseStorageSet(api, value) : callbackStorageSet(api, value);
 }
 
 export async function readPreferences() {
@@ -99,7 +93,7 @@ export async function readPreferences() {
     const result = await getStorageValue(api, STORAGE_KEY);
     return {
       preferences: normalizePreferences(result?.[STORAGE_KEY]),
-      persisted: true
+      persisted: true,
     };
   } catch {
     return { preferences: DEFAULT_PREFERENCES, persisted: false };

@@ -13,7 +13,10 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-const files = fs.readdirSync(themeDir).filter((file) => file.endsWith(".json")).sort();
+const files = fs
+  .readdirSync(themeDir)
+  .filter((file) => file.endsWith(".json"))
+  .sort();
 const blocks = [];
 
 for (const file of files) {
@@ -24,16 +27,21 @@ for (const file of files) {
       : `html[data-hnr-theme="dark"]`;
 
   const declarations = REQUIRED_TOKENS.map(
-    (token) => `  --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${theme.tokens[token]};`
+    (token) =>
+      `  --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${theme.tokens[token]};`,
   ).join("\n");
 
   blocks.push(`${selector} {\n${declarations}\n}`);
 }
 
-blocks.push(`@media (prefers-color-scheme: dark) {\n  html[data-hnr-theme="system"] {\n${REQUIRED_TOKENS.map((token) => {
-  const darkTheme = JSON.parse(fs.readFileSync(path.join(themeDir, "hn-dark.json"), "utf8"));
-  return `    --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${darkTheme.tokens[token]};`;
-}).join("\n")}\n  }\n}`);
+blocks.push(
+  `@media (prefers-color-scheme: dark) {\n  html[data-hnr-theme="system"] {\n${REQUIRED_TOKENS.map(
+    (token) => {
+      const darkTheme = JSON.parse(fs.readFileSync(path.join(themeDir, "hn-dark.json"), "utf8"));
+      return `    --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${darkTheme.tokens[token]};`;
+    },
+  ).join("\n")}\n  }\n}`,
+);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${blocks.join("\n\n")}\n`);

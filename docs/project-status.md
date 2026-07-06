@@ -31,6 +31,8 @@ Hacker News behavior and information architecture.
 Use `make` targets as the stable interface:
 
 ```bash
+make format
+make lint
 make check
 make build-themes
 make build-icons
@@ -68,6 +70,7 @@ dark-theme work accidentally affected light-theme navigation colors.
 Before claiming a code change is complete:
 
 ```bash
+make format
 make check
 ```
 

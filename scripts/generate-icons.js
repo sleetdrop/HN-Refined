@@ -35,22 +35,16 @@ function ensureDir(dir) {
 }
 
 function renderPng(source, outputPath, size) {
-  execFileSync("rsvg-convert", [
-    "-w",
-    String(size),
-    "-h",
-    String(size),
-    source,
-    "-o",
-    outputPath,
-  ]);
+  execFileSync("rsvg-convert", ["-w", String(size), "-h", String(size), source, "-o", outputPath]);
 }
 
 function requireRenderer() {
   const result = spawnSync("rsvg-convert", ["--version"], { encoding: "utf8" });
 
   if (result.status !== 0) {
-    throw new Error("Icon generation requires rsvg-convert. Install librsvg before running build:icons.");
+    throw new Error(
+      "Icon generation requires rsvg-convert. Install librsvg before running build:icons.",
+    );
   }
 }
 

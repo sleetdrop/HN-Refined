@@ -1,9 +1,9 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import {
-  DEFAULT_PREFERENCES,
   ALLOWED_PREFERENCES,
-  normalizePreferences
+  DEFAULT_PREFERENCES,
+  normalizePreferences,
 } from "../extension/shared/defaults.js";
 
 test("default preferences match the approved spec", () => {
@@ -13,7 +13,7 @@ test("default preferences match the approved spec", () => {
     desktopDensity: "comfortable",
     readingWidth: "comfortable",
     mobileLayout: "auto",
-    openStoryLinksInNewTabs: false
+    openStoryLinksInNewTabs: false,
   });
 });
 
@@ -23,16 +23,10 @@ test("allowed preferences expose only first-version options", () => {
     "hn-classic",
     "system-sans",
     "serif-reading",
-    "mono-ish"
+    "mono-ish",
   ]);
-  assert.deepEqual(ALLOWED_PREFERENCES.desktopDensity, [
-    "comfortable",
-    "classic-ish"
-  ]);
-  assert.deepEqual(ALLOWED_PREFERENCES.readingWidth, [
-    "comfortable",
-    "wide"
-  ]);
+  assert.deepEqual(ALLOWED_PREFERENCES.desktopDensity, ["comfortable", "classic-ish"]);
+  assert.deepEqual(ALLOWED_PREFERENCES.readingWidth, ["comfortable", "wide"]);
   assert.deepEqual(ALLOWED_PREFERENCES.mobileLayout, ["auto", "off"]);
 });
 
@@ -44,7 +38,7 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       desktopDensity: "huge",
       readingWidth: "wide",
       mobileLayout: "auto",
-      openStoryLinksInNewTabs: "yes"
+      openStoryLinksInNewTabs: "yes",
     }),
     {
       theme: "system",
@@ -52,8 +46,8 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       desktopDensity: "comfortable",
       readingWidth: "wide",
       mobileLayout: "auto",
-      openStoryLinksInNewTabs: false
-    }
+      openStoryLinksInNewTabs: false,
+    },
   );
 });
 

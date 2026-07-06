@@ -1,10 +1,7 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import { DEFAULT_PREFERENCES } from "../extension/shared/defaults.js";
-import {
-  readPreferences,
-  writePreferences
-} from "../extension/shared/preference-store.js";
+import { readPreferences, writePreferences } from "../extension/shared/preference-store.js";
 
 const customPreferences = {
   theme: "dark",
@@ -12,7 +9,7 @@ const customPreferences = {
   desktopDensity: "classic-ish",
   readingWidth: "wide",
   mobileLayout: "off",
-  openStoryLinksInNewTabs: true
+  openStoryLinksInNewTabs: true,
 };
 
 function restoreBrowserApi(originalBrowser, originalChrome) {
@@ -26,20 +23,21 @@ test("readPreferences calls strict promise-style storage get without callbacks",
   globalThis.browser = {
     storage: {
       local: {
-        async get(key) {
-          assert.equal(arguments.length, 1);
+        async get(...args) {
+          assert.equal(args.length, 1);
+          const [key] = args;
           assert.equal(key, "hnRefinedPreferences");
           return { hnRefinedPreferences: customPreferences };
-        }
-      }
-    }
+        },
+      },
+    },
   };
   globalThis.chrome = undefined;
 
   try {
     assert.deepEqual(await readPreferences(), {
       preferences: customPreferences,
-      persisted: true
+      persisted: true,
     });
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
@@ -55,7 +53,7 @@ test("writePreferences falls back to defaults when storage is unavailable", asyn
   try {
     assert.deepEqual(await writePreferences(customPreferences), {
       preferences: DEFAULT_PREFERENCES,
-      persisted: false
+      persisted: false,
     });
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
@@ -70,16 +68,16 @@ test("writePreferences falls back to defaults when storage write fails", async (
       local: {
         async set() {
           throw new Error("storage unavailable");
-        }
-      }
-    }
+        },
+      },
+    },
   };
   globalThis.chrome = undefined;
 
   try {
     assert.deepEqual(await writePreferences(customPreferences), {
       preferences: DEFAULT_PREFERENCES,
-      persisted: false
+      persisted: false,
     });
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
@@ -93,19 +91,20 @@ test("writePreferences calls strict promise-style storage set without callbacks"
   globalThis.browser = {
     storage: {
       local: {
-        async set(value) {
-          assert.equal(arguments.length, 1);
+        async set(...args) {
+          assert.equal(args.length, 1);
+          const [value] = args;
           writes.push(value);
-        }
-      }
-    }
+        },
+      },
+    },
   };
   globalThis.chrome = undefined;
 
   try {
     assert.deepEqual(await writePreferences(customPreferences), {
       preferences: customPreferences,
-      persisted: true
+      persisted: true,
     });
     assert.deepEqual(writes, [{ hnRefinedPreferences: customPreferences }]);
   } finally {
@@ -122,16 +121,16 @@ test("writePreferences returns normalized preferences after a storage write succ
       local: {
         async set(value) {
           writes.push(value);
-        }
-      }
-    }
+        },
+      },
+    },
   };
   globalThis.chrome = undefined;
 
   try {
     assert.deepEqual(await writePreferences(customPreferences), {
       preferences: customPreferences,
-      persisted: true
+      persisted: true,
     });
     assert.deepEqual(writes, [{ hnRefinedPreferences: customPreferences }]);
   } finally {
@@ -150,15 +149,15 @@ test("readPreferences supports callback-style chrome storage get", async () => {
         get(key, callback) {
           assert.equal(key, "hnRefinedPreferences");
           callback({ hnRefinedPreferences: customPreferences });
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   try {
     assert.deepEqual(await readPreferences(), {
       preferences: customPreferences,
-      persisted: true
+      persisted: true,
     });
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
@@ -177,15 +176,15 @@ test("writePreferences supports callback-style chrome storage set", async () => 
         set(value, callback) {
           writes.push(value);
           callback();
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   try {
     assert.deepEqual(await writePreferences(customPreferences), {
       preferences: customPreferences,
-      persisted: true
+      persisted: true,
     });
     assert.deepEqual(writes, [{ hnRefinedPreferences: customPreferences }]);
   } finally {
@@ -206,15 +205,15 @@ test("writePreferences falls back to defaults for callback-style chrome storage 
           globalThis.chrome.runtime.lastError = storageError;
           callback();
           delete globalThis.chrome.runtime.lastError;
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   try {
     assert.deepEqual(await writePreferences(customPreferences), {
       preferences: DEFAULT_PREFERENCES,
-      persisted: false
+      persisted: false,
     });
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);

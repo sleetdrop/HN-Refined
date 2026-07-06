@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 
 const script = fs.readFileSync("scripts/safari-dev.sh", "utf8");
 const developmentDoc = fs.readFileSync("docs/development.md", "utf8");

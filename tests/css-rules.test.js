@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 
 test("content CSS overrides Hacker News title link colors", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
@@ -28,12 +28,30 @@ test("content CSS overrides Hacker News footer link colors", () => {
 test("desktop comfortable CSS refines story and comment reading rhythm", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
-  assert.match(css, /html\[data-hnr-density="comfortable"\]\s+\.titleline\s*{[^}]*font-size:\s*15\.5px/s);
-  assert.match(css, /html\[data-hnr-density="comfortable"\]\s+\.titleline\s*{[^}]*line-height:\s*1\.42/s);
-  assert.match(css, /html\[data-hnr-density="comfortable"\]\s+\.subtext\s*{[^}]*padding-top:\s*2px/s);
-  assert.match(css, /html\[data-hnr-density="comfortable"\]\s+\.comment\s*{[^}]*font-size:\s*14px/s);
-  assert.match(css, /html\[data-hnr-density="comfortable"\]\s+\.comment\s*{[^}]*max-width:\s*72ch/s);
-  assert.match(css, /html\[data-hnr-density="comfortable"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.58/s);
+  assert.match(
+    css,
+    /html\[data-hnr-density="comfortable"\]\s+\.titleline\s*{[^}]*font-size:\s*15\.5px/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-density="comfortable"\]\s+\.titleline\s*{[^}]*line-height:\s*1\.42/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-density="comfortable"\]\s+\.subtext\s*{[^}]*padding-top:\s*2px/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-density="comfortable"\]\s+\.comment\s*{[^}]*font-size:\s*14px/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-density="comfortable"\]\s+\.comment\s*{[^}]*max-width:\s*72ch/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-density="comfortable"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.58/s,
+  );
 });
 
 test("mobile CSS raises reading size and touch targets", () => {

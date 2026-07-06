@@ -10,6 +10,18 @@ Run all local checks:
 make check
 ```
 
+Format changed source and documentation files:
+
+```bash
+make format
+```
+
+Run non-writing lint and format checks:
+
+```bash
+make lint
+```
+
 Build theme CSS:
 
 ```bash
@@ -30,6 +42,20 @@ Run tests:
 ```bash
 make test
 ```
+
+## Quality Toolchain
+
+The quality gate is intentionally small and agent-friendly:
+
+- Biome formats and lints JavaScript, CSS, JSON, Node scripts, and tests.
+- Prettier formats Markdown, HTML, and YAML.
+- Swift does not yet use a separate formatter or linter because the native host
+  app surface is small; rely on Xcode build validation through the Safari
+  workflow when touching Swift.
+
+Use `make format` before committing ordinary code or documentation changes, then
+use `make check` as the final local gate. Use `make lint` when you need the same
+format and lint checks without modifying files.
 
 ## Continuous Harness Maintenance
 

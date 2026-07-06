@@ -5,12 +5,18 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
+    "format": "npm run format:biome && npm run format:prettier",
+    "format:biome": "biome check --write extension/content extension/options/*.css extension/options/*.js extension/popup/*.css extension/popup/*.js extension/shared extension/manifest.json extension/themes scripts tests package.json biome.json",
+    "format:prettier": "prettier --write \"*.md\" \"docs/**/*.md\" \"extension/**/*.html\" \".github/**/*.yml\"",
+    "lint": "npm run lint:biome && npm run lint:prettier",
+    "lint:biome": "biome check extension/content extension/options/*.css extension/options/*.js extension/popup/*.css extension/popup/*.js extension/shared extension/manifest.json extension/themes scripts tests package.json biome.json",
+    "lint:prettier": "prettier --check \"*.md\" \"docs/**/*.md\" \"extension/**/*.html\" \".github/**/*.yml\"",
     "validate:themes": "node scripts/validate-themes.js",
     "build:themes": "node scripts/build-themes.js",
     "build:icons": "node scripts/generate-icons.js",
     "check:manifest": "node scripts/check-manifest.js",
     "check:no-remote": "node scripts/check-no-remote.js",
-    "check": "npm run validate:themes && npm run build:themes && npm run check:manifest && npm run check:no-remote && npm test",
+    "check": "npm run lint && npm run validate:themes && npm run build:themes && npm run check:manifest && npm run check:no-remote && npm test",
     "safari:build": "bash scripts/safari-dev.sh build",
     "safari:install": "bash scripts/safari-dev.sh install",
     "safari:reinstall": "bash scripts/safari-dev.sh reinstall",
@@ -21,5 +27,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.2",
+    "prettier": "3.9.4"
   }
 }

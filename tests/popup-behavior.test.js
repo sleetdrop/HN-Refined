@@ -1,5 +1,5 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 
 const existingPreferences = {
   theme: "dark",
@@ -7,7 +7,7 @@ const existingPreferences = {
   desktopDensity: "classic-ish",
   readingWidth: "wide",
   mobileLayout: "off",
-  openStoryLinksInNewTabs: true
+  openStoryLinksInNewTabs: true,
 };
 
 const latestPreferences = {
@@ -16,7 +16,7 @@ const latestPreferences = {
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
   mobileLayout: "auto",
-  openStoryLinksInNewTabs: false
+  openStoryLinksInNewTabs: false,
 };
 
 function makeElement(initial = {}) {
@@ -28,7 +28,7 @@ function makeElement(initial = {}) {
     addEventListener(type, listener) {
       this.listeners[type] = listener;
     },
-    ...initial
+    ...initial,
   };
 }
 
@@ -49,9 +49,7 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
 
   const status = makeElement({ hidden: true });
   const openSettings = makeElement();
-  const themeControls = ["system", "light", "dark"].map((value) =>
-    makeElement({ value })
-  );
+  const themeControls = ["system", "light", "dark"].map((value) => makeElement({ value }));
 
   globalThis.document = {
     querySelector(selector) {
@@ -71,14 +69,14 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
       }
 
       return [];
-    }
+    },
   };
 
   globalThis.browser = {
     runtime: {
       getURL(path) {
         return `safari-web-extension://example/${path}`;
-      }
+      },
     },
     storage: {
       local: {
@@ -86,20 +84,19 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
           assert.equal(key, "hnRefinedPreferences");
           readCount += 1;
           return {
-            hnRefinedPreferences:
-              readCount === 1 ? existingPreferences : latestPreferences
+            hnRefinedPreferences: readCount === 1 ? existingPreferences : latestPreferences,
           };
         },
         async set(value) {
           writes.push(value);
-        }
-      }
+        },
+      },
     },
     tabs: {
       async query(query) {
         assert.deepEqual(query, {
           currentWindow: true,
-          url: "https://news.ycombinator.com/*"
+          url: "https://news.ycombinator.com/*",
         });
         return [{ id: 7 }];
       },
@@ -108,8 +105,8 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
       },
       async create(tab) {
         createdTabs.push(tab);
-      }
-    }
+      },
+    },
   };
   globalThis.chrome = undefined;
 
@@ -125,9 +122,9 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
       {
         hnRefinedPreferences: {
           ...latestPreferences,
-          theme: "light"
-        }
-      }
+          theme: "light",
+        },
+      },
     ]);
     assert.deepEqual(messages, [
       {
@@ -136,17 +133,15 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
           type: "hn-refined:preferences-changed",
           preferences: {
             ...latestPreferences,
-            theme: "light"
-          }
-        }
-      }
+            theme: "light",
+          },
+        },
+      },
     ]);
 
     await openSettings.listeners.click();
 
-    assert.deepEqual(createdTabs, [
-      { url: "safari-web-extension://example/options/options.html" }
-    ]);
+    assert.deepEqual(createdTabs, [{ url: "safari-web-extension://example/options/options.html" }]);
   } finally {
     restoreGlobals(originalBrowser, originalChrome, originalDocument);
   }

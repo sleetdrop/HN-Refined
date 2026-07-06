@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 
 const makefile = fs.readFileSync("Makefile", "utf8");
 const developmentDoc = fs.readFileSync("docs/development.md", "utf8");
@@ -9,6 +9,8 @@ test("Makefile exposes stable top-level development targets", () => {
   for (const target of [
     "help",
     "check",
+    "format",
+    "lint",
     "test",
     "build-themes",
     "build-icons",
@@ -26,6 +28,8 @@ test("Makefile exposes stable top-level development targets", () => {
 
 test("Makefile wraps lower-level npm scripts instead of duplicating toolchain commands", () => {
   assert.match(makefile, /\n\tnpm run check/);
+  assert.match(makefile, /\n\tnpm run format/);
+  assert.match(makefile, /\n\tnpm run lint/);
   assert.match(makefile, /\n\tnpm run safari:reinstall/);
   assert.doesNotMatch(makefile, /xcodebuild/);
   assert.doesNotMatch(makefile, /pluginkit/);

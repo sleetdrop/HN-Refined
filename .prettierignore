@@ -1,0 +1,12 @@
+.git
+.build
+.superpowers
+.worktrees
+build
+node_modules
+HNRefined/HNRefined.xcodeproj
+HNRefined/**/xcuserdata
+extension/generated/themes.css
+extension/icons/*.png
+HNRefined/HNRefined/Assets.xcassets/**/*.png
+HNRefined/HNRefined/Resources/Icon.png

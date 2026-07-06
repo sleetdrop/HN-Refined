@@ -17,7 +17,7 @@ export async function openFullSettingsPage() {
   try {
     if (api?.tabs?.create && api?.runtime?.getURL) {
       await callMaybePromise(() =>
-        api.tabs.create({ url: api.runtime.getURL("options/options.html") })
+        api.tabs.create({ url: api.runtime.getURL("options/options.html") }),
       );
       return true;
     }

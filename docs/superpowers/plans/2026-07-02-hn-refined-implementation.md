@@ -51,6 +51,7 @@ Generated later by Safari tooling:
 ## Task 1: Project Scripts and Preference Defaults
 
 **Files:**
+
 - Create: `package.json`
 - Create: `extension/shared/defaults.js`
 - Create: `tests/defaults.test.js`
@@ -65,7 +66,7 @@ import assert from "node:assert/strict";
 import {
   DEFAULT_PREFERENCES,
   ALLOWED_PREFERENCES,
-  normalizePreferences
+  normalizePreferences,
 } from "../extension/shared/defaults.js";
 
 test("default preferences match the approved spec", () => {
@@ -75,7 +76,7 @@ test("default preferences match the approved spec", () => {
     desktopDensity: "comfortable",
     readingWidth: "comfortable",
     mobileLayout: "auto",
-    openStoryLinksInNewTabs: false
+    openStoryLinksInNewTabs: false,
   });
 });
 
@@ -85,16 +86,10 @@ test("allowed preferences expose only first-version options", () => {
     "hn-classic",
     "system-sans",
     "serif-reading",
-    "mono-ish"
+    "mono-ish",
   ]);
-  assert.deepEqual(ALLOWED_PREFERENCES.desktopDensity, [
-    "comfortable",
-    "classic-ish"
-  ]);
-  assert.deepEqual(ALLOWED_PREFERENCES.readingWidth, [
-    "comfortable",
-    "wide"
-  ]);
+  assert.deepEqual(ALLOWED_PREFERENCES.desktopDensity, ["comfortable", "classic-ish"]);
+  assert.deepEqual(ALLOWED_PREFERENCES.readingWidth, ["comfortable", "wide"]);
   assert.deepEqual(ALLOWED_PREFERENCES.mobileLayout, ["auto", "off"]);
 });
 
@@ -106,7 +101,7 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       desktopDensity: "huge",
       readingWidth: "wide",
       mobileLayout: "auto",
-      openStoryLinksInNewTabs: "yes"
+      openStoryLinksInNewTabs: "yes",
     }),
     {
       theme: "system",
@@ -114,8 +109,8 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       desktopDensity: "comfortable",
       readingWidth: "wide",
       mobileLayout: "auto",
-      openStoryLinksInNewTabs: false
-    }
+      openStoryLinksInNewTabs: false,
+    },
   );
 });
 ```
@@ -161,26 +156,19 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
   mobileLayout: "auto",
-  openStoryLinksInNewTabs: false
+  openStoryLinksInNewTabs: false,
 });
 
 export const ALLOWED_PREFERENCES = Object.freeze({
   theme: Object.freeze(["system", "light", "dark"]),
-  fontPreset: Object.freeze([
-    "hn-classic",
-    "system-sans",
-    "serif-reading",
-    "mono-ish"
-  ]),
+  fontPreset: Object.freeze(["hn-classic", "system-sans", "serif-reading", "mono-ish"]),
   desktopDensity: Object.freeze(["comfortable", "classic-ish"]),
   readingWidth: Object.freeze(["comfortable", "wide"]),
-  mobileLayout: Object.freeze(["auto", "off"])
+  mobileLayout: Object.freeze(["auto", "off"]),
 });
 
 function enumOrDefault(key, value) {
-  return ALLOWED_PREFERENCES[key].includes(value)
-    ? value
-    : DEFAULT_PREFERENCES[key];
+  return ALLOWED_PREFERENCES[key].includes(value) ? value : DEFAULT_PREFERENCES[key];
 }
 
 export function normalizePreferences(raw = {}) {
@@ -193,7 +181,7 @@ export function normalizePreferences(raw = {}) {
     openStoryLinksInNewTabs:
       typeof raw.openStoryLinksInNewTabs === "boolean"
         ? raw.openStoryLinksInNewTabs
-        : DEFAULT_PREFERENCES.openStoryLinksInNewTabs
+        : DEFAULT_PREFERENCES.openStoryLinksInNewTabs,
   };
 }
 ```
@@ -214,6 +202,7 @@ git commit -m "test: define preference defaults"
 ## Task 2: Link Classification
 
 **Files:**
+
 - Create: `extension/shared/link-classifier.js`
 - Create: `tests/link-classifier.test.js`
 
@@ -227,7 +216,7 @@ import assert from "node:assert/strict";
 import {
   isHackerNewsInternalUrl,
   isExternalStoryLink,
-  shouldForceNewTab
+  shouldForceNewTab,
 } from "../extension/shared/link-classifier.js";
 
 test("classifies Hacker News internal URLs", () => {
@@ -242,25 +231,25 @@ test("external story links are only title links", () => {
     isExternalStoryLink({
       href: "https://example.com/article",
       className: "titleline",
-      closestClassNames: ["titleline"]
+      closestClassNames: ["titleline"],
     }),
-    true
+    true,
   );
   assert.equal(
     isExternalStoryLink({
       href: "https://example.com/comment",
       className: "subtext",
-      closestClassNames: ["subtext"]
+      closestClassNames: ["subtext"],
     }),
-    false
+    false,
   );
   assert.equal(
     isExternalStoryLink({
       href: "item?id=1",
       className: "titleline",
-      closestClassNames: ["titleline"]
+      closestClassNames: ["titleline"],
     }),
-    false
+    false,
   );
 });
 
@@ -268,7 +257,7 @@ test("new-tab behavior is opt-in", () => {
   const story = {
     href: "https://example.com/article",
     className: "",
-    closestClassNames: ["titleline"]
+    closestClassNames: ["titleline"],
   };
 
   assert.equal(shouldForceNewTab(story, { openStoryLinksInNewTabs: false }), false);
@@ -307,9 +296,7 @@ export function isExternalStoryLink(linkInfo) {
 }
 
 export function shouldForceNewTab(linkInfo, preferences) {
-  return Boolean(
-    preferences.openStoryLinksInNewTabs && isExternalStoryLink(linkInfo)
-  );
+  return Boolean(preferences.openStoryLinksInNewTabs && isExternalStoryLink(linkInfo));
 }
 ```
 
@@ -329,6 +316,7 @@ git commit -m "test: classify Hacker News story links"
 ## Task 3: Theme Validation and Generation
 
 **Files:**
+
 - Create: `extension/themes/hn-light.json`
 - Create: `extension/themes/hn-dark.json`
 - Create: `scripts/validate-themes.js`
@@ -358,8 +346,8 @@ const validTheme = {
     link: "#000000",
     visitedLink: "#828282",
     borderSubtle: "#d9d0b1",
-    voteArrow: "#828282"
-  }
+    voteArrow: "#828282",
+  },
 };
 
 test("accepts a complete static theme", () => {
@@ -405,7 +393,7 @@ export const REQUIRED_TOKENS = Object.freeze([
   "link",
   "visitedLink",
   "borderSubtle",
-  "voteArrow"
+  "voteArrow",
 ]);
 
 const STATIC_COLOR_RE =
@@ -542,7 +530,10 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-const files = fs.readdirSync(themeDir).filter((file) => file.endsWith(".json")).sort();
+const files = fs
+  .readdirSync(themeDir)
+  .filter((file) => file.endsWith(".json"))
+  .sort();
 const blocks = [];
 
 for (const file of files) {
@@ -553,16 +544,21 @@ for (const file of files) {
       : `html[data-hnr-theme="dark"]`;
 
   const declarations = REQUIRED_TOKENS.map(
-    (token) => `  --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${theme.tokens[token]};`
+    (token) =>
+      `  --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${theme.tokens[token]};`,
   ).join("\n");
 
   blocks.push(`${selector} {\n${declarations}\n}`);
 }
 
-blocks.push(`@media (prefers-color-scheme: dark) {\n  html[data-hnr-theme="system"] {\n${REQUIRED_TOKENS.map((token) => {
-  const darkTheme = JSON.parse(fs.readFileSync(path.join(themeDir, "hn-dark.json"), "utf8"));
-  return `    --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${darkTheme.tokens[token]};`;
-}).join("\n")}\n  }\n}`);
+blocks.push(
+  `@media (prefers-color-scheme: dark) {\n  html[data-hnr-theme="system"] {\n${REQUIRED_TOKENS.map(
+    (token) => {
+      const darkTheme = JSON.parse(fs.readFileSync(path.join(themeDir, "hn-dark.json"), "utf8"));
+      return `    --hnr-${token.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}: ${darkTheme.tokens[token]};`;
+    },
+  ).join("\n")}\n  }\n}`,
+);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${blocks.join("\n\n")}\n`);
@@ -590,6 +586,7 @@ git commit -m "feat: add structured theme tokens"
 ## Task 4: Manifest and Safety Checks
 
 **Files:**
+
 - Create: `extension/manifest.json`
 - Create: `scripts/check-manifest.js`
 - Create: `scripts/check-no-remote.js`
@@ -639,7 +636,9 @@ if (manifest.manifest_version !== 3) {
   errors.push("manifest_version must be 3");
 }
 
-if (JSON.stringify(manifest.host_permissions) !== JSON.stringify(["https://news.ycombinator.com/*"])) {
+if (
+  JSON.stringify(manifest.host_permissions) !== JSON.stringify(["https://news.ycombinator.com/*"])
+) {
   errors.push("host_permissions must be limited to Hacker News");
 }
 
@@ -717,6 +716,7 @@ git commit -m "chore: add extension manifest safety checks"
 ## Task 5: Preference Storage and Options UI
 
 **Files:**
+
 - Create: `extension/shared/preference-store.js`
 - Create: `extension/options/options.html`
 - Create: `extension/options/options.css`
@@ -746,7 +746,7 @@ export async function readPreferences() {
     const result = await api.storage.local.get(STORAGE_KEY);
     return {
       preferences: normalizePreferences(result?.[STORAGE_KEY]),
-      persisted: true
+      persisted: true,
     };
   } catch {
     return { preferences: DEFAULT_PREFERENCES, persisted: false };
@@ -792,10 +792,10 @@ Create `extension/options/options.html`:
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HN Refined</title>
-    <link rel="stylesheet" href="options.css">
+    <link rel="stylesheet" href="options.css" />
   </head>
   <body>
     <main>
@@ -846,7 +846,7 @@ Create `extension/options/options.html`:
       </label>
 
       <label class="checkbox">
-        <input id="openStoryLinksInNewTabs" type="checkbox">
+        <input id="openStoryLinksInNewTabs" type="checkbox" />
         Open external story links in new tabs
       </label>
     </main>
@@ -863,7 +863,12 @@ Create `extension/options/options.css`:
 ```css
 :root {
   color-scheme: light dark;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-size: 14px;
 }
 
@@ -920,16 +925,14 @@ const fields = {
   desktopDensity: document.querySelector("#desktopDensity"),
   readingWidth: document.querySelector("#readingWidth"),
   mobileLayout: document.querySelector("#mobileLayout"),
-  openStoryLinksInNewTabs: document.querySelector("#openStoryLinksInNewTabs")
+  openStoryLinksInNewTabs: document.querySelector("#openStoryLinksInNewTabs"),
 };
 
 const status = document.querySelector("#storage-status");
 
 function setStatus(persisted) {
   status.hidden = persisted;
-  status.textContent = persisted
-    ? ""
-    : "Settings may not be saved in this browsing environment.";
+  status.textContent = persisted ? "" : "Settings may not be saved in this browsing environment.";
 }
 
 function render(preferences) {
@@ -948,7 +951,7 @@ function readForm() {
     desktopDensity: fields.desktopDensity.value,
     readingWidth: fields.readingWidth.value,
     mobileLayout: fields.mobileLayout.value,
-    openStoryLinksInNewTabs: fields.openStoryLinksInNewTabs.checked
+    openStoryLinksInNewTabs: fields.openStoryLinksInNewTabs.checked,
   };
 }
 
@@ -981,6 +984,7 @@ git commit -m "feat: add local preference options"
 ## Task 6: Content Script
 
 **Files:**
+
 - Create: `extension/content/content-script.js`
 
 - [ ] **Step 1: Implement auditable content script**
@@ -994,7 +998,7 @@ const DEFAULT_PREFERENCES = {
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
   mobileLayout: "auto",
-  openStoryLinksInNewTabs: false
+  openStoryLinksInNewTabs: false,
 };
 
 const STORAGE_KEY = "hnRefinedPreferences";
@@ -1020,9 +1024,7 @@ function normalize(raw = {}) {
       : "comfortable",
     mobileLayout: ["auto", "off"].includes(raw.mobileLayout) ? raw.mobileLayout : "auto",
     openStoryLinksInNewTabs:
-      typeof raw.openStoryLinksInNewTabs === "boolean"
-        ? raw.openStoryLinksInNewTabs
-        : false
+      typeof raw.openStoryLinksInNewTabs === "boolean" ? raw.openStoryLinksInNewTabs : false,
   };
 }
 
@@ -1047,10 +1049,7 @@ function isHackerNewsInternalUrl(href) {
 
 function isExternalStoryAnchor(anchor) {
   return Boolean(
-    anchor &&
-      anchor.closest(".titleline") &&
-      anchor.href &&
-      !isHackerNewsInternalUrl(anchor.href)
+    anchor && anchor.closest(".titleline") && anchor.href && !isHackerNewsInternalUrl(anchor.href),
   );
 }
 
@@ -1132,6 +1131,7 @@ git commit -m "feat: apply preferences on Hacker News pages"
 ## Task 7: Content CSS and Fixtures
 
 **Files:**
+
 - Create: `extension/content/content.css`
 - Create: `fixtures/hn/frontpage.html`
 - Create: `fixtures/hn/item.html`
@@ -1143,8 +1143,14 @@ Create `fixtures/hn/frontpage.html` with a small static HN-like table that inclu
 
 ```html
 <table id="hnmain">
-  <tr><td class="title"><span class="titleline"><a href="https://example.com/a">Example story</a></span></td></tr>
-  <tr><td class="subtext">123 points by user 1 hour ago | <a href="item?id=1">42 comments</a></td></tr>
+  <tr>
+    <td class="title">
+      <span class="titleline"><a href="https://example.com/a">Example story</a></span>
+    </td>
+  </tr>
+  <tr>
+    <td class="subtext">123 points by user 1 hour ago | <a href="item?id=1">42 comments</a></td>
+  </tr>
   <tr class="spacer" style="height:5px"></tr>
 </table>
 ```
@@ -1157,13 +1163,19 @@ Create `fixtures/preview.html`:
 
 ```html
 <!doctype html>
-<html data-hnr-theme="system" data-hnr-font="system-sans" data-hnr-density="comfortable" data-hnr-width="comfortable" data-hnr-mobile="auto">
+<html
+  data-hnr-theme="system"
+  data-hnr-font="system-sans"
+  data-hnr-density="comfortable"
+  data-hnr-width="comfortable"
+  data-hnr-mobile="auto"
+>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HN Refined Preview</title>
-    <link rel="stylesheet" href="../extension/generated/themes.css">
-    <link rel="stylesheet" href="../extension/content/content.css">
+    <link rel="stylesheet" href="../extension/generated/themes.css" />
+    <link rel="stylesheet" href="../extension/content/content.css" />
   </head>
   <body>
     <iframe title="frontpage" src="hn/frontpage.html"></iframe>
@@ -1213,7 +1225,12 @@ html[data-hnr-width="wide"] #hnmain {
 
 html[data-hnr-font="system-sans"] body,
 html[data-hnr-font="system-sans"] td {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
 html[data-hnr-font="hn-classic"] body,
@@ -1321,6 +1338,7 @@ git commit -m "feat: add Hacker News readability CSS"
 ## Task 8: Documentation
 
 **Files:**
+
 - Create: `docs/development.md`
 - Create: `docs/safari.md`
 - Create: `docs/privacy.md`
@@ -1332,7 +1350,7 @@ git commit -m "feat: add Hacker News readability CSS"
 
 Create `README.md` with:
 
-```markdown
+````markdown
 # HN Refined
 
 HN Refined is a restrained Safari extension that improves Hacker News readability while preserving the original site's behavior.
@@ -1352,16 +1370,19 @@ Run:
 ```bash
 npm run check
 ```
+````
 
 See `docs/development.md` and `docs/safari.md`.
+
 ```
+
 ```
 
 - [ ] **Step 2: Add development docs**
 
 Create `docs/development.md` with exact commands:
 
-```markdown
+````markdown
 # Development
 
 Run all local checks:
@@ -1369,6 +1390,7 @@ Run all local checks:
 ```bash
 npm run check
 ```
+````
 
 Build theme CSS:
 
@@ -1381,14 +1403,16 @@ Run tests:
 ```bash
 npm test
 ```
+
 ```
+
 ```
 
 - [ ] **Step 3: Add Safari docs with verification checklist**
 
 Create `docs/safari.md` documenting:
 
-```markdown
+````markdown
 # Safari Development
 
 The WebExtension source lives in `extension/`.
@@ -1398,6 +1422,7 @@ Before creating or refreshing the Xcode wrapper, run:
 ```bash
 npm run check
 ```
+````
 
 Implementation must verify current Apple documentation for:
 
@@ -1406,7 +1431,9 @@ Implementation must verify current Apple documentation for:
 - iOS and iPadOS extension enabling.
 - Private Browsing behavior.
 - Whether extensions run inside iOS home-screen web app containers.
+
 ```
+
 ```
 
 - [ ] **Step 4: Add privacy and contribution docs**
@@ -1432,6 +1459,7 @@ git commit -m "docs: add development and privacy guidance"
 ## Task 9: CI
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`
 
 - [ ] **Step 1: Add CI workflow**
@@ -1472,6 +1500,7 @@ git commit -m "ci: validate extension source"
 ## Task 10: Safari/Xcode Wrapper
 
 **Files:**
+
 - Create or refresh: `HNRefined/`
 - Modify: `docs/safari.md`
 
@@ -1546,6 +1575,7 @@ git commit -m "docs: document Safari wrapper setup blocker"
 ## Task 11: Final Verification
 
 **Files:**
+
 - Modify only files required by failures found during verification.
 
 - [ ] **Step 1: Run full source checks**

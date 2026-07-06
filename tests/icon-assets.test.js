@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 
 const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const appIconContents = JSON.parse(
@@ -47,17 +47,17 @@ test("icon generation is an explicit development command", () => {
 
 test("manifest references generated extension icons", () => {
   assert.deepEqual(manifest.icons, {
-    "16": "icons/icon-16.png",
-    "32": "icons/icon-32.png",
-    "48": "icons/icon-48.png",
-    "128": "icons/icon-128.png",
+    16: "icons/icon-16.png",
+    32: "icons/icon-32.png",
+    48: "icons/icon-48.png",
+    128: "icons/icon-128.png",
   });
 
   assert.deepEqual(manifest.action.default_icon, {
-    "16": "icons/icon-16.png",
-    "19": "icons/icon-19.png",
-    "32": "icons/icon-32.png",
-    "38": "icons/icon-38.png",
+    16: "icons/icon-16.png",
+    19: "icons/icon-19.png",
+    32: "icons/icon-32.png",
+    38: "icons/icon-38.png",
   });
 });
 
@@ -74,7 +74,10 @@ test("generated icon files are present in committed asset locations", () => {
 });
 
 test("toolbar icon source uses the approved B3f-2 small-size geometry", () => {
-  assert.match(toolbarIconSource, /<rect x="128" y="128" width="768" height="768" rx="170" fill="#ff6600"\/>/);
+  assert.match(
+    toolbarIconSource,
+    /<rect x="128" y="128" width="768" height="768" rx="170" fill="#ff6600"\/>/,
+  );
   assert.match(toolbarIconSource, /<rect width="752" height="474" rx="108" fill="#fff8ea"\/>/);
   assert.match(toolbarIconSource, /letter-spacing="8">HN<\/text>/);
   assert.match(toolbarIconSource, /<circle cx="746" cy="290" r="104" fill="#3a342d"\/>/);

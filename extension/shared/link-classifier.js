@@ -22,7 +22,5 @@ export function isExternalStoryLink(linkInfo) {
 }
 
 export function shouldForceNewTab(linkInfo, preferences) {
-  return Boolean(
-    preferences?.openStoryLinksInNewTabs === true && isExternalStoryLink(linkInfo)
-  );
+  return Boolean(preferences?.openStoryLinksInNewTabs === true && isExternalStoryLink(linkInfo));
 }

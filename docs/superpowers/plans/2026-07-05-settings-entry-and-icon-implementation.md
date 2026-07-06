@@ -35,6 +35,7 @@ Do not modify Hacker News content CSS as part of this plan unless a visual check
 ## Task 1: Add Settings Page Navigation Helper
 
 **Files:**
+
 - Create: `extension/shared/extension-navigation.js`
 - Create: `tests/extension-navigation.test.js`
 
@@ -65,23 +66,20 @@ test("opens options.html in a new tab when tab APIs are available", async () => 
       },
       async openOptionsPage() {
         calls.push("openOptionsPage");
-      }
+      },
     },
     tabs: {
       async create(tab) {
         calls.push(["tabs.create", tab]);
-      }
-    }
+      },
+    },
   };
   globalThis.chrome = undefined;
 
   try {
     assert.equal(await openFullSettingsPage(), true);
     assert.deepEqual(calls, [
-      [
-        "tabs.create",
-        { url: "safari-web-extension://example/options/options.html" }
-      ]
+      ["tabs.create", { url: "safari-web-extension://example/options/options.html" }],
     ]);
   } finally {
     restoreBrowserApi(originalBrowser, originalChrome);
@@ -97,8 +95,8 @@ test("falls back to runtime.openOptionsPage when tab APIs are unavailable", asyn
     runtime: {
       async openOptionsPage() {
         calls.push("openOptionsPage");
-      }
-    }
+      },
+    },
   };
   globalThis.chrome = undefined;
 
@@ -154,7 +152,7 @@ export async function openFullSettingsPage() {
   try {
     if (api?.tabs?.create && api?.runtime?.getURL) {
       await callMaybePromise(() =>
-        api.tabs.create({ url: api.runtime.getURL("options/options.html") })
+        api.tabs.create({ url: api.runtime.getURL("options/options.html") }),
       );
       return true;
     }
@@ -191,6 +189,7 @@ git commit -m "test: add settings page navigation helper"
 ## Task 2: Split Toolbar Popup From Full Settings
 
 **Files:**
+
 - Create: `extension/popup/popup.html`
 - Create: `extension/popup/popup.css`
 - Create: `extension/popup/popup.js`
@@ -205,10 +204,10 @@ Create `extension/popup/popup.html`:
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HN Refined</title>
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <main>
@@ -223,15 +222,15 @@ Create `extension/popup/popup.html`:
         <div id="theme-label" class="section-label">Theme</div>
         <div class="segmented" role="radiogroup" aria-labelledby="theme-label">
           <label>
-            <input type="radio" name="theme" value="system">
+            <input type="radio" name="theme" value="system" />
             <span>System</span>
           </label>
           <label>
-            <input type="radio" name="theme" value="light">
+            <input type="radio" name="theme" value="light" />
             <span>Light</span>
           </label>
           <label>
-            <input type="radio" name="theme" value="dark">
+            <input type="radio" name="theme" value="dark" />
             <span>Dark</span>
           </label>
         </div>
@@ -252,7 +251,12 @@ Create `extension/popup/popup.css`:
 ```css
 :root {
   color-scheme: light dark;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-size: 13px;
 }
 
@@ -377,7 +381,7 @@ for (const field of themeFields) {
   field.addEventListener("change", async () => {
     const result = await writePreferences({
       ...current.preferences,
-      theme: readThemeValue()
+      theme: readThemeValue(),
     });
     current = result;
     setThemeValue(result.preferences.theme);
@@ -450,6 +454,7 @@ git commit -m "feat: add minimal theme popup"
 ## Task 3: Reshape The Full Settings Page
 
 **Files:**
+
 - Modify: `extension/options/options.html`
 - Modify: `extension/options/options.css`
 - Modify: `extension/options/options.js` only if selectors need small updates
@@ -522,7 +527,7 @@ Modify the body of `extension/options/options.html` so `main` contains:
   <section aria-labelledby="links-heading">
     <h2 id="links-heading">Link Behavior</h2>
     <label class="checkbox">
-      <input id="openStoryLinksInNewTabs" type="checkbox">
+      <input id="openStoryLinksInNewTabs" type="checkbox" />
       Open external story links in new tabs
     </label>
   </section>
@@ -536,7 +541,12 @@ Modify `extension/options/options.css`:
 ```css
 :root {
   color-scheme: light dark;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-size: 15px;
 }
 
@@ -650,6 +660,7 @@ git commit -m "feat: organize full settings page"
 ## Task 4: Generate Icon Source And Assets
 
 **Files:**
+
 - Create: `assets/icon/hn-refined-icon.svg`
 - Create: `scripts/generate-icons.js`
 - Create: `extension/icons/icon-16.png`
@@ -704,8 +715,7 @@ import path from "node:path";
 
 const source = "assets/icon/hn-refined-icon.svg";
 
-const appIconDir =
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset";
+const appIconDir = "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset";
 const extensionIconDir = "extension/icons";
 
 const appIcons = [
@@ -718,7 +728,7 @@ const appIcons = [
   ["AppIcon-256.png", 256],
   ["AppIcon-256@2x.png", 512],
   ["AppIcon-512.png", 512],
-  ["AppIcon-512@2x.png", 1024]
+  ["AppIcon-512@2x.png", 1024],
 ];
 
 const extensionIcons = [
@@ -727,7 +737,7 @@ const extensionIcons = [
   ["icon-32.png", 32],
   ["icon-38.png", 38],
   ["icon-48.png", 48],
-  ["icon-128.png", 128]
+  ["icon-128.png", 128],
 ];
 
 function ensureDir(dir) {
@@ -735,14 +745,7 @@ function ensureDir(dir) {
 }
 
 function renderPng(outputPath, size) {
-  execFileSync("magick", [
-    "-background",
-    "none",
-    source,
-    "-resize",
-    `${size}x${size}`,
-    outputPath
-  ]);
+  execFileSync("magick", ["-background", "none", source, "-resize", `${size}x${size}`, outputPath]);
 }
 
 ensureDir(appIconDir);
@@ -779,21 +782,21 @@ Modify `HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/Contents.json`:
 
 ```json
 {
-  "images" : [
-    { "filename" : "AppIcon-16.png", "idiom" : "mac", "scale" : "1x", "size" : "16x16" },
-    { "filename" : "AppIcon-16@2x.png", "idiom" : "mac", "scale" : "2x", "size" : "16x16" },
-    { "filename" : "AppIcon-32.png", "idiom" : "mac", "scale" : "1x", "size" : "32x32" },
-    { "filename" : "AppIcon-32@2x.png", "idiom" : "mac", "scale" : "2x", "size" : "32x32" },
-    { "filename" : "AppIcon-128.png", "idiom" : "mac", "scale" : "1x", "size" : "128x128" },
-    { "filename" : "AppIcon-128@2x.png", "idiom" : "mac", "scale" : "2x", "size" : "128x128" },
-    { "filename" : "AppIcon-256.png", "idiom" : "mac", "scale" : "1x", "size" : "256x256" },
-    { "filename" : "AppIcon-256@2x.png", "idiom" : "mac", "scale" : "2x", "size" : "256x256" },
-    { "filename" : "AppIcon-512.png", "idiom" : "mac", "scale" : "1x", "size" : "512x512" },
-    { "filename" : "AppIcon-512@2x.png", "idiom" : "mac", "scale" : "2x", "size" : "512x512" }
+  "images": [
+    { "filename": "AppIcon-16.png", "idiom": "mac", "scale": "1x", "size": "16x16" },
+    { "filename": "AppIcon-16@2x.png", "idiom": "mac", "scale": "2x", "size": "16x16" },
+    { "filename": "AppIcon-32.png", "idiom": "mac", "scale": "1x", "size": "32x32" },
+    { "filename": "AppIcon-32@2x.png", "idiom": "mac", "scale": "2x", "size": "32x32" },
+    { "filename": "AppIcon-128.png", "idiom": "mac", "scale": "1x", "size": "128x128" },
+    { "filename": "AppIcon-128@2x.png", "idiom": "mac", "scale": "2x", "size": "128x128" },
+    { "filename": "AppIcon-256.png", "idiom": "mac", "scale": "1x", "size": "256x256" },
+    { "filename": "AppIcon-256@2x.png", "idiom": "mac", "scale": "2x", "size": "256x256" },
+    { "filename": "AppIcon-512.png", "idiom": "mac", "scale": "1x", "size": "512x512" },
+    { "filename": "AppIcon-512@2x.png", "idiom": "mac", "scale": "2x", "size": "512x512" }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }
 ```
@@ -861,6 +864,7 @@ git commit -m "feat: add HN Refined icon assets"
 ## Task 5: Final Integration Pass
 
 **Files:**
+
 - Modify docs only if implementation reveals a user-facing note that should be recorded.
 
 - [ ] **Step 1: Run full automated checks**

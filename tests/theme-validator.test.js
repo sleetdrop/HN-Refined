@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 import { validateTheme } from "../scripts/validate-themes.js";
 
 const validTheme = {
@@ -16,8 +16,8 @@ const validTheme = {
     link: "#000000",
     visitedLink: "#828282",
     borderSubtle: "#d9d0b1",
-    voteArrow: "#828282"
-  }
+    voteArrow: "#828282",
+  },
 };
 
 test("accepts a complete static theme", () => {
@@ -56,9 +56,7 @@ test("rejects unknown token keys", () => {
 
 function channelToLinear(channel) {
   const normalized = channel / 255;
-  return normalized <= 0.03928
-    ? normalized / 12.92
-    : ((normalized + 0.055) / 1.055) ** 2.4;
+  return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
 }
 
 function luminance(hexColor) {
@@ -80,37 +78,33 @@ function contrastRatio(foreground, background) {
 }
 
 test("bundled dark theme keeps core text readable", () => {
-  const darkTheme = JSON.parse(
-    fs.readFileSync("extension/themes/hn-dark.json", "utf8")
-  );
+  const darkTheme = JSON.parse(fs.readFileSync("extension/themes/hn-dark.json", "utf8"));
   const { tokens } = darkTheme;
 
   assert.ok(
     contrastRatio(tokens.textPrimary, tokens.contentBackground) >= 6,
-    "primary text should stay clear without becoming harsh on dark content"
+    "primary text should stay clear without becoming harsh on dark content",
   );
   assert.ok(
     contrastRatio(tokens.link, tokens.contentBackground) >= 6,
-    "story links should stay clear without becoming harsh on dark content"
+    "story links should stay clear without becoming harsh on dark content",
   );
   assert.ok(
     contrastRatio(tokens.visitedLink, tokens.contentBackground) >= 4.5,
-    "visited links should meet normal text contrast on dark content"
+    "visited links should meet normal text contrast on dark content",
   );
   assert.ok(
     contrastRatio(tokens.textMuted, tokens.contentBackground) >= 4.5,
-    "metadata should remain readable on dark content"
+    "metadata should remain readable on dark content",
   );
   assert.ok(
     contrastRatio(tokens.textPrimary, tokens.topBarBackground) >= 4.5,
-    "top bar text should stay readable"
+    "top bar text should stay readable",
   );
 });
 
 test("bundled dark theme keeps a warm Hacker News family palette", () => {
-  const darkTheme = JSON.parse(
-    fs.readFileSync("extension/themes/hn-dark.json", "utf8")
-  );
+  const darkTheme = JSON.parse(fs.readFileSync("extension/themes/hn-dark.json", "utf8"));
 
   assert.deepEqual(darkTheme.tokens, {
     pageBackground: "#211f1a",
@@ -121,6 +115,6 @@ test("bundled dark theme keeps a warm Hacker News family palette", () => {
     link: "#e6dcc5",
     visitedLink: "#bca97d",
     borderSubtle: "#40392e",
-    voteArrow: "#a89b82"
+    voteArrow: "#a89b82",
   });
 });

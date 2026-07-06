@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 import vm from "node:vm";
 
 const lightPreferences = {
@@ -9,12 +9,12 @@ const lightPreferences = {
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
   mobileLayout: "auto",
-  openStoryLinksInNewTabs: false
+  openStoryLinksInNewTabs: false,
 };
 
 const darkPreferences = {
   ...lightPreferences,
-  theme: "dark"
+  theme: "dark",
 };
 
 function nextMicrotask() {
@@ -44,7 +44,7 @@ function createContentScriptContext(initialPreferences) {
       },
       querySelectorAll() {
         return [];
-      }
+      },
     },
     window: {
       addEventListener(type, listener) {
@@ -54,7 +54,7 @@ function createContentScriptContext(initialPreferences) {
         intervalId += 1;
         intervalCallbacks.set(intervalId, { callback, delay });
         return intervalId;
-      }
+      },
     },
     browser: {
       storage: {
@@ -62,21 +62,21 @@ function createContentScriptContext(initialPreferences) {
           async get(key) {
             assert.equal(key, "hnRefinedPreferences");
             return { hnRefinedPreferences: storedPreferences };
-          }
+          },
         },
         onChanged: {
           addListener(listener) {
             storageChangeListeners.push(listener);
-          }
-        }
+          },
+        },
       },
       runtime: {
         onMessage: {
           addListener(listener) {
             runtimeMessageListeners.push(listener);
-          }
-        }
-      }
+          },
+        },
+      },
     },
     setStoredPreferences(nextPreferences) {
       storedPreferences = nextPreferences;
@@ -92,10 +92,10 @@ function createContentScriptContext(initialPreferences) {
         listener(
           {
             hnRefinedPreferences: {
-              newValue: nextPreferences
-            }
+              newValue: nextPreferences,
+            },
           },
-          areaName
+          areaName,
         );
       }
     },
@@ -112,7 +112,7 @@ function createContentScriptContext(initialPreferences) {
     },
     get runtimeMessageListenerCount() {
       return runtimeMessageListeners.length;
-    }
+    },
   };
 
   vm.createContext(context);

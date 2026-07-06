@@ -13,6 +13,8 @@ chooses a local preference.
 Use the `Makefile` targets as the stable interface:
 
 - `make check` for full local validation.
+- `make format` before committing ordinary code or docs changes.
+- `make lint` for non-writing format and lint checks.
 - `make safari-reinstall` for signed local Safari installation.
 - `make safari-doctor` for installed package sanity checks.
 
@@ -25,6 +27,10 @@ DerivedData, `.superpowers/`, `.build/`, or `build/`.
 For Safari runtime behavior, do not claim the work is fixed until the relevant
 automated checks pass and the installed Safari extension is refreshed with
 `make safari-reinstall`.
+
+For ordinary code and documentation changes, run `make format && make check`
+before committing. Keep formatter and lint output clean; do not bypass the
+quality gate unless the user explicitly accepts the residual issue.
 
 Maintain the project harness continuously. When a change affects product
 behavior, Safari behavior, permissions, signing/build workflow, verification

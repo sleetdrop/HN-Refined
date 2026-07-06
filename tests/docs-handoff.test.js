@@ -1,6 +1,6 @@
-import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import test from "node:test";
 
 const read = (path) => fs.readFileSync(path, "utf8");
 
@@ -25,6 +25,21 @@ test("workflow docs and CI prefer Makefile entrypoints", () => {
   assert.match(readme, /make check/);
   assert.match(safari, /make safari-reinstall/);
   assert.match(themeContribution, /make check/);
+});
+
+test("quality docs require agent-friendly format and lint gates", () => {
+  const agents = read("AGENTS.md");
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+  const packageJson = JSON.parse(read("package.json"));
+
+  assert.match(agents, /make format && make check/);
+  assert.match(development, /make format/);
+  assert.match(development, /make lint/);
+  assert.match(status, /make format/);
+  assert.equal(packageJson.scripts.format, "npm run format:biome && npm run format:prettier");
+  assert.equal(packageJson.scripts.lint, "npm run lint:biome && npm run lint:prettier");
+  assert.match(packageJson.scripts.check, /npm run lint/);
 });
 
 test("docs preserve the Safari popup refresh regression guard", () => {

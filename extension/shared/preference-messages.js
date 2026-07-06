@@ -1,5 +1,4 @@
-export const PREFERENCES_CHANGED_MESSAGE_TYPE =
-  "hn-refined:preferences-changed";
+export const PREFERENCES_CHANGED_MESSAGE_TYPE = "hn-refined:preferences-changed";
 const HN_TAB_URL_PATTERN = ["https://", "news.ycombinator.com", "/*"].join("");
 
 function browserApi() {
@@ -8,9 +7,7 @@ function browserApi() {
 
 export function isPreferencesChangedMessage(message) {
   return Boolean(
-    message &&
-      message.type === PREFERENCES_CHANGED_MESSAGE_TYPE &&
-      message.preferences
+    message && message.type === PREFERENCES_CHANGED_MESSAGE_TYPE && message.preferences,
   );
 }
 
@@ -23,11 +20,9 @@ export async function notifyActiveTabPreferencesChanged(preferences) {
   try {
     const hnTabs = await tabs.query({
       currentWindow: true,
-      url: HN_TAB_URL_PATTERN
+      url: HN_TAB_URL_PATTERN,
     });
-    const tabIds = hnTabs
-      .map((tab) => tab?.id)
-      .filter((tabId) => typeof tabId === "number");
+    const tabIds = hnTabs.map((tab) => tab?.id).filter((tabId) => typeof tabId === "number");
 
     if (tabIds.length === 0) {
       return false;
@@ -37,9 +32,9 @@ export async function notifyActiveTabPreferencesChanged(preferences) {
       tabIds.map((tabId) =>
         tabs.sendMessage(tabId, {
           type: PREFERENCES_CHANGED_MESSAGE_TYPE,
-          preferences
-        })
-      )
+          preferences,
+        }),
+      ),
     );
     return true;
   } catch {

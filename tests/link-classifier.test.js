@@ -1,9 +1,9 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import {
-  isHackerNewsInternalUrl,
   isExternalStoryLink,
-  shouldForceNewTab
+  isHackerNewsInternalUrl,
+  shouldForceNewTab,
 } from "../extension/shared/link-classifier.js";
 
 test("classifies Hacker News internal URLs", () => {
@@ -18,25 +18,25 @@ test("external story links are only title links", () => {
     isExternalStoryLink({
       href: "https://example.com/article",
       className: "titleline",
-      closestClassNames: ["titleline"]
+      closestClassNames: ["titleline"],
     }),
-    true
+    true,
   );
   assert.equal(
     isExternalStoryLink({
       href: "https://example.com/comment",
       className: "subtext",
-      closestClassNames: ["subtext"]
+      closestClassNames: ["subtext"],
     }),
-    false
+    false,
   );
   assert.equal(
     isExternalStoryLink({
       href: "item?id=1",
       className: "titleline",
-      closestClassNames: ["titleline"]
+      closestClassNames: ["titleline"],
     }),
-    false
+    false,
   );
 });
 
@@ -44,25 +44,25 @@ test("malformed story link class information is not external story link", () => 
   assert.equal(
     isExternalStoryLink({
       href: "https://example.com/article",
-      className: "titleline"
+      className: "titleline",
     }),
-    false
+    false,
   );
   assert.equal(
     isExternalStoryLink({
       href: "https://example.com/article",
       className: "titleline",
-      closestClassNames: null
+      closestClassNames: null,
     }),
-    false
+    false,
   );
   assert.equal(
     isExternalStoryLink({
       href: "https://example.com/article",
       className: "titleline",
-      closestClassNames: "not-titleline"
+      closestClassNames: "not-titleline",
     }),
-    false
+    false,
   );
 });
 
@@ -70,7 +70,7 @@ test("new-tab behavior is opt-in", () => {
   const story = {
     href: "https://example.com/article",
     className: "",
-    closestClassNames: ["titleline"]
+    closestClassNames: ["titleline"],
   };
 
   assert.equal(shouldForceNewTab(story, { openStoryLinksInNewTabs: false }), false);
@@ -81,7 +81,7 @@ test("new-tab behavior treats missing preferences as disabled", () => {
   const story = {
     href: "https://example.com/article",
     className: "",
-    closestClassNames: ["titleline"]
+    closestClassNames: ["titleline"],
   };
 
   assert.equal(shouldForceNewTab(story, null), false);

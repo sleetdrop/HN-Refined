@@ -4,7 +4,7 @@ const DEFAULT_PREFERENCES = {
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
   mobileLayout: "auto",
-  openStoryLinksInNewTabs: false
+  openStoryLinksInNewTabs: false,
 };
 
 const STORAGE_KEY = "hnRefinedPreferences";
@@ -17,7 +17,7 @@ const ALLOWED = {
   fontPreset: ["hn-classic", "system-sans", "serif-reading", "mono-ish"],
   desktopDensity: ["comfortable", "classic-ish"],
   readingWidth: ["comfortable", "wide"],
-  mobileLayout: ["auto", "off"]
+  mobileLayout: ["auto", "off"],
 };
 
 let preferences = DEFAULT_PREFERENCES;
@@ -66,7 +66,7 @@ function normalize(raw = {}) {
     openStoryLinksInNewTabs:
       typeof next.openStoryLinksInNewTabs === "boolean"
         ? next.openStoryLinksInNewTabs
-        : DEFAULT_PREFERENCES.openStoryLinksInNewTabs
+        : DEFAULT_PREFERENCES.openStoryLinksInNewTabs,
   };
 }
 
@@ -92,15 +92,12 @@ function isHackerNewsInternalUrl(href) {
 
 function isExternalStoryAnchor(anchor) {
   return Boolean(
-    anchor &&
-      anchor.closest(".titleline") &&
-      anchor.href &&
-      !isHackerNewsInternalUrl(anchor.href)
+    anchor?.closest(".titleline") && anchor.href && !isHackerNewsInternalUrl(anchor.href),
   );
 }
 
 function hasOriginalValue(anchor, key) {
-  return Object.prototype.hasOwnProperty.call(anchor.dataset, key);
+  return Object.hasOwn(anchor.dataset, key);
 }
 
 function rememberAttribute(anchor, attributeName, dataKey) {
