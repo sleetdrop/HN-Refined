@@ -10,6 +10,7 @@ const DEFAULT_PREFERENCES = {
 const STORAGE_KEY = "hnRefinedPreferences";
 const HN_HOSTNAME = "news.ycombinator.com";
 const PREFERENCES_CHANGED_MESSAGE_TYPE = "hn-refined:preferences-changed";
+const PREFERENCE_REFRESH_INTERVAL_MS = 1000;
 
 const ALLOWED = {
   theme: ["system", "light", "dark"],
@@ -182,10 +183,14 @@ function refreshPreferences() {
   return loadPreferences().then(updateStoryTargets);
 }
 
+function isLocalStorageArea(areaName) {
+  return areaName === "local" || areaName == null;
+}
+
 function observePreferences() {
   const api = browserApi();
   api?.storage?.onChanged?.addListener?.((changes, areaName) => {
-    if (areaName !== "local" || !changes[STORAGE_KEY]) {
+    if (!isLocalStorageArea(areaName) || !changes[STORAGE_KEY]) {
       return;
     }
 
@@ -203,6 +208,16 @@ function observePreferences() {
   });
 }
 
+function startPreferenceRefreshFallback() {
+  window.setInterval(() => {
+    if (document.visibilityState !== "visible") {
+      return Promise.resolve();
+    }
+
+    return refreshPreferences();
+  }, PREFERENCE_REFRESH_INTERVAL_MS);
+}
+
 function observePageActivation() {
   window.addEventListener("focus", refreshPreferences);
   window.addEventListener("pageshow", refreshPreferences);
@@ -217,6 +232,7 @@ function start() {
   refreshPreferences();
   observePreferences();
   observePageActivation();
+  startPreferenceRefreshFallback();
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", updateStoryTargets, { once: true });

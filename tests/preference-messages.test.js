@@ -32,7 +32,7 @@ test("recognizes only HN Refined preference change messages", () => {
   assert.equal(isPreferencesChangedMessage(null), false);
 });
 
-test("notifies the active tab after preferences change", async () => {
+test("notifies matching Hacker News tabs after preferences change", async () => {
   const originalBrowser = globalThis.browser;
   const originalChrome = globalThis.chrome;
   const sentMessages = [];
@@ -40,8 +40,11 @@ test("notifies the active tab after preferences change", async () => {
   globalThis.browser = {
     tabs: {
       async query(query) {
-        assert.deepEqual(query, { active: true, currentWindow: true });
-        return [{ id: 42 }];
+        assert.deepEqual(query, {
+          currentWindow: true,
+          url: "https://news.ycombinator.com/*"
+        });
+        return [{ id: 42 }, { id: 43 }];
       },
       async sendMessage(tabId, message) {
         sentMessages.push({ tabId, message });
@@ -55,6 +58,13 @@ test("notifies the active tab after preferences change", async () => {
     assert.deepEqual(sentMessages, [
       {
         tabId: 42,
+        message: {
+          type: PREFERENCES_CHANGED_MESSAGE_TYPE,
+          preferences
+        }
+      },
+      {
+        tabId: 43,
         message: {
           type: PREFERENCES_CHANGED_MESSAGE_TYPE,
           preferences

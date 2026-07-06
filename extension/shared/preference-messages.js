@@ -1,5 +1,6 @@
 export const PREFERENCES_CHANGED_MESSAGE_TYPE =
   "hn-refined:preferences-changed";
+const HN_TAB_URL_PATTERN = ["https://", "news.ycombinator.com", "/*"].join("");
 
 function browserApi() {
   return globalThis.browser || globalThis.chrome;
@@ -20,15 +21,26 @@ export async function notifyActiveTabPreferencesChanged(preferences) {
   }
 
   try {
-    const [activeTab] = await tabs.query({ active: true, currentWindow: true });
-    if (typeof activeTab?.id !== "number") {
+    const hnTabs = await tabs.query({
+      currentWindow: true,
+      url: HN_TAB_URL_PATTERN
+    });
+    const tabIds = hnTabs
+      .map((tab) => tab?.id)
+      .filter((tabId) => typeof tabId === "number");
+
+    if (tabIds.length === 0) {
       return false;
     }
 
-    await tabs.sendMessage(activeTab.id, {
-      type: PREFERENCES_CHANGED_MESSAGE_TYPE,
-      preferences
-    });
+    await Promise.all(
+      tabIds.map((tabId) =>
+        tabs.sendMessage(tabId, {
+          type: PREFERENCES_CHANGED_MESSAGE_TYPE,
+          preferences
+        })
+      )
+    );
     return true;
   } catch {
     return false;

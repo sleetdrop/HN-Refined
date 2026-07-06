@@ -97,7 +97,10 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
     },
     tabs: {
       async query(query) {
-        assert.deepEqual(query, { active: true, currentWindow: true });
+        assert.deepEqual(query, {
+          currentWindow: true,
+          url: "https://news.ycombinator.com/*"
+        });
         return [{ id: 7 }];
       },
       async sendMessage(tabId, message) {

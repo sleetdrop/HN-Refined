@@ -23,8 +23,10 @@ function nextMicrotask() {
 
 function createContentScriptContext(initialPreferences) {
   let storedPreferences = initialPreferences;
+  let intervalId = 0;
   const windowListeners = new Map();
   const documentListeners = new Map();
+  const intervalCallbacks = new Map();
   const runtimeMessageListeners = [];
   const storageChangeListeners = [];
 
@@ -47,6 +49,11 @@ function createContentScriptContext(initialPreferences) {
     window: {
       addEventListener(type, listener) {
         windowListeners.set(type, listener);
+      },
+      setInterval(callback, delay) {
+        intervalId += 1;
+        intervalCallbacks.set(intervalId, { callback, delay });
+        return intervalId;
       }
     },
     browser: {
@@ -80,6 +87,26 @@ function createContentScriptContext(initialPreferences) {
     dispatchDocumentEvent(type) {
       documentListeners.get(type)?.();
     },
+    dispatchStorageChange(nextPreferences, areaName) {
+      for (const listener of storageChangeListeners) {
+        listener(
+          {
+            hnRefinedPreferences: {
+              newValue: nextPreferences
+            }
+          },
+          areaName
+        );
+      }
+    },
+    async runInterval(index = 0) {
+      const interval = [...intervalCallbacks.values()][index];
+      assert.ok(interval, `missing interval callback at index ${index}`);
+      await interval.callback();
+    },
+    get intervalDelays() {
+      return [...intervalCallbacks.values()].map((interval) => interval.delay);
+    },
     get storageChangeListenerCount() {
       return storageChangeListeners.length;
     },
@@ -107,4 +134,33 @@ test("content script refreshes preferences when the HN tab regains focus", async
   assert.equal(context.document.documentElement.dataset.hnrTheme, "dark");
   assert.equal(context.storageChangeListenerCount, 1);
   assert.equal(context.runtimeMessageListenerCount, 1);
+});
+
+test("content script accepts Safari storage change events without an area name", async () => {
+  const context = createContentScriptContext(lightPreferences);
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+  await nextMicrotask();
+
+  assert.equal(context.document.documentElement.dataset.hnrTheme, "light");
+  context.dispatchStorageChange(darkPreferences, undefined);
+
+  assert.equal(context.document.documentElement.dataset.hnrTheme, "dark");
+});
+
+test("content script periodically refreshes visible pages as a Safari fallback", async () => {
+  const context = createContentScriptContext(lightPreferences);
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+  await nextMicrotask();
+
+  assert.equal(context.document.documentElement.dataset.hnrTheme, "light");
+  assert.deepEqual(context.intervalDelays, [1000]);
+
+  context.setStoredPreferences(darkPreferences);
+  await context.runInterval();
+
+  assert.equal(context.document.documentElement.dataset.hnrTheme, "dark");
 });
