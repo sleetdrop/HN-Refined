@@ -26,17 +26,14 @@ Token values must be static color values accepted by the validator. Do not use `
 Validate theme files:
 
 ```bash
-npm run validate:themes
-```
-
-Build generated theme CSS:
-
-```bash
-npm run build:themes
+make build-themes
 ```
 
 Run the full local check before submitting theme changes:
 
 ```bash
-npm run check
+make check
 ```
+
+The lower-level npm scripts remain available, but `make` targets are the stable
+interface for humans and agents.

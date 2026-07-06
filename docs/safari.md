@@ -2,11 +2,22 @@
 
 The WebExtension source lives in `extension/`.
 
-Before creating or refreshing the Xcode wrapper, run the WebExtension checks:
+Use the current Makefile workflow for local Safari development:
 
 ```bash
-npm run check
+make check
+make safari-reinstall
+make safari-doctor
 ```
+
+This is the supported local workflow for this repository. It builds into
+repo-local `.build/xcode-derived-data`, installs the signed app to
+`~/Applications/HNRefined.app`, removes stale HN Refined PluginKit
+registrations, registers the installed app, and opens Hacker News explicitly in
+Safari.
+
+Do not register extension builds from `/tmp` or random Xcode DerivedData paths.
+That caused duplicate and stale extension registrations during development.
 
 ## Local Wrapper Generation
 
@@ -32,19 +43,25 @@ Unable to parse manifest.json at file:///.../extension/
 
 Running the same command with normal local filesystem access succeeded. The converter reported that the `open_in_tab` manifest key is not supported by the installed Safari tooling, and that the manifest does not define icons to import into the generated project.
 
-## Build
+## Build Details
 
-Build the generated macOS wrapper with:
+The Makefile wraps this lower-level build flow:
 
 ```bash
-xcodebuild -project HNRefined/HNRefined.xcodeproj -scheme HNRefined -configuration Debug build
+make safari-build
 ```
 
-On this machine, the managed sandbox could not write Xcode DerivedData under `~/Library/Developer/Xcode`, so the first build failed before compilation. Running the same command with normal Xcode filesystem access succeeded using Xcode local ad-hoc signing (`Sign to Run Locally`).
+The workflow uses repo-local DerivedData by default, detects an Apple
+Development signing identity when available, derives the development team from
+the certificate, and keeps personal team ids out of committed project settings.
 
 ## Manual Safari Smoke Test
 
-Manual Safari smoke testing was not run for this task because it requires launching the generated macOS app and interacting with Safari's GUI extension settings. Verify the wrapper manually before claiming Safari runtime behavior.
+For Safari runtime behavior, run `make safari-reinstall` and `make
+safari-doctor`, then test the real Safari extension UI. Automated tests cover
+the WebExtension source, but Safari toolbar popup behavior, extension
+registration, Private Browsing, iOS, and home-screen behavior still require real
+Safari checks before making product claims.
 
 ## Safari Behavior Checks
 

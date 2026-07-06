@@ -15,7 +15,8 @@ HN Refined is a restrained Safari extension that improves Hacker News readabilit
 Run:
 
 ```bash
-npm run check
+make check
 ```
 
-See `docs/development.md` and `docs/safari.md`.
+Start with `docs/project-status.md`, then see `docs/development.md` and
+`docs/safari.md`.
