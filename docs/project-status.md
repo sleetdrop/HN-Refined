@@ -15,13 +15,17 @@ Hacker News behavior and information architecture.
 - Default desktop presentation is `Comfortable`.
 - Mobile responsive and standalone/PWA-like CSS rules are implemented for normal
   Safari browsing surfaces.
-- Theme, font, density, width, mobile layout, and external story-link target
-  preferences exist.
+- Theme, font, density, width, and external story-link target preferences
+  exist.
+- Mobile responsive layout is enabled by default instead of exposed as a
+  first-version setting.
 - External story links open in the current tab by default. New-tab behavior is
   opt-in and applies only to external story title links.
 - Toolbar popup is intentionally minimal: theme quick switch plus full settings
   entry.
 - Full settings page is `extension/options/options.html`.
+- Full settings are grouped by where preferences apply: shared appearance,
+  desktop reading, and link behavior.
 - App icon uses the full C4 design. Safari toolbar icons use the simplified
   B3f-2 small-size mark.
 - The macOS host app has a native status window instead of a blank window.
@@ -97,10 +101,6 @@ relevant docs and tests in the same change.
 These are not all required for the next task, but they are useful starting
 points for a fresh context:
 
-- Polish the full settings page into grouped sections: Appearance, Reading
-  Layout, Mobile Behavior, and Link Behavior.
-- Decide whether settings should visually mark desktop-only, mobile-only, and
-  shared preferences.
 - Run real Safari visual checks across front page, item/comment pages, forms,
   static pages, light theme, and dark theme after each style change.
 - Verify iOS and iPadOS behavior on simulator or device, including whether

@@ -9,7 +9,10 @@ HN Refined is designed as a local Safari extension for Hacker News readability. 
 - HN Refined does not track browsing history.
 - HN Refined does not load remote code, remote themes, or analytics.
 
-The extension uses local preferences for presentation choices such as theme, font, density, width, mobile layout, and external story-link target behavior. It does not modify Hacker News account actions such as voting, hiding, replying, logging in, or submitting comments.
+The extension uses local preferences for presentation choices such as theme,
+font, density, width, and external story-link target behavior. It does not
+modify Hacker News account actions such as voting, hiding, replying, logging
+in, or submitting comments.
 
 The extension requests Safari's `activeTab` permission only for user-initiated
 preference updates from the toolbar popup. Preference changes are sent only to

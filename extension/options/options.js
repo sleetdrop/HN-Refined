@@ -6,7 +6,6 @@ const fields = {
   fontPreset: document.querySelector("#fontPreset"),
   desktopDensity: document.querySelector("#desktopDensity"),
   readingWidth: document.querySelector("#readingWidth"),
-  mobileLayout: document.querySelector("#mobileLayout"),
   openStoryLinksInNewTabs: document.querySelector("#openStoryLinksInNewTabs"),
 };
 
@@ -22,7 +21,6 @@ function render(preferences) {
   fields.fontPreset.value = preferences.fontPreset;
   fields.desktopDensity.value = preferences.desktopDensity;
   fields.readingWidth.value = preferences.readingWidth;
-  fields.mobileLayout.value = preferences.mobileLayout;
   fields.openStoryLinksInNewTabs.checked = preferences.openStoryLinksInNewTabs;
 }
 
@@ -32,7 +30,6 @@ function readForm() {
     fontPreset: fields.fontPreset.value,
     desktopDensity: fields.desktopDensity.value,
     readingWidth: fields.readingWidth.value,
-    mobileLayout: fields.mobileLayout.value,
     openStoryLinksInNewTabs: fields.openStoryLinksInNewTabs.checked,
   };
 }

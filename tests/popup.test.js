@@ -4,6 +4,7 @@ import test from "node:test";
 
 const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const popupHtml = fs.readFileSync("extension/popup/popup.html", "utf8");
+const optionsHtml = fs.readFileSync("extension/options/options.html", "utf8");
 const xcodeProject = fs.readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
 
 test("manifest separates toolbar popup from full settings page", () => {
@@ -29,6 +30,27 @@ test("popup exposes only theme choice and full settings entry", () => {
     "openStoryLinksInNewTabs",
   ]) {
     assert.doesNotMatch(popupHtml, new RegExp(`id="${fullSettingsId}"`));
+  }
+});
+
+test("full settings page groups only meaningful user-facing controls", () => {
+  for (const heading of ["Appearance", "Desktop Reading", "Links"]) {
+    assert.match(optionsHtml, new RegExp(`>${heading}<`));
+  }
+
+  assert.match(optionsHtml, /Desktop reading settings mainly affect wide Hacker News layouts/);
+  assert.doesNotMatch(optionsHtml, /Mobile Reading/);
+  assert.doesNotMatch(optionsHtml, /Mobile Layout/);
+  assert.doesNotMatch(optionsHtml, /id="mobileLayout"/);
+
+  for (const fieldId of [
+    "theme",
+    "fontPreset",
+    "desktopDensity",
+    "readingWidth",
+    "openStoryLinksInNewTabs",
+  ]) {
+    assert.match(optionsHtml, new RegExp(`id="${fieldId}"`));
   }
 });
 

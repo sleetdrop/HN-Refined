@@ -6,28 +6,62 @@
 
 body {
   margin: 0;
-  min-width: 280px;
   color: CanvasText;
   background: Canvas;
 }
 
 main {
   display: grid;
-  gap: 12px;
-  padding: 14px;
+  width: min(720px, calc(100% - 32px));
+  gap: 16px;
+  margin: 0 auto;
+  padding: 24px 0 32px;
 }
 
-h1 {
-  margin: 0 0 4px;
-  font-size: 18px;
-}
-
-label {
+header {
   display: grid;
   gap: 4px;
 }
 
+h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 650;
+}
+
+header p,
+.section-heading p {
+  margin: 0;
+  color: color-mix(in srgb, CanvasText 64%, transparent);
+  line-height: 1.45;
+}
+
+section {
+  display: grid;
+  gap: 12px;
+  padding-block: 14px;
+  border-top: 1px solid color-mix(in srgb, CanvasText 14%, transparent);
+}
+
+.section-heading {
+  display: grid;
+  gap: 3px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+label {
+  display: grid;
+  gap: 5px;
+  font-weight: 550;
+}
+
 select {
+  min-height: 32px;
   font: inherit;
 }
 
@@ -41,4 +75,11 @@ select {
   margin: 0;
   padding: 8px;
   border: 1px solid color-mix(in srgb, CanvasText 25%, transparent);
+}
+
+@media (max-width: 520px) {
+  main {
+    width: min(100% - 24px, 720px);
+    padding-block: 18px 24px;
+  }
 }
