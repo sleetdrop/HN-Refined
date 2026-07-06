@@ -10,6 +10,9 @@ Use this checklist before preparing App Store submission materials. It is not a 
 - Verify the extension does not load remote code, remote configuration, remote themes, analytics, or third-party runtime resources.
 - Confirm preferences are local extension preferences only.
 - Prepare privacy labels and review copy that match `docs/privacy.md`.
+- Prepare App Store description text that discloses the Hacker News HTML
+  structure dependency, the lightweight compatibility posture, and the GitHub
+  issue or pull request feedback path for future site changes.
 - Prepare screenshots that show the extension on Hacker News without implying official Hacker News or Apple endorsement.
 - Verify Safari WebExtension manifest behavior against current Apple documentation.
 - Verify local development and distribution requirements against current Apple documentation, including what requires paid Apple Developer Program membership.

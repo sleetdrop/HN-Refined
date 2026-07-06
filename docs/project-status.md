@@ -21,6 +21,9 @@ Hacker News behavior and information architecture.
   first-version setting.
 - External story links open in the current tab by default. New-tab behavior is
   opt-in and applies only to external story title links.
+- Story-link behavior prefers Hacker News' current `.titleline` markup and has
+  a small fallback to the surrounding story row structure for minor title-markup
+  changes.
 - Toolbar popup is intentionally minimal: theme quick switch plus full settings
   entry.
 - Full settings page is `extension/options/options.html`.
@@ -109,6 +112,9 @@ points for a fresh context:
 - Refresh App Store review, signing, privacy label, and distribution notes
   against current Apple documentation before public release.
 - Add release/package preparation when the project is ready for App Store work.
+- Keep public README and App Store copy clear that HN Refined depends on the
+  traditional Hacker News HTML structure and accepts GitHub issues or pull
+  requests for future site-compatibility fixes.
 
 ## Historical Planning Docs
 

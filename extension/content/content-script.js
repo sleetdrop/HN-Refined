@@ -11,6 +11,8 @@ const STORAGE_KEY = "hnRefinedPreferences";
 const HN_HOSTNAME = "news.ycombinator.com";
 const PREFERENCES_CHANGED_MESSAGE_TYPE = "hn-refined:preferences-changed";
 const PREFERENCE_REFRESH_INTERVAL_MS = 1000;
+const TITLELINE_STORY_ANCHOR_SELECTOR = ".titleline a[href]";
+const STORY_ROW_ANCHOR_SELECTOR = ".athing:not(.comtr) a[href]";
 
 const ALLOWED = {
   theme: ["system", "light", "dark"],
@@ -92,8 +94,39 @@ function isHackerNewsInternalUrl(href) {
 
 function isExternalStoryAnchor(anchor) {
   return Boolean(
-    anchor?.closest(".titleline") && anchor.href && !isHackerNewsInternalUrl(anchor.href),
+    anchor?.href &&
+      !isHackerNewsInternalUrl(anchor.href) &&
+      (anchor.closest(".titleline") || isFallbackStoryAnchor(anchor)),
   );
+}
+
+function isFallbackStoryAnchor(anchor) {
+  if (!anchor?.href || isHackerNewsInternalUrl(anchor.href)) {
+    return false;
+  }
+
+  if (!anchor.closest(".athing:not(.comtr)") || !anchor.closest("td.title")) {
+    return false;
+  }
+
+  return !(
+    anchor.closest(".subtext") ||
+    anchor.closest(".comhead") ||
+    anchor.closest(".reply") ||
+    anchor.closest(".pagetop")
+  );
+}
+
+function storyAnchorCandidates() {
+  const anchors = new Set(document.querySelectorAll(TITLELINE_STORY_ANCHOR_SELECTOR));
+
+  for (const anchor of document.querySelectorAll(STORY_ROW_ANCHOR_SELECTOR)) {
+    if (isFallbackStoryAnchor(anchor)) {
+      anchors.add(anchor);
+    }
+  }
+
+  return anchors;
 }
 
 function hasOriginalValue(anchor, key) {
@@ -146,7 +179,7 @@ function restoreStoryTarget(anchor) {
 }
 
 function updateStoryTargets() {
-  for (const anchor of document.querySelectorAll(".titleline a[href]")) {
+  for (const anchor of storyAnchorCandidates()) {
     if (!isExternalStoryAnchor(anchor)) {
       continue;
     }

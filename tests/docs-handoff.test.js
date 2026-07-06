@@ -69,3 +69,13 @@ test("agent docs require continuous docs and harness maintenance", () => {
 
   assert.match(development, /docs-and-harness impact check/);
 });
+
+test("public docs disclose Hacker News structure dependency", () => {
+  const readme = read("README.md");
+  const appStoreChecklist = read("docs/app-store-checklist.md");
+
+  assert.match(readme, /Hacker News HTML\s+structure/);
+  assert.match(readme, /GitHub issue/);
+  assert.match(readme, /pull request/);
+  assert.match(appStoreChecklist, /Hacker News HTML\s+structure/);
+});
