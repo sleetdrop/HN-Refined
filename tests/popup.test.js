@@ -4,6 +4,7 @@ import fs from "node:fs";
 
 const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const popupHtml = fs.readFileSync("extension/popup/popup.html", "utf8");
+const xcodeProject = fs.readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
 
 test("manifest separates toolbar popup from full settings page", () => {
   assert.equal(manifest.action.default_popup, "popup/popup.html");
@@ -29,4 +30,9 @@ test("popup exposes only theme choice and full settings entry", () => {
   ]) {
     assert.doesNotMatch(popupHtml, new RegExp(`id="${fullSettingsId}"`));
   }
+});
+
+test("Xcode packages toolbar popup resources into the Safari extension", () => {
+  assert.match(xcodeProject, /\/\* popup \*\//);
+  assert.match(xcodeProject, /\/\* popup in Resources \*\//);
 });

@@ -7,7 +7,6 @@
 
 import Cocoa
 import SafariServices
-import WebKit
 
 private func extensionBundleIdentifier() -> String {
     guard let plugInsURL = Bundle.main.builtInPlugInsURL,
@@ -22,42 +21,73 @@ private func extensionBundleIdentifier() -> String {
     return extensionBundleIdentifier
 }
 
-class ViewController: NSViewController, WKNavigationDelegate, WKScriptMessageHandler {
+class ViewController: NSViewController {
 
-    @IBOutlet var webView: WKWebView!
+    private let statusLabel = NSTextField(labelWithString: "Checking HN Refined extension status...")
+    private let openSettingsButton = NSButton(title: "Open Safari Settings...", target: nil, action: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.webView.navigationDelegate = self
-
-        self.webView.configuration.userContentController.add(self, name: "controller")
-
-        self.webView.loadFileURL(Bundle.main.url(forResource: "Main", withExtension: "html")!, allowingReadAccessTo: Bundle.main.resourceURL!)
+        renderInstallStatus()
+        refreshExtensionState()
     }
 
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    private func renderInstallStatus() {
+        view.subviews.removeAll()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+
+        let iconView = NSImageView()
+        iconView.image = Bundle.main.url(forResource: "Icon", withExtension: "png")
+            .flatMap { NSImage(contentsOf: $0) }
+        iconView.imageScaling = .scaleProportionallyUpOrDown
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.widthAnchor.constraint(equalToConstant: 96).isActive = true
+        iconView.heightAnchor.constraint(equalToConstant: 96).isActive = true
+
+        statusLabel.alignment = .center
+        statusLabel.font = .preferredFont(forTextStyle: .body)
+        statusLabel.lineBreakMode = .byWordWrapping
+        statusLabel.maximumNumberOfLines = 0
+        statusLabel.textColor = .labelColor
+
+        openSettingsButton.target = self
+        openSettingsButton.action = #selector(openSafariSettings)
+        openSettingsButton.bezelStyle = .rounded
+
+        let stackView = NSStackView(views: [iconView, statusLabel, openSettingsButton])
+        stackView.orientation = .vertical
+        stackView.alignment = .centerX
+        stackView.spacing = 18
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32)
+        ])
+    }
+
+    private func refreshExtensionState() {
         SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier()) { (state, error) in
-            guard let state = state, error == nil else {
-                // Insert code to inform the user that something went wrong.
-                return
-            }
-
             DispatchQueue.main.async {
-                if #available(macOS 13, *) {
-                    webView.evaluateJavaScript("show(\(state.isEnabled), true)")
-                } else {
-                    webView.evaluateJavaScript("show(\(state.isEnabled), false)")
+                guard let state = state, error == nil else {
+                    self.statusLabel.stringValue = "Open Safari Settings to enable HN Refined in Extensions."
+                    return
                 }
+
+                self.statusLabel.stringValue = state.isEnabled
+                    ? "HN Refined is currently enabled in Safari."
+                    : "HN Refined is currently disabled. Enable it in Safari Settings."
             }
         }
     }
 
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if (message.body as! String != "open-preferences") {
-            return;
-        }
-
+    @objc private func openSafariSettings() {
         SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier()) { error in
             DispatchQueue.main.async {
                 NSApplication.shared.terminate(nil)

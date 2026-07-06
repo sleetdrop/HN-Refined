@@ -23,6 +23,7 @@
 		D67080732FF7D2C7008E7291 /* shared in Resources */ = {isa = PBXBuildFile; fileRef = D670806D2FF7D2C7008E7291 /* shared */; };
 		D67080742FF7D2C7008E7291 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = D670806E2FF7D2C7008E7291 /* manifest.json */; };
 		D67080752FF7D2C7008E7291 /* themes in Resources */ = {isa = PBXBuildFile; fileRef = D670806F2FF7D2C7008E7291 /* themes */; };
+		D67080762FF7D2C7008E7291 /* popup in Resources */ = {isa = PBXBuildFile; fileRef = D67080772FF7D2C7008E7291 /* popup */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		D670806D2FF7D2C7008E7291 /* shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shared; path = ../../extension/shared; sourceTree = "<group>"; };
 		D670806E2FF7D2C7008E7291 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = "<group>"; };
 		D670806F2FF7D2C7008E7291 /* themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = themes; path = ../../extension/themes; sourceTree = "<group>"; };
+		D67080772FF7D2C7008E7291 /* popup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popup; path = ../../extension/popup; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				D670806D2FF7D2C7008E7291 /* shared */,
 				D670806E2FF7D2C7008E7291 /* manifest.json */,
 				D670806F2FF7D2C7008E7291 /* themes */,
+				D67080772FF7D2C7008E7291 /* popup */,
 			);
 			name = Resources;
 			path = "HNRefined Extension";
@@ -260,6 +263,7 @@
 				D67080742FF7D2C7008E7291 /* manifest.json in Resources */,
 				D67080702FF7D2C7008E7291 /* generated in Resources */,
 				D67080712FF7D2C7008E7291 /* options in Resources */,
+				D67080762FF7D2C7008E7291 /* popup in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,49 @@
+.DEFAULT_GOAL := help
+
+.PHONY: help check test build-themes safari-build safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
+
+help:
+	@printf '%s\n' \
+		'HN Refined development targets:' \
+		'' \
+		'  make check              Run all local validation and tests' \
+		'  make test               Run the Node test suite only' \
+		'  make build-themes       Rebuild generated theme CSS' \
+		'' \
+		'  make safari-reinstall   Build, install, register, and open HN in Safari' \
+		'  make safari-build       Build the signed local Safari host app' \
+		'  make safari-install     Install and register the last built app' \
+		'  make safari-status      Show signing, process, and extension state' \
+		'  make safari-doctor      Run Safari workflow sanity checks' \
+		'  make safari-unregister  Remove local HN Refined registrations' \
+		'  make safari-open        Open Hacker News explicitly in Safari'
+
+check:
+	npm run check
+
+test:
+	npm test
+
+build-themes:
+	npm run build:themes
+
+safari-build:
+	npm run safari:build
+
+safari-install:
+	npm run safari:install
+
+safari-reinstall:
+	npm run safari:reinstall
+
+safari-status:
+	npm run safari:status
+
+safari-doctor:
+	npm run safari:doctor
+
+safari-unregister:
+	npm run safari:unregister
+
+safari-open:
+	npm run safari:open

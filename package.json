@@ -9,7 +9,14 @@
     "build:themes": "node scripts/build-themes.js",
     "check:manifest": "node scripts/check-manifest.js",
     "check:no-remote": "node scripts/check-no-remote.js",
-    "check": "npm run validate:themes && npm run build:themes && npm run check:manifest && npm run check:no-remote && npm test"
+    "check": "npm run validate:themes && npm run build:themes && npm run check:manifest && npm run check:no-remote && npm test",
+    "safari:build": "bash scripts/safari-dev.sh build",
+    "safari:install": "bash scripts/safari-dev.sh install",
+    "safari:reinstall": "bash scripts/safari-dev.sh reinstall",
+    "safari:status": "bash scripts/safari-dev.sh status",
+    "safari:doctor": "bash scripts/safari-dev.sh doctor",
+    "safari:unregister": "bash scripts/safari-dev.sh unregister",
+    "safari:open": "bash scripts/safari-dev.sh open-safari"
   },
   "engines": {
     "node": ">=20"

@@ -1,4 +1,6 @@
 .superpowers/
 .worktrees
 .worktrees/
+.build/
+build/
 HNRefined/**/xcuserdata/
