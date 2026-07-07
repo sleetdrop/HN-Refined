@@ -15,20 +15,19 @@ test("manifest separates toolbar popup from full settings page", () => {
   assert.deepEqual(manifest.host_permissions, ["https://news.ycombinator.com/*"]);
 });
 
-test("popup exposes only theme choice and full settings entry", () => {
+test("popup exposes only quick settings and full settings entry", () => {
   for (const theme of ["system", "light", "dark"]) {
     assert.match(popupHtml, new RegExp(`value="${theme}"`));
   }
 
+  assert.match(popupHtml, /id="openStoryLinksInNewTabs"/);
+  assert.match(popupHtml, /<legend>Story links<\/legend>/);
+  assert.match(popupHtml, /class="single-option"/);
+  assert.doesNotMatch(popupHtml, /class="toggle-row"/);
   assert.match(popupHtml, /id="open-settings"/);
+  assert.match(popupHtml, />All Settings</);
 
-  for (const fullSettingsId of [
-    "fontPreset",
-    "desktopDensity",
-    "readingWidth",
-    "mobileLayout",
-    "openStoryLinksInNewTabs",
-  ]) {
+  for (const fullSettingsId of ["fontPreset", "desktopDensity", "readingWidth", "mobileLayout"]) {
     assert.doesNotMatch(popupHtml, new RegExp(`id="${fullSettingsId}"`));
   }
 });

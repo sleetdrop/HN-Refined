@@ -115,15 +115,16 @@ HNREFINED_KEEP_HOST_APP=1 make safari-reinstall
 ## Safari Popup Preference Refresh
 
 Do not regress popup theme changes back to active-tab-only messaging. Safari's
-toolbar popup does not reliably behave like a normal page tab, so preference
-changes must notify all current-window Hacker News tabs with
+toolbar popup does not reliably behave like a normal page tab, so popup-driven
+preference changes must notify all current-window Hacker News tabs with
 `tabs.query({ currentWindow: true, url: HN pattern })`.
 
 The Hacker News content script also must tolerate Safari storage change events
 where `areaName` is missing, and it keeps a lightweight visible-page refresh
 fallback. These are intentional guards for the recurring bug where choosing
 light or dark in the toolbar popup only takes effect after manually refreshing
-the Hacker News page.
+the Hacker News page. Keep the compact popup limited to high-frequency controls:
+theme, external story-link new-tab behavior, and the full settings entry.
 
 ## Signing
 

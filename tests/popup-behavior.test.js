@@ -10,15 +10,6 @@ const existingPreferences = {
   openStoryLinksInNewTabs: true,
 };
 
-const latestPreferences = {
-  theme: "dark",
-  fontPreset: "hn-classic",
-  desktopDensity: "comfortable",
-  readingWidth: "comfortable",
-  mobileLayout: "auto",
-  openStoryLinksInNewTabs: false,
-};
-
 function makeElement(initial = {}) {
   return {
     checked: false,
@@ -38,17 +29,18 @@ function restoreGlobals(originalBrowser, originalChrome, originalDocument) {
   globalThis.document = originalDocument;
 }
 
-test("popup writes only theme changes, notifies the active tab, and opens full settings", async () => {
+test("popup writes quick setting changes, notifies Hacker News tabs, and opens all settings", async () => {
   const originalBrowser = globalThis.browser;
   const originalChrome = globalThis.chrome;
   const originalDocument = globalThis.document;
   const writes = [];
   const messages = [];
   const createdTabs = [];
-  let readCount = 0;
+  let storedPreferences = existingPreferences;
 
   const status = makeElement({ hidden: true });
   const openSettings = makeElement();
+  const openStoryLinksInNewTabs = makeElement();
   const themeControls = ["system", "light", "dark"].map((value) => makeElement({ value }));
 
   globalThis.document = {
@@ -59,6 +51,10 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
 
       if (selector === "#open-settings") {
         return openSettings;
+      }
+
+      if (selector === "#openStoryLinksInNewTabs") {
+        return openStoryLinksInNewTabs;
       }
 
       return null;
@@ -82,13 +78,13 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
       local: {
         async get(key) {
           assert.equal(key, "hnRefinedPreferences");
-          readCount += 1;
           return {
-            hnRefinedPreferences: readCount === 1 ? existingPreferences : latestPreferences,
+            hnRefinedPreferences: storedPreferences,
           };
         },
         async set(value) {
           writes.push(value);
+          storedPreferences = value.hnRefinedPreferences;
         },
       },
     },
@@ -114,15 +110,26 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
     await import(`../extension/popup/popup.js?test=${Date.now()}`);
 
     assert.equal(themeControls[2].checked, true);
+    assert.equal(openStoryLinksInNewTabs.checked, true);
 
     themeControls[1].checked = true;
     await themeControls[1].listeners.change({ currentTarget: themeControls[1] });
 
+    openStoryLinksInNewTabs.checked = false;
+    await openStoryLinksInNewTabs.listeners.change();
+
     assert.deepEqual(writes, [
       {
         hnRefinedPreferences: {
-          ...latestPreferences,
+          ...existingPreferences,
           theme: "light",
+        },
+      },
+      {
+        hnRefinedPreferences: {
+          ...existingPreferences,
+          theme: "light",
+          openStoryLinksInNewTabs: false,
         },
       },
     ]);
@@ -132,8 +139,19 @@ test("popup writes only theme changes, notifies the active tab, and opens full s
         message: {
           type: "hn-refined:preferences-changed",
           preferences: {
-            ...latestPreferences,
+            ...existingPreferences,
             theme: "light",
+          },
+        },
+      },
+      {
+        tabId: 7,
+        message: {
+          type: "hn-refined:preferences-changed",
+          preferences: {
+            ...existingPreferences,
+            theme: "light",
+            openStoryLinksInNewTabs: false,
           },
         },
       },

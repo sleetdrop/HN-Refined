@@ -6,14 +6,14 @@
 
 body {
   margin: 0;
-  min-width: 260px;
+  min-width: 276px;
   color: CanvasText;
   background: Canvas;
 }
 
 main {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   padding: 14px;
 }
 
@@ -53,9 +53,6 @@ legend {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, CanvasText 22%, transparent);
-  border-radius: 7px;
-  background: color-mix(in srgb, Canvas 92%, CanvasText);
 }
 
 .segmented-control label {
@@ -92,16 +89,67 @@ legend {
   outline-offset: -2px;
 }
 
-button {
-  width: 100%;
-  min-height: 32px;
-  border: 1px solid color-mix(in srgb, CanvasText 24%, transparent);
+.segmented-control,
+.single-option {
+  border: 1px solid color-mix(in srgb, CanvasText 22%, transparent);
   border-radius: 7px;
-  color: CanvasText;
-  background: Canvas;
+  background: color-mix(in srgb, Canvas 92%, CanvasText);
+}
+
+.single-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 42px;
+  padding: 0 10px 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.single-option span {
+  min-width: 0;
+}
+
+.single-option input {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  accent-color: AccentColor;
+}
+
+.single-option:has(input:focus-visible) {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1px;
+}
+
+button {
   font: inherit;
 }
 
-button:active {
+.settings-link {
+  width: 100%;
+  min-height: 28px;
+  border: 0;
+  border-radius: 6px;
+  color: LinkText;
+  background: transparent;
+  font-size: 13px;
+  text-align: right;
+}
+
+.settings-link:active {
   background: color-mix(in srgb, CanvasText 10%, Canvas);
+}
+
+.settings-link:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
 }

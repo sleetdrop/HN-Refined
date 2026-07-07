@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-06
+Last updated: 2026-07-07
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -24,8 +24,8 @@ Hacker News behavior and information architecture.
 - Story-link behavior prefers Hacker News' current `.titleline` markup and has
   a small fallback to the surrounding story row structure for minor title-markup
   changes.
-- Toolbar popup is intentionally minimal: theme quick switch plus full settings
-  entry.
+- Toolbar popup is intentionally compact: theme quick switch, external
+  story-link new-tab toggle, and a lightweight full settings entry.
 - Full settings page is `extension/options/options.html`.
 - Full settings are grouped by where preferences apply: shared appearance,
   desktop reading, and link behavior.
@@ -59,7 +59,7 @@ They caused stale duplicate extension registrations during development.
 ## Guarded Regressions
 
 The toolbar popup light/dark switch has regressed multiple times. Keep these
-guards:
+guards for popup-driven preference changes:
 
 - `extension/shared/preference-messages.js` must notify all current-window
   Hacker News tabs, not only the active tab.
