@@ -87,7 +87,7 @@ test("content CSS covers comment page reading and reply affordances", () => {
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.reply\s+a/);
 });
 
-test("content CSS covers forms and static Hacker News pages", () => {
+test("content CSS covers forms without special-casing static Hacker News pages", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
   assert.match(css, /input\[type="text"\]/);
@@ -100,5 +100,8 @@ test("content CSS covers forms and static Hacker News pages", () => {
   assert.match(css, /\.default\s+a:link/);
   assert.match(css, /\.admin\s+a:link/);
   assert.match(css, /\.pagetop\s+a:visited/);
+  assert.doesNotMatch(css, /body\s*>\s*center\s*>\s*table/);
+  assert.doesNotMatch(css, /\[bgcolor="#ffffff"/);
+  assert.doesNotMatch(css, /\[bgcolor="#f6f6ef"/);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+textarea/);
 });

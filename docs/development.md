@@ -126,6 +126,19 @@ light or dark in the toolbar popup only takes effect after manually refreshing
 the Hacker News page. Keep the compact popup limited to high-frequency controls:
 theme, external story-link new-tab behavior, and the full settings entry.
 
+## Hacker News Page Scope
+
+HN Refined targets the normal interactive Hacker News surfaces: front page,
+story lists, item/comment pages, forms, and the account/navigation pages that
+share the traditional Hacker News table structure.
+
+Purely static information pages such as `newsfaq.html`,
+`newsguidelines.html`, `security.html`, and YC/legal documents are outside the
+first-version styling target. Safari may open some of them in Reader View, and
+their document-like HTML can be edited independently from the main Hacker News
+application. Do not add special selectors, compatibility layers, or active
+behavior just to restyle those static pages; document the limitation instead.
+
 ## Signing
 
 The committed project does not include a personal Apple development team id.

@@ -24,6 +24,9 @@ Hacker News behavior and information architecture.
 - Story-link behavior prefers Hacker News' current `.titleline` markup and has
   a small fallback to the surrounding story row structure for minor title-markup
   changes.
+- Purely static information pages such as FAQ, guidelines, security, and legal
+  documents are outside the first-version styling target. Do not add
+  compatibility code solely to restyle those document-like pages.
 - Toolbar popup is intentionally compact: theme quick switch, external
   story-link new-tab toggle, and a lightweight full settings entry.
 - Full settings page is `extension/options/options.html`.
@@ -105,7 +108,8 @@ These are not all required for the next task, but they are useful starting
 points for a fresh context:
 
 - Run real Safari visual checks across front page, item/comment pages, forms,
-  static pages, light theme, and dark theme after each style change.
+  light theme, and dark theme after each style change. Static information pages
+  can be sanity-checked for breakage, but they are not a required styling target.
 - Verify iOS and iPadOS behavior on simulator or device, including whether
   Safari extensions apply inside home-screen web app containers.
 - Verify Private Browsing behavior when the extension is allowed.

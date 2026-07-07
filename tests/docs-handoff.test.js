@@ -79,3 +79,17 @@ test("public docs disclose Hacker News structure dependency", () => {
   assert.match(readme, /pull request/);
   assert.match(appStoreChecklist, /Hacker News HTML\s+structure/);
 });
+
+test("docs keep static information pages outside the styling target", () => {
+  const readme = read("README.md");
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+
+  for (const doc of [readme, development, status]) {
+    assert.match(doc, /static information pages/);
+    assert.match(doc, /outside the\s+first-version styling target/);
+  }
+
+  assert.match(development, /Do not add special selectors/);
+  assert.match(status, /Do not add\s+compatibility code/);
+});

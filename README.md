@@ -25,6 +25,11 @@ future Hacker News change makes the page look wrong, disable the Safari
 extension temporarily and report it with a GitHub issue. Developers are welcome
 to send a pull request with a small, auditable fix.
 
+Purely static information pages, such as FAQ, guidelines, security, and legal
+pages, are outside the first-version styling target. Safari may also open some
+of these pages in Reader View. HN Refined intentionally does not add extra
+compatibility code for those document-like pages.
+
 ## Development
 
 Run:
