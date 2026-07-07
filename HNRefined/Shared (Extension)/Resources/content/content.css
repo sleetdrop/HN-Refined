@@ -260,9 +260,14 @@ html[data-hnr-density="comfortable"] .comtr {
 }
 
 @media (max-width: 700px) {
+  html[data-hnr-mobile="auto"] body {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+
   html[data-hnr-mobile="auto"] #hnmain {
     width: 100%;
     max-width: none;
+    margin-bottom: calc(72px + env(safe-area-inset-bottom));
   }
 
   html[data-hnr-mobile="auto"] .titleline {
@@ -337,12 +342,37 @@ html[data-hnr-density="comfortable"] .comtr {
   html[data-hnr-mobile="auto"] select,
   html[data-hnr-mobile="auto"] textarea {
     box-sizing: border-box;
+    width: min(100%, 22rem);
     max-width: 100%;
     font-size: 16px;
   }
 
   html[data-hnr-mobile="auto"] textarea {
     width: 100%;
+  }
+
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 16px;
+  }
+
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) table,
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) tbody,
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) tr,
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) td {
+    display: block;
+    max-width: 100%;
+  }
+
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) td {
+    padding-block: 2px;
+  }
+
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) input[type="text"],
+  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) input[type="password"] {
+    width: 100%;
+    max-width: calc(100vw - 32px);
   }
 }
 

@@ -97,6 +97,15 @@ Current iOS evidence:
 - The built app installs and launches on iPhone 17 Pro / iOS 26.3 simulator.
 - The iOS host app displays the HN Refined icon and Safari extension enablement
   message.
-- Extension enabling in iOS Settings, live Hacker News page injection, popup and
-  options behavior, iPad layout, and home-screen web app container behavior are
-  still pending runtime checks.
+- In iOS Settings, the extension must be turned on with `Allow Extension`.
+  Under Permissions, set `news.ycombinator.com` to `Allow`. Leaving the site at
+  the default `Ask` state did not show a prompt when refreshing Hacker News in
+  Safari, and the extension only applied after the site permission was changed
+  to `Allow`.
+- Live Hacker News page injection and visual behavior were checked in iOS Safari
+  on iPhone 17 Pro / iOS 26.3 for news, newest, ask, show, jobs, item/comment,
+  submit, and login pages, including system dark appearance. The standalone
+  login form relies on the mobile form-width guard to avoid iOS Safari autofocus
+  panning/zooming horizontally.
+- Popup and options behavior, iPad layout, and home-screen web app container
+  behavior are still pending runtime checks.

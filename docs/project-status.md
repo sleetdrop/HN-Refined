@@ -21,8 +21,15 @@ Hacker News behavior and information architecture.
   targets generated from the Safari WebExtension converter. The repository-local
   build workflow syncs `extension/` into the Xcode wrapper before building.
 - iOS simulator build, install, and host-app launch were verified on iPhone 17
-  Pro / iOS 26.3. Safari extension enabling and live Hacker News page behavior
-  on iOS/iPadOS still require real Settings/Safari verification.
+  Pro / iOS 26.3. iOS Settings requires `Allow Extension` plus setting the
+  `news.ycombinator.com` permission to `Allow`; the default `Ask` state did not
+  prompt on Safari refresh. Live Hacker News pages were visually checked in iOS
+  Safari on iPhone 17 Pro / iOS 26.3 across news, newest, ask, show, jobs,
+  item/comment, submit, and login surfaces, including system dark appearance.
+  The login-style forms need the mobile form-width guard because iOS Safari
+  autofocus can otherwise pan/zoom horizontally on Hacker News' standalone login
+  markup. iPad layout, popup/options behavior, and home-screen web app container
+  behavior still require verification.
 - Theme, font, density, width, and external story-link target preferences
   exist.
 - Mobile responsive layout is enabled by default instead of exposed as a
@@ -118,16 +125,18 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Verify iOS and iPadOS behavior on simulator or device, including extension
-  enabling, popup/options behavior, mobile HN pages, and whether Safari
-  extensions apply inside home-screen web app containers.
+- Verify remaining iOS and iPadOS behavior on simulator or device, including
+  iPad layout, popup/options behavior, and whether Safari extensions apply
+  inside home-screen web app containers. iPhone Safari page injection and the
+  `news.ycombinator.com` permission flow have current simulator evidence.
 - Verify Private Browsing behavior when the extension is allowed.
 - Refresh App Store review, signing, privacy label, and distribution notes
   against current Apple documentation before public release.
 - Add release/package preparation when the project is ready for App Store work.
 - Keep public README and App Store copy clear that HN Refined depends on the
-  traditional Hacker News HTML structure and accepts GitHub issues or pull
-  requests for future site-compatibility fixes.
+  traditional Hacker News HTML structure, documents the iOS/iPadOS
+  `Allow Extension` plus `news.ycombinator.com` permission steps, and accepts
+  GitHub issues or pull requests for future site-compatibility fixes.
 
 ## Historical Planning Docs
 

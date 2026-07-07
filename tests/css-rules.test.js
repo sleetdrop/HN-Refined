@@ -62,6 +62,14 @@ test("mobile CSS raises reading size and touch targets", () => {
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.comment,[\s\S]*?font-size:\s*14px/s);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.titleline\s+a,[\s\S]*?min-height:\s*32px/s);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.pagetop\s*{[^}]*font-size:\s*14px/s);
+  assert.match(
+    css,
+    /html\[data-hnr-mobile="auto"\]\s+body\s*{[^}]*padding-bottom:\s*calc\(72px \+ env\(safe-area-inset-bottom\)\)/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-mobile="auto"\]\s+#hnmain\s*{[^}]*margin-bottom:\s*calc\(72px \+ env\(safe-area-inset-bottom\)\)/s,
+  );
 });
 
 test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => {
@@ -104,4 +112,7 @@ test("content CSS covers forms without special-casing static Hacker News pages",
   assert.doesNotMatch(css, /\[bgcolor="#ffffff"/);
   assert.doesNotMatch(css, /\[bgcolor="#f6f6ef"/);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+textarea/);
+  assert.match(css, /width:\s*min\(100%,\s*22rem\)/);
+  assert.match(css, /body:not\(:has\(#hnmain\)\):has\(form\)/);
+  assert.match(css, /max-width:\s*calc\(100vw - 32px\)/);
 });

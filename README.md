@@ -11,6 +11,20 @@ HN Refined is a restrained Safari extension that improves Hacker News readabilit
   story-link target behavior.
 - Does not collect data, load remote code, or modify Hacker News account actions.
 
+## Enabling on iPhone and iPad
+
+After installing HN Refined on iOS or iPadOS, open Settings and enable the
+Safari extension:
+
+1. Open Settings.
+2. Go to Apps, Safari, Extensions, HN Refined.
+3. Turn on `Allow Extension`.
+4. Under Permissions, set `news.ycombinator.com` to `Allow`.
+
+The default site permission can be `Ask`, but Safari may not show a prompt when
+you refresh Hacker News. If HN Refined does not appear on Hacker News, check
+that `news.ycombinator.com` is set to `Allow`, then reload the page.
+
 ## Site compatibility
 
 HN Refined is a lightweight enhancement layer for Hacker News, not a separate

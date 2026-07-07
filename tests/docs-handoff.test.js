@@ -81,6 +81,7 @@ test("public docs disclose Hacker News structure dependency", () => {
 });
 
 test("docs keep iOS and iPadOS in first-version release scope", () => {
+  const readme = read("README.md");
   const development = read("docs/development.md");
   const safari = read("docs/safari.md");
   const status = read("docs/project-status.md");
@@ -90,7 +91,16 @@ test("docs keep iOS and iPadOS in first-version release scope", () => {
   assert.match(development, /iOS and iPadOS support is part of the first-version release scope/);
   assert.match(development, /make safari-build-ios/);
   assert.match(safari, /HNRefined \(iOS\)/);
+  assert.match(safari, /Allow Extension/);
+  assert.match(safari, /news\.ycombinator\.com.*Allow/s);
+  assert.match(safari, /default `Ask` state did not show a prompt/);
+  assert.match(status, /default `Ask` state did not\s+prompt/);
+  assert.match(readme, /Enabling on iPhone and iPad/);
+  assert.match(readme, /Allow Extension/);
+  assert.match(readme, /news\.ycombinator\.com` is set to `Allow/);
   assert.match(appStoreChecklist, /iOS\/iPadOS support is required for the first release/);
+  assert.match(appStoreChecklist, /Include iPhone and iPad enablement text/);
+  assert.match(appStoreChecklist, /do\s+not assume Safari will prompt/);
 });
 
 test("docs keep static information pages outside the styling target", () => {

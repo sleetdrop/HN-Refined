@@ -13,10 +13,16 @@ Use this checklist before preparing App Store submission materials. It is not a 
 - Prepare App Store description text that discloses the Hacker News HTML
   structure dependency, the lightweight compatibility posture, and the GitHub
   issue or pull request feedback path for future site changes.
+- Include iPhone and iPad enablement text in the App Store description or
+  release notes: turn on `Allow Extension`, then set `news.ycombinator.com` to
+  `Allow` under Safari extension permissions.
 - Prepare screenshots that show the extension on Hacker News without implying official Hacker News or Apple endorsement.
 - Verify Safari WebExtension manifest behavior against current Apple documentation.
 - Verify local development and distribution requirements against current Apple documentation, including what requires paid Apple Developer Program membership.
-- Verify iOS and iPadOS extension enabling on the target device or simulator versions. iOS/iPadOS support is required for the first release.
+- Verify iOS and iPadOS extension enabling on the target device or simulator
+  versions. iOS/iPadOS support is required for the first release. On iOS,
+  confirm both `Allow Extension` and `news.ycombinator.com` set to `Allow`; do
+  not assume Safari will prompt when the site permission remains `Ask`.
 - Verify Private Browsing behavior when the extension is allowed, including storage fallback behavior.
 - Verify whether extensions run inside iOS home-screen web app containers. If they do not, document that limitation and keep normal mobile Safari support as the fallback.
 - Confirm disabling the Safari extension restores the original Hacker News site behavior.

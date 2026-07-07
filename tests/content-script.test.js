@@ -176,6 +176,16 @@ test("content script refreshes preferences when the HN tab regains focus", async
   assert.equal(context.runtimeMessageListenerCount, 1);
 });
 
+test("content script applies default attributes before async storage resolves", () => {
+  const context = createContentScriptContext(darkPreferences);
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  assert.equal(context.document.documentElement.dataset.hnrTheme, "system");
+  assert.equal(context.document.documentElement.dataset.hnrMobile, "auto");
+});
+
 test("content script accepts Safari storage change events without an area name", async () => {
   const context = createContentScriptContext(lightPreferences);
   const script = fs.readFileSync("extension/content/content-script.js", "utf8");

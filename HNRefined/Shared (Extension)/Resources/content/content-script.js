@@ -259,6 +259,7 @@ function observePageActivation() {
 }
 
 function start() {
+  applyPreferences(DEFAULT_PREFERENCES);
   refreshPreferences();
   observePreferences();
   observePageActivation();
