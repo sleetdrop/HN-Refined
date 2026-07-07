@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HN Refined</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>HN Refined</h1>
+        <p>Reading preferences for Hacker News.</p>
+      </header>
+      <p id="storage-status" class="status" hidden></p>
+
+      <section aria-labelledby="appearance-heading">
+        <div class="section-heading">
+          <h2 id="appearance-heading">Appearance</h2>
+          <p>Applies anywhere Hacker News is refined.</p>
+        </div>
+
+        <label>
+          Theme
+          <select id="theme">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </label>
+
+        <label>
+          Font
+          <select id="fontPreset">
+            <option value="system-sans">System Sans</option>
+            <option value="hn-classic">HN Classic</option>
+            <option value="serif-reading">Serif Reading</option>
+            <option value="mono-ish">Mono-ish</option>
+          </select>
+        </label>
+      </section>
+
+      <section aria-labelledby="desktop-heading">
+        <div class="section-heading">
+          <h2 id="desktop-heading">Desktop Reading</h2>
+          <p>Desktop reading settings mainly affect wide Hacker News layouts.</p>
+        </div>
+
+        <label>
+          Desktop Density
+          <select id="desktopDensity">
+            <option value="comfortable">Comfortable</option>
+            <option value="classic-ish">Classic-ish</option>
+          </select>
+        </label>
+
+        <label>
+          Reading Width
+          <select id="readingWidth">
+            <option value="comfortable">Comfortable</option>
+            <option value="wide">Wide</option>
+          </select>
+        </label>
+      </section>
+
+      <section aria-labelledby="links-heading">
+        <div class="section-heading">
+          <h2 id="links-heading">Links</h2>
+          <p>Controls only external story title links.</p>
+        </div>
+
+        <label class="checkbox">
+          <input id="openStoryLinksInNewTabs" type="checkbox" />
+          Open external story links in new tabs
+        </label>
+      </section>
+    </main>
+
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

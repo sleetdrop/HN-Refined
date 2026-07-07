@@ -1,0 +1,155 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+body {
+  margin: 0;
+  min-width: 276px;
+  color: CanvasText;
+  background: Canvas;
+}
+
+main {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+header {
+  display: grid;
+  gap: 6px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.status {
+  margin: 0;
+  color: color-mix(in srgb, CanvasText 72%, transparent);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  margin: 0 0 6px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: color-mix(in srgb, CanvasText 70%, transparent);
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  overflow: hidden;
+}
+
+.segmented-control label {
+  position: relative;
+  min-width: 0;
+}
+
+.segmented-control label + label {
+  border-left: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+}
+
+.segmented-control input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.segmented-control span {
+  display: block;
+  padding: 7px 8px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.segmented-control input:checked + span {
+  color: Canvas;
+  background: CanvasText;
+}
+
+.segmented-control input:focus-visible + span {
+  outline: 2px solid Highlight;
+  outline-offset: -2px;
+}
+
+.segmented-control,
+.single-option {
+  border: 1px solid color-mix(in srgb, CanvasText 22%, transparent);
+  border-radius: 7px;
+  background: color-mix(in srgb, Canvas 92%, CanvasText);
+}
+
+.single-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 42px;
+  padding: 0 10px 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.single-option span {
+  min-width: 0;
+}
+
+.single-option input {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  accent-color: AccentColor;
+}
+
+.single-option:has(input:focus-visible) {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1px;
+}
+
+button {
+  font: inherit;
+}
+
+.settings-link {
+  width: 100%;
+  min-height: 28px;
+  border: 0;
+  border-radius: 6px;
+  color: LinkText;
+  background: transparent;
+  font-size: 13px;
+  text-align: right;
+}
+
+.settings-link:active {
+  background: color-mix(in srgb, CanvasText 10%, Canvas);
+}
+
+.settings-link:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}

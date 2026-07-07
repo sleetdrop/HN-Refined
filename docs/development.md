@@ -43,6 +43,12 @@ Run tests:
 make test
 ```
 
+Build the iOS/iPadOS Safari host app:
+
+```bash
+make safari-build-ios
+```
+
 ## Quality Toolchain
 
 The quality gate is intentionally small and agent-friendly:
@@ -111,6 +117,32 @@ then closes it. To keep the host app open for visual inspection:
 ```bash
 HNREFINED_KEEP_HOST_APP=1 make safari-reinstall
 ```
+
+## iOS and iPadOS Local Development
+
+iOS and iPadOS support is part of the first-version release scope. The current
+Xcode wrapper was rebuilt with Safari WebExtension converter support for all
+platforms and now contains `HNRefined (iOS)` and `HNRefined (macOS)` schemes.
+
+Use the repo workflow instead of building stale copied extension resources by
+hand:
+
+```bash
+make safari-build-ios
+```
+
+The default iOS destination is `generic/platform=iOS Simulator`. Override it
+when you need a specific simulator or device:
+
+```bash
+HNREFINED_IOS_DESTINATION="platform=iOS Simulator,name=iPhone 17" make safari-build-ios
+```
+
+If simulator services are unavailable inside an agent sandbox, do not treat that
+as a product limitation. Run the exact command in a normal local terminal or ask
+the human maintainer to approve it. Keep build output in repo-local
+`.build/xcode-derived-data` and do not register arbitrary `/tmp` or DerivedData
+apps with Safari.
 
 ## Safari Popup Preference Refresh
 

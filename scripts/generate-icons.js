@@ -4,21 +4,23 @@ import path from "node:path";
 
 const appIconSource = "assets/icon/hn-refined-icon.svg";
 const toolbarIconSource = "assets/icon/hn-refined-toolbar-icon.svg";
-const appIconDir = "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset";
+const appIconDir = "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset";
 const extensionIconDir = "extension/icons";
-const hostIcon = ["HNRefined/HNRefined/Resources/Icon.png", 384];
+const hostIcon = ["HNRefined/Shared (App)/Resources/Icon.png", 384];
+const largeIcon = ["HNRefined/Shared (App)/Assets.xcassets/LargeIcon.imageset/icon-128.png", 128];
 
 const appIcons = [
-  ["AppIcon-16.png", 16],
-  ["AppIcon-16@2x.png", 32],
-  ["AppIcon-32.png", 32],
-  ["AppIcon-32@2x.png", 64],
-  ["AppIcon-128.png", 128],
-  ["AppIcon-128@2x.png", 256],
-  ["AppIcon-256.png", 256],
-  ["AppIcon-256@2x.png", 512],
-  ["AppIcon-512.png", 512],
-  ["AppIcon-512@2x.png", 1024],
+  ["universal-icon-1024@1x.png", 1024],
+  ["mac-icon-16@1x.png", 16],
+  ["mac-icon-16@2x.png", 32],
+  ["mac-icon-32@1x.png", 32],
+  ["mac-icon-32@2x.png", 64],
+  ["mac-icon-128@1x.png", 128],
+  ["mac-icon-128@2x.png", 256],
+  ["mac-icon-256@1x.png", 256],
+  ["mac-icon-256@2x.png", 512],
+  ["mac-icon-512@1x.png", 512],
+  ["mac-icon-512@2x.png", 1024],
 ];
 
 const extensionIcons = [
@@ -61,3 +63,4 @@ for (const [filename, size] of extensionIcons) {
 }
 
 renderPng(appIconSource, hostIcon[0], hostIcon[1]);
+renderPng(appIconSource, largeIcon[0], largeIcon[1]);

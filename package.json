@@ -18,6 +18,7 @@
     "check:no-remote": "node scripts/check-no-remote.js",
     "check": "npm run lint && npm run validate:themes && npm run build:themes && npm run check:manifest && npm run check:no-remote && npm test",
     "safari:build": "bash scripts/safari-dev.sh build",
+    "safari:build:ios": "bash scripts/safari-dev.sh build-ios",
     "safari:install": "bash scripts/safari-dev.sh install",
     "safari:reinstall": "bash scripts/safari-dev.sh reinstall",
     "safari:status": "bash scripts/safari-dev.sh status",

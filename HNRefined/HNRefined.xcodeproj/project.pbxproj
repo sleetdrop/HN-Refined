@@ -7,44 +7,82 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D67080412FF7D2C5008E7291 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67080402FF7D2C5008E7291 /* AppDelegate.swift */; };
-		D67080452FF7D2C5008E7291 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = D67080432FF7D2C5008E7291 /* Main.html */; };
-		D67080472FF7D2C5008E7291 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D67080462FF7D2C5008E7291 /* Icon.png */; };
-		D67080492FF7D2C5008E7291 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = D67080482FF7D2C5008E7291 /* Style.css */; };
-		D670804B2FF7D2C5008E7291 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = D670804A2FF7D2C5008E7291 /* Script.js */; };
-		D670804D2FF7D2C5008E7291 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670804C2FF7D2C5008E7291 /* ViewController.swift */; };
-		D67080502FF7D2C5008E7291 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D670804E2FF7D2C5008E7291 /* Main.storyboard */; };
-		D67080522FF7D2C6008E7291 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D67080512FF7D2C6008E7291 /* Assets.xcassets */; };
-		D67080592FF7D2C6008E7291 /* HNRefined Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D67080582FF7D2C6008E7291 /* HNRefined Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D670805E2FF7D2C6008E7291 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670805D2FF7D2C6008E7291 /* SafariWebExtensionHandler.swift */; };
-		D67080702FF7D2C7008E7291 /* generated in Resources */ = {isa = PBXBuildFile; fileRef = D670806A2FF7D2C7008E7291 /* generated */; };
-		D67080712FF7D2C7008E7291 /* options in Resources */ = {isa = PBXBuildFile; fileRef = D670806B2FF7D2C7008E7291 /* options */; };
-		D67080722FF7D2C7008E7291 /* content in Resources */ = {isa = PBXBuildFile; fileRef = D670806C2FF7D2C7008E7291 /* content */; };
-		D67080732FF7D2C7008E7291 /* shared in Resources */ = {isa = PBXBuildFile; fileRef = D670806D2FF7D2C7008E7291 /* shared */; };
-		D67080742FF7D2C7008E7291 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = D670806E2FF7D2C7008E7291 /* manifest.json */; };
-		D67080752FF7D2C7008E7291 /* themes in Resources */ = {isa = PBXBuildFile; fileRef = D670806F2FF7D2C7008E7291 /* themes */; };
-		D67080762FF7D2C7008E7291 /* popup in Resources */ = {isa = PBXBuildFile; fileRef = D67080772FF7D2C7008E7291 /* popup */; };
-		D67080792FF7D2C7008E7291 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = D67080782FF7D2C7008E7291 /* icons */; };
+		D61027E72FFCFFBB00FEC7F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027E62FFCFFBB00FEC7F0 /* AppDelegate.swift */; };
+		D61027E92FFCFFBB00FEC7F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027E82FFCFFBB00FEC7F0 /* SceneDelegate.swift */; };
+		D61027EC2FFCFFBB00FEC7F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61027EA2FFCFFBB00FEC7F0 /* LaunchScreen.storyboard */; };
+		D61027EF2FFCFFBB00FEC7F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61027ED2FFCFFBB00FEC7F0 /* Main.storyboard */; };
+		D61027F82FFCFFBB00FEC7F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027F72FFCFFBB00FEC7F0 /* AppDelegate.swift */; };
+		D61027FB2FFCFFBB00FEC7F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D61027F92FFCFFBB00FEC7F0 /* Main.storyboard */; };
+		D61028022FFCFFBB00FEC7F0 /* HNRefined Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D61028012FFCFFBB00FEC7F0 /* HNRefined Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D610280C2FFCFFBB00FEC7F0 /* HNRefined Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D610280B2FFCFFBB00FEC7F0 /* HNRefined Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D61028112FFCFFBB00FEC7F0 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = D61027D62FFCFFBA00FEC7F0 /* Main.html */; };
+		D61028122FFCFFBB00FEC7F0 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = D61027D62FFCFFBA00FEC7F0 /* Main.html */; };
+		D61028132FFCFFBB00FEC7F0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D61027D82FFCFFBA00FEC7F0 /* Icon.png */; };
+		D61028142FFCFFBB00FEC7F0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D61027D82FFCFFBA00FEC7F0 /* Icon.png */; };
+		D61028152FFCFFBB00FEC7F0 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = D61027D92FFCFFBA00FEC7F0 /* Style.css */; };
+		D61028162FFCFFBB00FEC7F0 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = D61027D92FFCFFBA00FEC7F0 /* Style.css */; };
+		D61028172FFCFFBB00FEC7F0 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = D61027DA2FFCFFBA00FEC7F0 /* Script.js */; };
+		D61028182FFCFFBB00FEC7F0 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = D61027DA2FFCFFBA00FEC7F0 /* Script.js */; };
+		D61028192FFCFFBB00FEC7F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027DB2FFCFFBA00FEC7F0 /* ViewController.swift */; };
+		D610281A2FFCFFBB00FEC7F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027DB2FFCFFBA00FEC7F0 /* ViewController.swift */; };
+		D610281B2FFCFFBB00FEC7F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D61027DC2FFCFFBB00FEC7F0 /* Assets.xcassets */; };
+		D610281C2FFCFFBB00FEC7F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D61027DC2FFCFFBB00FEC7F0 /* Assets.xcassets */; };
+		D610281D2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027DE2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift */; };
+		D610281E2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61027DE2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift */; };
+		D61028382FFCFFBB00FEC7F0 /* generated in Resources */ = {isa = PBXBuildFile; fileRef = D61028302FFCFFBB00FEC7F0 /* generated */; };
+		D61028392FFCFFBB00FEC7F0 /* options in Resources */ = {isa = PBXBuildFile; fileRef = D61028312FFCFFBB00FEC7F0 /* options */; };
+		D610283A2FFCFFBB00FEC7F0 /* popup in Resources */ = {isa = PBXBuildFile; fileRef = D61028322FFCFFBB00FEC7F0 /* popup */; };
+		D610283B2FFCFFBB00FEC7F0 /* content in Resources */ = {isa = PBXBuildFile; fileRef = D61028332FFCFFBB00FEC7F0 /* content */; };
+		D610283C2FFCFFBB00FEC7F0 /* shared in Resources */ = {isa = PBXBuildFile; fileRef = D61028342FFCFFBB00FEC7F0 /* shared */; };
+		D610283D2FFCFFBB00FEC7F0 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = D61028352FFCFFBB00FEC7F0 /* icons */; };
+		D610283E2FFCFFBB00FEC7F0 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = D61028362FFCFFBB00FEC7F0 /* manifest.json */; };
+		D610283F2FFCFFBB00FEC7F0 /* themes in Resources */ = {isa = PBXBuildFile; fileRef = D61028372FFCFFBB00FEC7F0 /* themes */; };
+		D61028402FFCFFBB00FEC7F0 /* generated in Resources */ = {isa = PBXBuildFile; fileRef = D61028302FFCFFBB00FEC7F0 /* generated */; };
+		D61028412FFCFFBB00FEC7F0 /* options in Resources */ = {isa = PBXBuildFile; fileRef = D61028312FFCFFBB00FEC7F0 /* options */; };
+		D61028422FFCFFBB00FEC7F0 /* popup in Resources */ = {isa = PBXBuildFile; fileRef = D61028322FFCFFBB00FEC7F0 /* popup */; };
+		D61028432FFCFFBB00FEC7F0 /* content in Resources */ = {isa = PBXBuildFile; fileRef = D61028332FFCFFBB00FEC7F0 /* content */; };
+		D61028442FFCFFBB00FEC7F0 /* shared in Resources */ = {isa = PBXBuildFile; fileRef = D61028342FFCFFBB00FEC7F0 /* shared */; };
+		D61028452FFCFFBB00FEC7F0 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = D61028352FFCFFBB00FEC7F0 /* icons */; };
+		D61028462FFCFFBB00FEC7F0 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = D61028362FFCFFBB00FEC7F0 /* manifest.json */; };
+		D61028472FFCFFBB00FEC7F0 /* themes in Resources */ = {isa = PBXBuildFile; fileRef = D61028372FFCFFBB00FEC7F0 /* themes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D670805A2FF7D2C6008E7291 /* PBXContainerItemProxy */ = {
+		D61028032FFCFFBB00FEC7F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D67080352FF7D2C5008E7291 /* Project object */;
+			containerPortal = D61027D02FFCFFBA00FEC7F0 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D67080572FF7D2C6008E7291;
-			remoteInfo = "HNRefined Extension";
+			remoteGlobalIDString = D61028002FFCFFBB00FEC7F0;
+			remoteInfo = "HNRefined Extension (iOS)";
+		};
+		D610280D2FFCFFBB00FEC7F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D61027D02FFCFFBA00FEC7F0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D610280A2FFCFFBB00FEC7F0;
+			remoteInfo = "HNRefined Extension (macOS)";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D67080652FF7D2C6008E7291 /* Embed Foundation Extensions */ = {
+		D61028242FFCFFBB00FEC7F0 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D67080592FF7D2C6008E7291 /* HNRefined Extension.appex in Embed Foundation Extensions */,
+				D61028022FFCFFBB00FEC7F0 /* HNRefined Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D610282B2FFCFFBB00FEC7F0 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D610280C2FFCFFBB00FEC7F0 /* HNRefined Extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,38 +90,60 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D670803D2FF7D2C5008E7291 /* HNRefined.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HNRefined.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D67080402FF7D2C5008E7291 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D67080442FF7D2C5008E7291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
-		D67080462FF7D2C5008E7291 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		D67080482FF7D2C5008E7291 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
-		D670804A2FF7D2C5008E7291 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
-		D670804C2FF7D2C5008E7291 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D670804F2FF7D2C5008E7291 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D67080512FF7D2C6008E7291 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D67080532FF7D2C6008E7291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D67080582FF7D2C6008E7291 /* HNRefined Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HNRefined Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D670805D2FF7D2C6008E7291 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
-		D670805F2FF7D2C6008E7291 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D670806A2FF7D2C7008E7291 /* generated */ = {isa = PBXFileReference; lastKnownFileType = folder; name = generated; path = ../../extension/generated; sourceTree = "<group>"; };
-		D670806B2FF7D2C7008E7291 /* options */ = {isa = PBXFileReference; lastKnownFileType = folder; name = options; path = ../../extension/options; sourceTree = "<group>"; };
-		D670806C2FF7D2C7008E7291 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; name = content; path = ../../extension/content; sourceTree = "<group>"; };
-		D670806D2FF7D2C7008E7291 /* shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shared; path = ../../extension/shared; sourceTree = "<group>"; };
-		D670806E2FF7D2C7008E7291 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = "<group>"; };
-		D670806F2FF7D2C7008E7291 /* themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = themes; path = ../../extension/themes; sourceTree = "<group>"; };
-		D67080772FF7D2C7008E7291 /* popup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popup; path = ../../extension/popup; sourceTree = "<group>"; };
-		D67080782FF7D2C7008E7291 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../extension/icons; sourceTree = "<group>"; };
+		D61027D72FFCFFBA00FEC7F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		D61027D82FFCFFBA00FEC7F0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		D61027D92FFCFFBA00FEC7F0 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		D61027DA2FFCFFBA00FEC7F0 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		D61027DB2FFCFFBA00FEC7F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D61027DC2FFCFFBB00FEC7F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D61027DE2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		D61027E32FFCFFBB00FEC7F0 /* HNRefined.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HNRefined.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D61027E62FFCFFBB00FEC7F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D61027E82FFCFFBB00FEC7F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D61027EB2FFCFFBB00FEC7F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D61027EE2FFCFFBB00FEC7F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D61027F02FFCFFBB00FEC7F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D61027F52FFCFFBB00FEC7F0 /* HNRefined.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HNRefined.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D61027F72FFCFFBB00FEC7F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D61027FA2FFCFFBB00FEC7F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D61027FC2FFCFFBB00FEC7F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D61028012FFCFFBB00FEC7F0 /* HNRefined Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HNRefined Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D61028062FFCFFBB00FEC7F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D610280B2FFCFFBB00FEC7F0 /* HNRefined Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "HNRefined Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D61028102FFCFFBB00FEC7F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D61028302FFCFFBB00FEC7F0 /* generated */ = {isa = PBXFileReference; lastKnownFileType = folder; name = generated; path = Resources/generated; sourceTree = "<group>"; };
+		D61028312FFCFFBB00FEC7F0 /* options */ = {isa = PBXFileReference; lastKnownFileType = folder; name = options; path = Resources/options; sourceTree = "<group>"; };
+		D61028322FFCFFBB00FEC7F0 /* popup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popup; path = Resources/popup; sourceTree = "<group>"; };
+		D61028332FFCFFBB00FEC7F0 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; name = content; path = Resources/content; sourceTree = "<group>"; };
+		D61028342FFCFFBB00FEC7F0 /* shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shared; path = Resources/shared; sourceTree = "<group>"; };
+		D61028352FFCFFBB00FEC7F0 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = Resources/icons; sourceTree = "<group>"; };
+		D61028362FFCFFBB00FEC7F0 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
+		D61028372FFCFFBB00FEC7F0 /* themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = themes; path = Resources/themes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D670803A2FF7D2C5008E7291 /* Frameworks */ = {
+		D61027E02FFCFFBB00FEC7F0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D67080552FF7D2C6008E7291 /* Frameworks */ = {
+		D61027F22FFCFFBB00FEC7F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D61027FE2FFCFFBB00FEC7F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D61028082FFCFFBB00FEC7F0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -93,227 +153,383 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D67080342FF7D2C5008E7291 = {
+		D61027CF2FFCFFBA00FEC7F0 = {
 			isa = PBXGroup;
 			children = (
-				D670803F2FF7D2C5008E7291 /* HNRefined */,
-				D670805C2FF7D2C6008E7291 /* HNRefined Extension */,
-				D670803E2FF7D2C5008E7291 /* Products */,
+				D61027D42FFCFFBA00FEC7F0 /* Shared (App) */,
+				D61027DD2FFCFFBB00FEC7F0 /* Shared (Extension) */,
+				D61027E52FFCFFBB00FEC7F0 /* iOS (App) */,
+				D61027F62FFCFFBB00FEC7F0 /* macOS (App) */,
+				D61028052FFCFFBB00FEC7F0 /* iOS (Extension) */,
+				D610280F2FFCFFBB00FEC7F0 /* macOS (Extension) */,
+				D61027E42FFCFFBB00FEC7F0 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D670803E2FF7D2C5008E7291 /* Products */ = {
+		D61027D42FFCFFBA00FEC7F0 /* Shared (App) */ = {
 			isa = PBXGroup;
 			children = (
-				D670803D2FF7D2C5008E7291 /* HNRefined.app */,
-				D67080582FF7D2C6008E7291 /* HNRefined Extension.appex */,
+				D61027DB2FFCFFBA00FEC7F0 /* ViewController.swift */,
+				D61027DC2FFCFFBB00FEC7F0 /* Assets.xcassets */,
+				D61027D52FFCFFBA00FEC7F0 /* Resources */,
 			);
-			name = Products;
+			path = "Shared (App)";
 			sourceTree = "<group>";
 		};
-		D670803F2FF7D2C5008E7291 /* HNRefined */ = {
+		D61027D52FFCFFBA00FEC7F0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D67080402FF7D2C5008E7291 /* AppDelegate.swift */,
-				D670804C2FF7D2C5008E7291 /* ViewController.swift */,
-				D670804E2FF7D2C5008E7291 /* Main.storyboard */,
-				D67080512FF7D2C6008E7291 /* Assets.xcassets */,
-				D67080532FF7D2C6008E7291 /* Info.plist */,
-				D67080422FF7D2C5008E7291 /* Resources */,
-			);
-			path = HNRefined;
-			sourceTree = "<group>";
-		};
-		D67080422FF7D2C5008E7291 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D67080432FF7D2C5008E7291 /* Main.html */,
-				D67080462FF7D2C5008E7291 /* Icon.png */,
-				D67080482FF7D2C5008E7291 /* Style.css */,
-				D670804A2FF7D2C5008E7291 /* Script.js */,
+				D61027D62FFCFFBA00FEC7F0 /* Main.html */,
+				D61027D82FFCFFBA00FEC7F0 /* Icon.png */,
+				D61027D92FFCFFBA00FEC7F0 /* Style.css */,
+				D61027DA2FFCFFBA00FEC7F0 /* Script.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		D670805C2FF7D2C6008E7291 /* HNRefined Extension */ = {
+		D61027DD2FFCFFBB00FEC7F0 /* Shared (Extension) */ = {
 			isa = PBXGroup;
 			children = (
-				D67080692FF7D2C7008E7291 /* Resources */,
-				D670805D2FF7D2C6008E7291 /* SafariWebExtensionHandler.swift */,
-				D670805F2FF7D2C6008E7291 /* Info.plist */,
+				D610282F2FFCFFBB00FEC7F0 /* Resources */,
+				D61027DE2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift */,
 			);
-			path = "HNRefined Extension";
+			path = "Shared (Extension)";
 			sourceTree = "<group>";
 		};
-		D67080692FF7D2C7008E7291 /* Resources */ = {
+		D61027E42FFCFFBB00FEC7F0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D670806A2FF7D2C7008E7291 /* generated */,
-				D670806B2FF7D2C7008E7291 /* options */,
-				D670806C2FF7D2C7008E7291 /* content */,
-				D670806D2FF7D2C7008E7291 /* shared */,
-				D670806E2FF7D2C7008E7291 /* manifest.json */,
-				D670806F2FF7D2C7008E7291 /* themes */,
-				D67080772FF7D2C7008E7291 /* popup */,
-				D67080782FF7D2C7008E7291 /* icons */,
+				D61027E32FFCFFBB00FEC7F0 /* HNRefined.app */,
+				D61027F52FFCFFBB00FEC7F0 /* HNRefined.app */,
+				D61028012FFCFFBB00FEC7F0 /* HNRefined Extension.appex */,
+				D610280B2FFCFFBB00FEC7F0 /* HNRefined Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D61027E52FFCFFBB00FEC7F0 /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				D61027E62FFCFFBB00FEC7F0 /* AppDelegate.swift */,
+				D61027E82FFCFFBB00FEC7F0 /* SceneDelegate.swift */,
+				D61027EA2FFCFFBB00FEC7F0 /* LaunchScreen.storyboard */,
+				D61027ED2FFCFFBB00FEC7F0 /* Main.storyboard */,
+				D61027F02FFCFFBB00FEC7F0 /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		D61027F62FFCFFBB00FEC7F0 /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				D61027F72FFCFFBB00FEC7F0 /* AppDelegate.swift */,
+				D61027F92FFCFFBB00FEC7F0 /* Main.storyboard */,
+				D61027FC2FFCFFBB00FEC7F0 /* Info.plist */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		D61028052FFCFFBB00FEC7F0 /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				D61028062FFCFFBB00FEC7F0 /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		D610280F2FFCFFBB00FEC7F0 /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				D61028102FFCFFBB00FEC7F0 /* Info.plist */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		D610282F2FFCFFBB00FEC7F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D61028302FFCFFBB00FEC7F0 /* generated */,
+				D61028312FFCFFBB00FEC7F0 /* options */,
+				D61028322FFCFFBB00FEC7F0 /* popup */,
+				D61028332FFCFFBB00FEC7F0 /* content */,
+				D61028342FFCFFBB00FEC7F0 /* shared */,
+				D61028352FFCFFBB00FEC7F0 /* icons */,
+				D61028362FFCFFBB00FEC7F0 /* manifest.json */,
+				D61028372FFCFFBB00FEC7F0 /* themes */,
 			);
 			name = Resources;
-			path = "HNRefined Extension";
+			path = "Shared (Extension)";
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D670803C2FF7D2C5008E7291 /* HNRefined */ = {
+		D61027E22FFCFFBB00FEC7F0 /* HNRefined (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D67080662FF7D2C6008E7291 /* Build configuration list for PBXNativeTarget "HNRefined" */;
+			buildConfigurationList = D61028252FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined (iOS)" */;
 			buildPhases = (
-				D67080392FF7D2C5008E7291 /* Sources */,
-				D670803A2FF7D2C5008E7291 /* Frameworks */,
-				D670803B2FF7D2C5008E7291 /* Resources */,
-				D67080652FF7D2C6008E7291 /* Embed Foundation Extensions */,
+				D61027DF2FFCFFBB00FEC7F0 /* Sources */,
+				D61027E02FFCFFBB00FEC7F0 /* Frameworks */,
+				D61027E12FFCFFBB00FEC7F0 /* Resources */,
+				D61028242FFCFFBB00FEC7F0 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D670805B2FF7D2C6008E7291 /* PBXTargetDependency */,
+				D61028042FFCFFBB00FEC7F0 /* PBXTargetDependency */,
 			);
-			name = HNRefined;
+			name = "HNRefined (iOS)";
 			packageProductDependencies = (
 			);
-			productName = HNRefined;
-			productReference = D670803D2FF7D2C5008E7291 /* HNRefined.app */;
+			productName = "HNRefined (iOS)";
+			productReference = D61027E32FFCFFBB00FEC7F0 /* HNRefined.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D67080572FF7D2C6008E7291 /* HNRefined Extension */ = {
+		D61027F42FFCFFBB00FEC7F0 /* HNRefined (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D67080622FF7D2C6008E7291 /* Build configuration list for PBXNativeTarget "HNRefined Extension" */;
+			buildConfigurationList = D610282C2FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined (macOS)" */;
 			buildPhases = (
-				D67080542FF7D2C6008E7291 /* Sources */,
-				D67080552FF7D2C6008E7291 /* Frameworks */,
-				D67080562FF7D2C6008E7291 /* Resources */,
+				D61027F12FFCFFBB00FEC7F0 /* Sources */,
+				D61027F22FFCFFBB00FEC7F0 /* Frameworks */,
+				D61027F32FFCFFBB00FEC7F0 /* Resources */,
+				D610282B2FFCFFBB00FEC7F0 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D610280E2FFCFFBB00FEC7F0 /* PBXTargetDependency */,
+			);
+			name = "HNRefined (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "HNRefined (macOS)";
+			productReference = D61027F52FFCFFBB00FEC7F0 /* HNRefined.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D61028002FFCFFBB00FEC7F0 /* HNRefined Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D61028212FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined Extension (iOS)" */;
+			buildPhases = (
+				D61027FD2FFCFFBB00FEC7F0 /* Sources */,
+				D61027FE2FFCFFBB00FEC7F0 /* Frameworks */,
+				D61027FF2FFCFFBB00FEC7F0 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "HNRefined Extension";
+			name = "HNRefined Extension (iOS)";
 			packageProductDependencies = (
 			);
-			productName = "HNRefined Extension";
-			productReference = D67080582FF7D2C6008E7291 /* HNRefined Extension.appex */;
+			productName = "HNRefined Extension (iOS)";
+			productReference = D61028012FFCFFBB00FEC7F0 /* HNRefined Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		D610280A2FFCFFBB00FEC7F0 /* HNRefined Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D61028282FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined Extension (macOS)" */;
+			buildPhases = (
+				D61028072FFCFFBB00FEC7F0 /* Sources */,
+				D61028082FFCFFBB00FEC7F0 /* Frameworks */,
+				D61028092FFCFFBB00FEC7F0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "HNRefined Extension (macOS)";
+			packageProductDependencies = (
+			);
+			productName = "HNRefined Extension (macOS)";
+			productReference = D610280B2FFCFFBB00FEC7F0 /* HNRefined Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D67080352FF7D2C5008E7291 /* Project object */ = {
+		D61027D02FFCFFBA00FEC7F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2630;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
-					D670803C2FF7D2C5008E7291 = {
+					D61027E22FFCFFBB00FEC7F0 = {
 						CreatedOnToolsVersion = 26.3;
 					};
-					D67080572FF7D2C6008E7291 = {
+					D61027F42FFCFFBB00FEC7F0 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					D61028002FFCFFBB00FEC7F0 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					D610280A2FFCFFBB00FEC7F0 = {
 						CreatedOnToolsVersion = 26.3;
 					};
 				};
 			};
-			buildConfigurationList = D67080382FF7D2C5008E7291 /* Build configuration list for PBXProject "HNRefined" */;
+			buildConfigurationList = D61027D32FFCFFBA00FEC7F0 /* Build configuration list for PBXProject "HNRefined" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = D67080342FF7D2C5008E7291;
+			mainGroup = D61027CF2FFCFFBA00FEC7F0;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D670803E2FF7D2C5008E7291 /* Products */;
+			productRefGroup = D61027E42FFCFFBB00FEC7F0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D670803C2FF7D2C5008E7291 /* HNRefined */,
-				D67080572FF7D2C6008E7291 /* HNRefined Extension */,
+				D61027E22FFCFFBB00FEC7F0 /* HNRefined (iOS) */,
+				D61027F42FFCFFBB00FEC7F0 /* HNRefined (macOS) */,
+				D61028002FFCFFBB00FEC7F0 /* HNRefined Extension (iOS) */,
+				D610280A2FFCFFBB00FEC7F0 /* HNRefined Extension (macOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D670803B2FF7D2C5008E7291 /* Resources */ = {
+		D61027E12FFCFFBB00FEC7F0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D67080472FF7D2C5008E7291 /* Icon.png in Resources */,
-				D67080502FF7D2C5008E7291 /* Main.storyboard in Resources */,
-				D670804B2FF7D2C5008E7291 /* Script.js in Resources */,
-				D67080452FF7D2C5008E7291 /* Main.html in Resources */,
-				D67080522FF7D2C6008E7291 /* Assets.xcassets in Resources */,
-				D67080492FF7D2C5008E7291 /* Style.css in Resources */,
+				D61028132FFCFFBB00FEC7F0 /* Icon.png in Resources */,
+				D61027EC2FFCFFBB00FEC7F0 /* LaunchScreen.storyboard in Resources */,
+				D61028112FFCFFBB00FEC7F0 /* Main.html in Resources */,
+				D61028172FFCFFBB00FEC7F0 /* Script.js in Resources */,
+				D610281B2FFCFFBB00FEC7F0 /* Assets.xcassets in Resources */,
+				D61027EF2FFCFFBB00FEC7F0 /* Main.storyboard in Resources */,
+				D61028152FFCFFBB00FEC7F0 /* Style.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D67080562FF7D2C6008E7291 /* Resources */ = {
+		D61027F32FFCFFBB00FEC7F0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D67080722FF7D2C7008E7291 /* content in Resources */,
-				D67080732FF7D2C7008E7291 /* shared in Resources */,
-				D67080752FF7D2C7008E7291 /* themes in Resources */,
-				D67080742FF7D2C7008E7291 /* manifest.json in Resources */,
-				D67080702FF7D2C7008E7291 /* generated in Resources */,
-				D67080712FF7D2C7008E7291 /* options in Resources */,
-				D67080762FF7D2C7008E7291 /* popup in Resources */,
-				D67080792FF7D2C7008E7291 /* icons in Resources */,
+				D61028142FFCFFBB00FEC7F0 /* Icon.png in Resources */,
+				D61028162FFCFFBB00FEC7F0 /* Style.css in Resources */,
+				D61027FB2FFCFFBB00FEC7F0 /* Main.storyboard in Resources */,
+				D61028182FFCFFBB00FEC7F0 /* Script.js in Resources */,
+				D610281C2FFCFFBB00FEC7F0 /* Assets.xcassets in Resources */,
+				D61028122FFCFFBB00FEC7F0 /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D61027FF2FFCFFBB00FEC7F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D61028442FFCFFBB00FEC7F0 /* shared in Resources */,
+				D61028462FFCFFBB00FEC7F0 /* manifest.json in Resources */,
+				D61028422FFCFFBB00FEC7F0 /* popup in Resources */,
+				D61028402FFCFFBB00FEC7F0 /* generated in Resources */,
+				D61028472FFCFFBB00FEC7F0 /* themes in Resources */,
+				D61028452FFCFFBB00FEC7F0 /* icons in Resources */,
+				D61028432FFCFFBB00FEC7F0 /* content in Resources */,
+				D61028412FFCFFBB00FEC7F0 /* options in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D61028092FFCFFBB00FEC7F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D610283C2FFCFFBB00FEC7F0 /* shared in Resources */,
+				D610283E2FFCFFBB00FEC7F0 /* manifest.json in Resources */,
+				D610283A2FFCFFBB00FEC7F0 /* popup in Resources */,
+				D61028382FFCFFBB00FEC7F0 /* generated in Resources */,
+				D610283F2FFCFFBB00FEC7F0 /* themes in Resources */,
+				D610283D2FFCFFBB00FEC7F0 /* icons in Resources */,
+				D610283B2FFCFFBB00FEC7F0 /* content in Resources */,
+				D61028392FFCFFBB00FEC7F0 /* options in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D67080392FF7D2C5008E7291 /* Sources */ = {
+		D61027DF2FFCFFBB00FEC7F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D670804D2FF7D2C5008E7291 /* ViewController.swift in Sources */,
-				D67080412FF7D2C5008E7291 /* AppDelegate.swift in Sources */,
+				D61028192FFCFFBB00FEC7F0 /* ViewController.swift in Sources */,
+				D61027E72FFCFFBB00FEC7F0 /* AppDelegate.swift in Sources */,
+				D61027E92FFCFFBB00FEC7F0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D67080542FF7D2C6008E7291 /* Sources */ = {
+		D61027F12FFCFFBB00FEC7F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D670805E2FF7D2C6008E7291 /* SafariWebExtensionHandler.swift in Sources */,
+				D610281A2FFCFFBB00FEC7F0 /* ViewController.swift in Sources */,
+				D61027F82FFCFFBB00FEC7F0 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D61027FD2FFCFFBB00FEC7F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D610281D2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D61028072FFCFFBB00FEC7F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D610281E2FFCFFBB00FEC7F0 /* SafariWebExtensionHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D670805B2FF7D2C6008E7291 /* PBXTargetDependency */ = {
+		D61028042FFCFFBB00FEC7F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D67080572FF7D2C6008E7291 /* HNRefined Extension */;
-			targetProxy = D670805A2FF7D2C6008E7291 /* PBXContainerItemProxy */;
+			target = D61028002FFCFFBB00FEC7F0 /* HNRefined Extension (iOS) */;
+			targetProxy = D61028032FFCFFBB00FEC7F0 /* PBXContainerItemProxy */;
+		};
+		D610280E2FFCFFBB00FEC7F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D610280A2FFCFFBB00FEC7F0 /* HNRefined Extension (macOS) */;
+			targetProxy = D610280D2FFCFFBB00FEC7F0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D67080432FF7D2C5008E7291 /* Main.html */ = {
+		D61027D62FFCFFBA00FEC7F0 /* Main.html */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D67080442FF7D2C5008E7291 /* Base */,
+				D61027D72FFCFFBA00FEC7F0 /* Base */,
 			);
 			name = Main.html;
 			sourceTree = "<group>";
 		};
-		D670804E2FF7D2C5008E7291 /* Main.storyboard */ = {
+		D61027EA2FFCFFBB00FEC7F0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D670804F2FF7D2C5008E7291 /* Base */,
+				D61027EB2FFCFFBB00FEC7F0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D61027ED2FFCFFBB00FEC7F0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D61027EE2FFCFFBB00FEC7F0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D61027F92FFCFFBB00FEC7F0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D61027FA2FFCFFBB00FEC7F0 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -321,7 +537,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		D67080602FF7D2C6008E7291 /* Debug */ = {
+		D610281F2FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -374,17 +590,15 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		D67080612FF7D2C6008E7291 /* Release */ = {
+		D61028202FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -431,102 +645,98 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
-		D67080632FF7D2C6008E7291 /* Debug */ = {
+		D61028222FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "HNRefined Extension/Info.plist";
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "HNRefined Extension";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		D67080642FF7D2C6008E7291 /* Release */ = {
+		D61028232FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "HNRefined Extension/Info.plist";
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "HNRefined Extension";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		D67080672FF7D2C6008E7291 /* Debug */ = {
+		D61028262FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HNRefined/Info.plist;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
+					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
@@ -536,8 +746,161 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = HNRefined;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D61028272FFCFFBB00FEC7F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
+				PRODUCT_NAME = HNRefined;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D61028292FFCFFBB00FEC7F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
+				PRODUCT_NAME = "HNRefined Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D610282A2FFCFFBB00FEC7F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
+				PRODUCT_NAME = "HNRefined Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D610282D2FFCFFBB00FEC7F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
+				PRODUCT_NAME = HNRefined;
 				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -547,27 +910,27 @@
 			};
 			name = Debug;
 		};
-		D67080682FF7D2C6008E7291 /* Release */ = {
+		D610282E2FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HNRefined/Info.plist;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -576,8 +939,9 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = HNRefined;
 				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -590,34 +954,52 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D67080382FF7D2C5008E7291 /* Build configuration list for PBXProject "HNRefined" */ = {
+		D61027D32FFCFFBA00FEC7F0 /* Build configuration list for PBXProject "HNRefined" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D67080602FF7D2C6008E7291 /* Debug */,
-				D67080612FF7D2C6008E7291 /* Release */,
+				D610281F2FFCFFBB00FEC7F0 /* Debug */,
+				D61028202FFCFFBB00FEC7F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D67080622FF7D2C6008E7291 /* Build configuration list for PBXNativeTarget "HNRefined Extension" */ = {
+		D61028212FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined Extension (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D67080632FF7D2C6008E7291 /* Debug */,
-				D67080642FF7D2C6008E7291 /* Release */,
+				D61028222FFCFFBB00FEC7F0 /* Debug */,
+				D61028232FFCFFBB00FEC7F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D67080662FF7D2C6008E7291 /* Build configuration list for PBXNativeTarget "HNRefined" */ = {
+		D61028252FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D67080672FF7D2C6008E7291 /* Debug */,
-				D67080682FF7D2C6008E7291 /* Release */,
+				D61028262FFCFFBB00FEC7F0 /* Debug */,
+				D61028272FFCFFBB00FEC7F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D61028282FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D61028292FFCFFBB00FEC7F0 /* Debug */,
+				D610282A2FFCFFBB00FEC7F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D610282C2FFCFFBB00FEC7F0 /* Build configuration list for PBXNativeTarget "HNRefined (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D610282D2FFCFFBB00FEC7F0 /* Debug */,
+				D610282E2FFCFFBB00FEC7F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D67080352FF7D2C5008E7291 /* Project object */;
+	rootObject = D61027D02FFCFFBA00FEC7F0 /* Project object */;
 }

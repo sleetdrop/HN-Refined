@@ -21,11 +21,22 @@ That caused duplicate and stale extension registrations during development.
 
 ## Local Wrapper Generation
 
-The Safari wrapper in `HNRefined/` was generated locally with:
+The original macOS-only Safari wrapper in `HNRefined/` was generated locally with:
 
 ```bash
 xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier org.hnrefined.HNRefined --macos-only --no-open --no-prompt
 ```
+
+The current first-release wrapper was rebuilt for all platforms with:
+
+```bash
+xcrun safari-web-extension-converter extension --rebuild-project HNRefined/HNRefined.xcodeproj --project-location .build/ios-rebuild-preview --app-name HNRefined --bundle-identifier org.hnrefined.HNRefined --swift --no-open --no-prompt --force
+```
+
+The rebuilt project contains `HNRefined (iOS)` and `HNRefined (macOS)` schemes.
+The committed project keeps the generated all-platform wrapper in
+`HNRefined/`, while repo workflows sync the root `extension/` directory into
+`HNRefined/Shared (Extension)/Resources` before Xcode builds.
 
 The converter is supplied by Xcode:
 
@@ -49,6 +60,7 @@ The Makefile wraps this lower-level build flow:
 
 ```bash
 make safari-build
+make safari-build-ios
 ```
 
 The workflow uses repo-local DerivedData by default, detects an Apple
@@ -73,4 +85,18 @@ Verify against current Apple documentation before making product claims about:
 - Private Browsing behavior.
 - Whether extensions run inside iOS home-screen web app containers.
 
-The repository does not yet claim these Safari behaviors as verified. Record the Apple documentation version, Safari version, platform version, and device or simulator used when completing those checks.
+The repository now includes iOS/iPadOS targets, but does not yet claim the
+runtime behaviors above as verified. Record the Apple documentation version,
+Safari version, platform version, and device or simulator used when completing
+those checks.
+
+Current iOS evidence:
+
+- `make safari-build-ios` succeeds outside the managed agent sandbox with Xcode
+  26.3 and iOS 26.3 simulator runtimes.
+- The built app installs and launches on iPhone 17 Pro / iOS 26.3 simulator.
+- The iOS host app displays the HN Refined icon and Safari extension enablement
+  message.
+- Extension enabling in iOS Settings, live Hacker News page injection, popup and
+  options behavior, iPad layout, and home-screen web app container behavior are
+  still pending runtime checks.

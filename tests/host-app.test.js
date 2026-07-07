@@ -2,20 +2,21 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 
-const viewController = fs.readFileSync("HNRefined/HNRefined/ViewController.swift", "utf8");
+const viewController = fs.readFileSync("HNRefined/Shared (App)/ViewController.swift", "utf8");
+const hostHtml = fs.readFileSync("HNRefined/Shared (App)/Resources/Base.lproj/Main.html", "utf8");
 
-test("host app renders its install status with native Cocoa controls", () => {
-  assert.doesNotMatch(viewController, /\bimport\s+WebKit\b/);
-  assert.doesNotMatch(viewController, /\bWKWebView\b/);
-  assert.doesNotMatch(viewController, /loadFileURL/);
-
-  assert.match(viewController, /NSStackView/);
-  assert.match(viewController, /NSTextField\(labelWithString:/);
-  assert.match(viewController, /NSButton\(title:\s*"Open Safari Settings.*"/);
+test("host app is shared across iOS, iPadOS, and macOS", () => {
+  assert.match(viewController, /#if os\(iOS\)/);
+  assert.match(viewController, /import UIKit/);
+  assert.match(viewController, /#elseif os\(macOS\)/);
+  assert.match(viewController, /import SafariServices/);
+  assert.match(viewController, /\bWKWebView\b/);
+  assert.match(viewController, /show\('ios'\)/);
+  assert.match(hostHtml, /You can turn on HNRefined.*Safari extension in Settings/);
 });
 
 test("host app still opens Safari settings for its embedded extension", () => {
   assert.match(viewController, /SFSafariExtensionManager\.getStateOfSafariExtension/);
   assert.match(viewController, /SFSafariApplication\.showPreferencesForExtension/);
-  assert.match(viewController, /extensionBundleIdentifier\(\)/);
+  assert.match(viewController, /extensionBundleIdentifier/);
 });

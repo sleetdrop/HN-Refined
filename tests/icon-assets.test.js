@@ -4,7 +4,10 @@ import test from "node:test";
 
 const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const appIconContents = JSON.parse(
-  fs.readFileSync("HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/Contents.json", "utf8"),
+  fs.readFileSync(
+    "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/Contents.json",
+    "utf8",
+  ),
 );
 const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const makefile = fs.readFileSync("Makefile", "utf8");
@@ -22,16 +25,17 @@ const requiredExtensionIcons = [
 ];
 
 const requiredAppIcons = [
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-16.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-16@2x.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-32.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-32@2x.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-128.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-128@2x.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-256.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-256@2x.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-512.png",
-  "HNRefined/HNRefined/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/universal-icon-1024@1x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-16@1x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-16@2x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-32@1x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-32@2x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-128@1x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-128@2x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-256@1x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-256@2x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-512@1x.png",
+  "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/mac-icon-512@2x.png",
 ];
 
 test("icon generation is an explicit development command", () => {
@@ -65,7 +69,8 @@ test("generated icon files are present in committed asset locations", () => {
   for (const iconPath of [
     "assets/icon/hn-refined-icon.svg",
     "assets/icon/hn-refined-toolbar-icon.svg",
-    "HNRefined/HNRefined/Resources/Icon.png",
+    "HNRefined/Shared (App)/Resources/Icon.png",
+    "HNRefined/Shared (App)/Assets.xcassets/LargeIcon.imageset/icon-128.png",
     ...requiredExtensionIcons,
     ...requiredAppIcons,
   ]) {
@@ -88,15 +93,18 @@ test("Xcode app icon catalog references all generated macOS icon files", () => {
   const filenames = appIconContents.images.map((image) => image.filename);
 
   assert.deepEqual(filenames, [
-    "AppIcon-16.png",
-    "AppIcon-16@2x.png",
-    "AppIcon-32.png",
-    "AppIcon-32@2x.png",
-    "AppIcon-128.png",
-    "AppIcon-128@2x.png",
-    "AppIcon-256.png",
-    "AppIcon-256@2x.png",
-    "AppIcon-512.png",
-    "AppIcon-512@2x.png",
+    "universal-icon-1024@1x.png",
+    "universal-icon-1024@1x.png",
+    "universal-icon-1024@1x.png",
+    "mac-icon-16@1x.png",
+    "mac-icon-16@2x.png",
+    "mac-icon-32@1x.png",
+    "mac-icon-32@2x.png",
+    "mac-icon-128@1x.png",
+    "mac-icon-128@2x.png",
+    "mac-icon-256@1x.png",
+    "mac-icon-256@2x.png",
+    "mac-icon-512@1x.png",
+    "mac-icon-512@2x.png",
   ]);
 });

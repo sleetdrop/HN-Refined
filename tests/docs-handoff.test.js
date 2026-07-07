@@ -80,6 +80,19 @@ test("public docs disclose Hacker News structure dependency", () => {
   assert.match(appStoreChecklist, /Hacker News HTML\s+structure/);
 });
 
+test("docs keep iOS and iPadOS in first-version release scope", () => {
+  const development = read("docs/development.md");
+  const safari = read("docs/safari.md");
+  const status = read("docs/project-status.md");
+  const appStoreChecklist = read("docs/app-store-checklist.md");
+
+  assert.match(status, /First-version release scope includes iOS and iPadOS/);
+  assert.match(development, /iOS and iPadOS support is part of the first-version release scope/);
+  assert.match(development, /make safari-build-ios/);
+  assert.match(safari, /HNRefined \(iOS\)/);
+  assert.match(appStoreChecklist, /iOS\/iPadOS support is required for the first release/);
+});
+
 test("docs keep static information pages outside the styling target", () => {
   const readme = read("README.md");
   const development = read("docs/development.md");

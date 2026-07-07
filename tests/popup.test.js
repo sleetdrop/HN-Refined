@@ -62,3 +62,12 @@ test("Xcode packages icon resources into the Safari extension", () => {
   assert.match(xcodeProject, /\/\* icons \*\//);
   assert.match(xcodeProject, /\/\* icons in Resources \*\//);
 });
+
+test("Xcode wrapper includes iOS and macOS Safari extension targets", () => {
+  assert.match(xcodeProject, /HNRefined \(iOS\)/);
+  assert.match(xcodeProject, /HNRefined \(macOS\)/);
+  assert.match(xcodeProject, /HNRefined Extension \(iOS\)/);
+  assert.match(xcodeProject, /HNRefined Extension \(macOS\)/);
+  assert.match(xcodeProject, /IPHONEOS_DEPLOYMENT_TARGET/);
+  assert.match(xcodeProject, /TARGETED_DEVICE_FAMILY = "1,2"/);
+});

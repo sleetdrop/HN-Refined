@@ -1,0 +1,16 @@
+{
+  "id": "hn-light",
+  "name": "HN Light",
+  "mode": "light",
+  "tokens": {
+    "pageBackground": "#f6f6ef",
+    "contentBackground": "#f6f6ef",
+    "topBarBackground": "#ff6600",
+    "textPrimary": "#000000",
+    "textMuted": "#828282",
+    "link": "#000000",
+    "visitedLink": "#828282",
+    "borderSubtle": "#d9d0b1",
+    "voteArrow": "#828282"
+  }
+}

@@ -12,6 +12,10 @@ test("Safari development workflow uses stable local paths", () => {
   assert.match(script, /\$HOME\/Applications\/HNRefined\.app/);
   assert.match(script, /detect_signing_identity/);
   assert.match(script, /detect_development_team/);
+  assert.match(script, /HNRefined \(macOS\)/);
+  assert.match(script, /HNRefined \(iOS\)/);
+  assert.match(script, /sync_extension_resources/);
+  assert.match(script, /rsync -a --delete/);
   assert.match(script, /DEVELOPMENT_TEAM=\$team/);
   assert.match(script, /CODE_SIGN_IDENTITY=Apple Development/);
   assert.match(script, /verify_installed_app_signature/);
@@ -35,6 +39,7 @@ test("Safari development workflow avoids automatic Safari restarts", () => {
 
 test("npm exposes the Safari development workflow", () => {
   assert.equal(packageJson.scripts["safari:reinstall"], "bash scripts/safari-dev.sh reinstall");
+  assert.equal(packageJson.scripts["safari:build:ios"], "bash scripts/safari-dev.sh build-ios");
   assert.equal(packageJson.scripts["safari:status"], "bash scripts/safari-dev.sh status");
   assert.equal(packageJson.scripts["safari:doctor"], "bash scripts/safari-dev.sh doctor");
   assert.equal(packageJson.scripts["safari:open"], "bash scripts/safari-dev.sh open-safari");

@@ -9,12 +9,20 @@ Hacker News behavior and information architecture.
 ## Current Implementation
 
 - Host scope is limited to `https://news.ycombinator.com/*`.
+- First-version release scope includes iOS and iPadOS Safari extension support,
+  not only macOS Safari.
 - The extension stores only local presentation preferences.
 - No remote code, remote themes, analytics, arbitrary CSS, or third-party
   runtime resources are loaded.
 - Default desktop presentation is `Comfortable`.
 - Mobile responsive and standalone/PWA-like CSS rules are implemented for normal
   Safari browsing surfaces.
+- The Xcode wrapper contains separate iOS, iPadOS, and macOS Safari extension
+  targets generated from the Safari WebExtension converter. The repository-local
+  build workflow syncs `extension/` into the Xcode wrapper before building.
+- iOS simulator build, install, and host-app launch were verified on iPhone 17
+  Pro / iOS 26.3. Safari extension enabling and live Hacker News page behavior
+  on iOS/iPadOS still require real Settings/Safari verification.
 - Theme, font, density, width, and external story-link target preferences
   exist.
 - Mobile responsive layout is enabled by default instead of exposed as a
@@ -110,8 +118,9 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Verify iOS and iPadOS behavior on simulator or device, including whether
-  Safari extensions apply inside home-screen web app containers.
+- Verify iOS and iPadOS behavior on simulator or device, including extension
+  enabling, popup/options behavior, mobile HN pages, and whether Safari
+  extensions apply inside home-screen web app containers.
 - Verify Private Browsing behavior when the extension is allowed.
 - Refresh App Store review, signing, privacy label, and distribution notes
   against current Apple documentation before public release.

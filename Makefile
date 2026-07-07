@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help check format lint test build-themes build-icons safari-build safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
+.PHONY: help check format lint test build-themes build-icons safari-build safari-build-ios safari-install safari-reinstall safari-status safari-doctor safari-unregister safari-open
 
 help:
 	@printf '%s\n' \
@@ -15,6 +15,7 @@ help:
 		'' \
 		'  make safari-reinstall   Build, install, register, and open HN in Safari' \
 		'  make safari-build       Build the signed local Safari host app' \
+		'  make safari-build-ios   Build the iOS/iPadOS Safari host app' \
 		'  make safari-install     Install and register the last built app' \
 		'  make safari-status      Show signing, process, and extension state' \
 		'  make safari-doctor      Run Safari workflow sanity checks' \
@@ -41,6 +42,9 @@ build-icons:
 
 safari-build:
 	npm run safari:build
+
+safari-build-ios:
+	npm run safari:build:ios
 
 safari-install:
 	npm run safari:install
