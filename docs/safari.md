@@ -72,8 +72,9 @@ the certificate, and keeps personal team ids out of committed project settings.
 For Safari runtime behavior, run `make safari-reinstall` and `make
 safari-doctor`, then test the real Safari extension UI. Automated tests cover
 the WebExtension source, but Safari toolbar popup behavior, extension
-registration, Private Browsing, iOS, and home-screen behavior still require real
-Safari checks before making product claims.
+registration, Private Browsing, and home-screen behavior still require real
+Safari checks before making product claims. Current iPhone and iPad simulator
+evidence is recorded below.
 
 ## Safari Behavior Checks
 
@@ -85,10 +86,9 @@ Verify against current Apple documentation before making product claims about:
 - Private Browsing behavior.
 - Whether extensions run inside iOS home-screen web app containers.
 
-The repository now includes iOS/iPadOS targets, but does not yet claim the
-runtime behaviors above as verified. Record the Apple documentation version,
-Safari version, platform version, and device or simulator used when completing
-those checks.
+The repository now includes iOS/iPadOS targets. Record the Apple documentation
+version, Safari version, platform version, and device or simulator used when
+completing checks that do not yet have runtime evidence.
 
 Current iOS evidence:
 
@@ -107,5 +107,14 @@ Current iOS evidence:
   submit, and login pages, including system dark appearance. The standalone
   login form relies on the mobile form-width guard to avoid iOS Safari autofocus
   panning/zooming horizontally.
-- Popup and options behavior, iPad layout, and home-screen web app container
-  behavior are still pending runtime checks.
+- iPad Air 11-inch / iOS 26.3 simulator checks covered logged-out news,
+  item/comment, and submit/login pages plus logged-in news, submit, threads,
+  profile/settings, and item/comment pages. Portrait and landscape layouts and
+  fixed light and dark themes were checked. The standalone form spacing rule
+  applies outside the phone breakpoint so iPad login-style forms retain viewport
+  padding.
+- The iPad popup and options page fit in portrait and landscape. Theme changes
+  from both surfaces updated an already-open Hacker News tab without a manual
+  refresh. The normal iPad Safari page, popup, and options acceptance pass is
+  complete.
+- Home-screen web app container behavior is still pending a runtime check.

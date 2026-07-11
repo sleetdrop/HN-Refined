@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-07
+Last updated: 2026-07-11
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -28,8 +28,15 @@ Hacker News behavior and information architecture.
   item/comment, submit, and login surfaces, including system dark appearance.
   The login-style forms need the mobile form-width guard because iOS Safari
   autofocus can otherwise pan/zoom horizontally on Hacker News' standalone login
-  markup. iPad layout, popup/options behavior, and home-screen web app container
-  behavior still require verification.
+  markup. iPad Air 11-inch / iOS 26.3 simulator checks covered logged-out news,
+  item/comment, and submit/login pages plus logged-in news, submit, threads,
+  profile/settings, and item/comment pages. Portrait and landscape layouts and
+  fixed light and dark themes were checked. Standalone form spacing now applies
+  beyond the phone breakpoint so iPad forms do not touch the viewport edge. The
+  popup and options page fit in both orientations, and popup and options
+  preference changes update open Hacker News tabs without a manual refresh. The
+  normal iPad Safari page, popup, and options acceptance pass is complete;
+  home-screen web app container behavior remains a separate verification task.
 - Theme, font, density, width, and external story-link target preferences
   exist.
 - Mobile responsive layout is enabled by default instead of exposed as a
@@ -125,10 +132,10 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Verify remaining iOS and iPadOS behavior on simulator or device, including
-  iPad layout, popup/options behavior, and whether Safari extensions apply
-  inside home-screen web app containers. iPhone Safari page injection and the
-  `news.ycombinator.com` permission flow have current simulator evidence.
+- Verify whether Safari extensions apply inside iOS/iPadOS home-screen web app
+  containers. iPhone page injection and the permission flow, plus logged-out and
+  logged-in iPad layout and popup/options behavior, have current simulator
+  evidence.
 - Verify Private Browsing behavior when the extension is allowed.
 - Refresh App Store review, signing, privacy label, and distribution notes
   against current Apple documentation before public release.

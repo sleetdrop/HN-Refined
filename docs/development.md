@@ -144,6 +144,11 @@ the human maintainer to approve it. Keep build output in repo-local
 `.build/xcode-derived-data` and do not register arbitrary `/tmp` or DerivedData
 apps with Safari.
 
+Installing a rebuilt app on a simulator can reset the Safari extension toggle
+or return the site permission to `Ask`. After reinstalling, recheck `Allow
+Extension` and set `news.ycombinator.com` to `Allow` before judging page
+injection or popup behavior.
+
 ## Safari Popup Preference Refresh
 
 Do not regress popup theme changes back to active-tab-only messaging. Safari's

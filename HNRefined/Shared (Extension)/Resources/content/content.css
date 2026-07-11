@@ -259,6 +259,12 @@ html[data-hnr-density="comfortable"] .comtr {
   height: auto;
 }
 
+html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 16px;
+}
+
 @media (max-width: 700px) {
   html[data-hnr-mobile="auto"] body {
     padding-bottom: calc(72px + env(safe-area-inset-bottom));
@@ -349,12 +355,6 @@ html[data-hnr-density="comfortable"] .comtr {
 
   html[data-hnr-mobile="auto"] textarea {
     width: 100%;
-  }
-
-  html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
-    box-sizing: border-box;
-    min-height: 100vh;
-    padding: 16px;
   }
 
   html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) table,
