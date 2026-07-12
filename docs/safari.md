@@ -72,9 +72,8 @@ the certificate, and keeps personal team ids out of committed project settings.
 For Safari runtime behavior, run `make safari-reinstall` and `make
 safari-doctor`, then test the real Safari extension UI. Automated tests cover
 the WebExtension source, but Safari toolbar popup behavior, extension
-registration and home-screen behavior still require real Safari checks before
-making product claims. Current Private Browsing, iPhone, and iPad simulator
-evidence is recorded below.
+registration still requires real Safari checks before making product claims.
+Current Private Browsing, iPhone, and iPad simulator evidence is recorded below.
 
 ## Safari Behavior Checks
 
@@ -83,7 +82,6 @@ Verify against current Apple documentation before making product claims about:
 - Supported Safari WebExtension manifest version behavior.
 - Local development without paid Apple Developer Program distribution.
 - iOS and iPadOS extension enabling.
-- Whether extensions run inside iOS home-screen web app containers.
 
 The repository now includes iOS/iPadOS targets. Record the Apple documentation
 version, Safari version, platform version, and device or simulator used when
@@ -123,4 +121,11 @@ Current iOS evidence:
   theme refresh worked as expected. A stale iPad private tab briefly rendered
   blank even with private extension access disabled; navigating the tab away
   and back restored Hacker News, so this was not attributed to the extension.
-- Home-screen web app container behavior is still pending a runtime check.
+- HN Refined does not guarantee iOS or iPadOS Home Screen web apps. Apple
+  documents those web apps as independent app containers and documents Safari
+  extension management in Safari, but does not document an equivalent
+  extension-management surface for iOS/iPadOS Home Screen web apps. On iPhone 17
+  Pro / iOS 26.3 simulator, extension styling appeared in the Home Screen web
+  app, but the extension popup was unavailable and Safari preference changes did
+  not propagate, including after relaunch. Treat that behavior as incidental and
+  support normal Safari instead of adding a separate compatibility layer.

@@ -27,6 +27,10 @@ The default site permission can be `Ask`, but Safari may not show a prompt when
 you refresh Hacker News. If HN Refined does not appear on Hacker News, check
 that `news.ycombinator.com` is set to `Allow`, then reload the page.
 
+Home Screen web apps are not a supported iOS or iPadOS surface. HN Refined
+supports Hacker News opened in Safari; an added-to-Home-Screen copy may use an
+independent container without the extension popup or Safari preference state.
+
 ## Site compatibility
 
 HN Refined is a lightweight enhancement layer for Hacker News, not a separate

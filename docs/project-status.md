@@ -35,12 +35,17 @@ Hacker News behavior and information architecture.
   beyond the phone breakpoint so iPad forms do not touch the viewport edge. The
   popup and options page fit in both orientations, and popup and options
   preference changes update open Hacker News tabs without a manual refresh. The
-  normal iPad Safari page, popup, and options acceptance pass is complete;
-  home-screen web app container behavior remains a separate verification task.
+  normal iPad Safari page, popup, and options acceptance pass is complete.
 - Private Browsing acceptance is complete on iPhone 17 Pro / iOS 26.3, iPad Air
   11-inch / iOS 26.3, and macOS Safari. With `Allow in Private Browsing` and the
   Hacker News site permission enabled, page injection, popup/options access,
   local preferences, forms, and immediate theme refresh behaved as expected.
+- iOS/iPadOS Home Screen web apps are outside the supported iOS/iPadOS scope.
+  iPhone simulator testing showed extension styling could appear in the
+  independent web app container, but Safari preference changes and popup access
+  were unavailable there. Apple documents Home Screen web apps as independent
+  app containers and does not document an iOS/iPadOS extension-management UI
+  for them. Do not add compatibility code for this surface.
 - Theme, font, density, width, and external story-link target preferences
   exist.
 - Mobile responsive layout is enabled by default instead of exposed as a
@@ -136,10 +141,6 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Verify whether Safari extensions apply inside iOS/iPadOS home-screen web app
-  containers. iPhone page injection and the permission flow, plus logged-out and
-  logged-in iPad layout and popup/options behavior, have current simulator
-  evidence.
 - Refresh App Store review, signing, privacy label, and distribution notes
   against current Apple documentation before public release.
 - Add release/package preparation when the project is ready for App Store work.
