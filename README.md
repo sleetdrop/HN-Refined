@@ -21,6 +21,8 @@ Safari extension:
 3. Turn on `Allow Extension`.
 4. Under Permissions, set `news.ycombinator.com` to `Allow`.
 
+To use HN Refined in private tabs, also turn on `Allow in Private Browsing`.
+
 The default site permission can be `Ask`, but Safari may not show a prompt when
 you refresh Hacker News. If HN Refined does not appear on Hacker News, check
 that `news.ycombinator.com` is set to `Allow`, then reload the page.

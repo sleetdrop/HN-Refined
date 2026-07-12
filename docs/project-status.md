@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-11
+Last updated: 2026-07-12
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -37,6 +37,10 @@ Hacker News behavior and information architecture.
   preference changes update open Hacker News tabs without a manual refresh. The
   normal iPad Safari page, popup, and options acceptance pass is complete;
   home-screen web app container behavior remains a separate verification task.
+- Private Browsing acceptance is complete on iPhone 17 Pro / iOS 26.3, iPad Air
+  11-inch / iOS 26.3, and macOS Safari. With `Allow in Private Browsing` and the
+  Hacker News site permission enabled, page injection, popup/options access,
+  local preferences, forms, and immediate theme refresh behaved as expected.
 - Theme, font, density, width, and external story-link target preferences
   exist.
 - Mobile responsive layout is enabled by default instead of exposed as a
@@ -136,7 +140,6 @@ points for a fresh context:
   containers. iPhone page injection and the permission flow, plus logged-out and
   logged-in iPad layout and popup/options behavior, have current simulator
   evidence.
-- Verify Private Browsing behavior when the extension is allowed.
 - Refresh App Store review, signing, privacy label, and distribution notes
   against current Apple documentation before public release.
 - Add release/package preparation when the project is ready for App Store work.

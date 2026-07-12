@@ -72,8 +72,8 @@ the certificate, and keeps personal team ids out of committed project settings.
 For Safari runtime behavior, run `make safari-reinstall` and `make
 safari-doctor`, then test the real Safari extension UI. Automated tests cover
 the WebExtension source, but Safari toolbar popup behavior, extension
-registration, Private Browsing, and home-screen behavior still require real
-Safari checks before making product claims. Current iPhone and iPad simulator
+registration and home-screen behavior still require real Safari checks before
+making product claims. Current Private Browsing, iPhone, and iPad simulator
 evidence is recorded below.
 
 ## Safari Behavior Checks
@@ -83,7 +83,6 @@ Verify against current Apple documentation before making product claims about:
 - Supported Safari WebExtension manifest version behavior.
 - Local development without paid Apple Developer Program distribution.
 - iOS and iPadOS extension enabling.
-- Private Browsing behavior.
 - Whether extensions run inside iOS home-screen web app containers.
 
 The repository now includes iOS/iPadOS targets. Record the Apple documentation
@@ -117,4 +116,11 @@ Current iOS evidence:
   from both surfaces updated an already-open Hacker News tab without a manual
   refresh. The normal iPad Safari page, popup, and options acceptance pass is
   complete.
+- Private Browsing was checked on iPhone 17 Pro / iOS 26.3, iPad Air 11-inch /
+  iOS 26.3, and macOS Safari. `Allow Extension`, `Allow in Private Browsing`,
+  and the `news.ycombinator.com` permission must be enabled. Page injection,
+  popup/options access, local preference reads and writes, forms, and immediate
+  theme refresh worked as expected. A stale iPad private tab briefly rendered
+  blank even with private extension access disabled; navigating the tab away
+  and back restored Hacker News, so this was not attributed to the extension.
 - Home-screen web app container behavior is still pending a runtime check.

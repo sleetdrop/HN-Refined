@@ -23,7 +23,9 @@ Use this checklist before preparing App Store submission materials. It is not a 
   versions. iOS/iPadOS support is required for the first release. On iOS,
   confirm both `Allow Extension` and `news.ycombinator.com` set to `Allow`; do
   not assume Safari will prompt when the site permission remains `Ask`.
-- Verify Private Browsing behavior when the extension is allowed, including storage fallback behavior.
+- Private Browsing runtime behavior has been verified on current iPhone, iPad,
+  and macOS test environments. Recheck it on release-candidate builds, including
+  local preference behavior.
 - Verify whether extensions run inside iOS home-screen web app containers. If they do not, document that limitation and keep normal mobile Safari support as the fallback.
 - Confirm disabling the Safari extension restores the original Hacker News site behavior.
 - Confirm external story links open in the current tab by default and only change when the user enables the new-tab preference.

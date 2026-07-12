@@ -101,6 +101,10 @@ test("docs keep iOS and iPadOS in first-version release scope", () => {
   assert.match(status, /popup and options\s+preference changes/);
   assert.match(safari, /iPad Air 11-inch/);
   assert.match(safari, /logged-in/);
+  assert.match(status, /Private Browsing acceptance.*complete/s);
+  assert.match(safari, /Allow in Private Browsing/);
+  assert.match(safari, /iPhone 17 Pro.*iPad Air 11-inch.*macOS/s);
+  assert.match(readme, /Allow in Private Browsing/);
   assert.match(readme, /Enabling on iPhone and iPad/);
   assert.match(readme, /Allow Extension/);
   assert.match(readme, /news\.ycombinator\.com` is set to `Allow/);
