@@ -7,6 +7,7 @@ Connect before submission.
 
 - Name: `HN Refined`
 - Version: `1.0`
+- Bundle ID: `net.vetcafe.hnrefined`
 - Category: Utilities
 - Price: Free
 - Support URL: `https://github.com/sleetdrop/HN-Refined/issues`

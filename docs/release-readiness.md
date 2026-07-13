@@ -13,7 +13,7 @@ Last reviewed: 2026-07-13
 | Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                            |
 | Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                      |
 | Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                  |
-| App record         | Human action | Create the App Store Connect record and confirm the final Bundle ID.                                 |
+| App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.     |
 | Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                            |
 | Archive validation | Pending      | Archive the release configuration, validate, and inspect warnings before upload.                     |
 | Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                    |

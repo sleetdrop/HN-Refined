@@ -21,16 +21,17 @@ That caused duplicate and stale extension registrations during development.
 
 ## Local Wrapper Generation
 
-The original macOS-only Safari wrapper in `HNRefined/` was generated locally with:
+To regenerate a macOS-only wrapper with the final Bundle ID, use:
 
 ```bash
-xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier org.hnrefined.HNRefined --macos-only --no-open --no-prompt
+xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier net.vetcafe.hnrefined --macos-only --no-open --no-prompt
 ```
 
-The current first-release wrapper was rebuilt for all platforms with:
+To rebuild the first-release wrapper for all supported platforms with the final
+Bundle ID, use:
 
 ```bash
-xcrun safari-web-extension-converter extension --rebuild-project HNRefined/HNRefined.xcodeproj --project-location .build/ios-rebuild-preview --app-name HNRefined --bundle-identifier org.hnrefined.HNRefined --swift --no-open --no-prompt --force
+xcrun safari-web-extension-converter extension --rebuild-project HNRefined/HNRefined.xcodeproj --project-location .build/ios-rebuild-preview --app-name HNRefined --bundle-identifier net.vetcafe.hnrefined --swift --no-open --no-prompt --force
 ```
 
 The rebuilt project contains `HNRefined (iOS)` and `HNRefined (macOS)` schemes.

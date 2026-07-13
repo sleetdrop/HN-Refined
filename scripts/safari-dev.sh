@@ -10,7 +10,10 @@ DERIVED_DATA_PATH="${HNREFINED_DERIVED_DATA:-$ROOT_DIR/.build/xcode-derived-data
 INSTALL_APP_PATH="${HNREFINED_INSTALL_APP:-$HOME/Applications/HNRefined.app}"
 PRODUCT_APP_PATH="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION/HNRefined.app"
 IOS_DESTINATION="${HNREFINED_IOS_DESTINATION:-generic/platform=iOS Simulator}"
-EXTENSION_ID="org.hnrefined.HNRefined.Extension"
+APP_ID="net.vetcafe.hnrefined"
+EXTENSION_ID="net.vetcafe.hnrefined.extension"
+LEGACY_APP_ID="org.hnrefined.HNRefined"
+LEGACY_EXTENSION_ID="org.hnrefined.HNRefined.Extension"
 PLUGIN_TYPE="com.apple.Safari.web-extension"
 
 usage() {
@@ -115,7 +118,10 @@ run_ios_build() {
 }
 
 stop_host_app() {
-  osascript -e 'tell application id "org.hnrefined.HNRefined" to quit' >/dev/null 2>&1 || true
+  local app_id
+  for app_id in "$APP_ID" "$LEGACY_APP_ID"; do
+    osascript -e "tell application id \"$app_id\" to quit" >/dev/null 2>&1 || true
+  done
 }
 
 verify_installed_app_signature() {
@@ -126,7 +132,9 @@ verify_installed_app_signature() {
 unregister_hnrefined() {
   log "Removing existing HN Refined Safari extension registrations"
   local paths
-  paths="$(pluginkit -m -D -v -p "$PLUGIN_TYPE" 2>/dev/null | awk -F '\t' "/$EXTENSION_ID/ {print \$4}")"
+  paths="$(pluginkit -m -D -v -p "$PLUGIN_TYPE" 2>/dev/null \
+    | awk -F '\t' -v current="$EXTENSION_ID" -v legacy="$LEGACY_EXTENSION_ID" \
+      'index($0, current) || index($0, legacy) {print $4}')"
 
   if [[ -z "$paths" ]]; then
     log "No existing HN Refined registrations found"

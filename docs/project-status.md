@@ -71,6 +71,9 @@ Hacker News behavior and information architecture.
   security policies are present, and the project uses the MIT License.
 - First-release public version surfaces are aligned at `1.0.0`; Xcode uses
   marketing version `1.0` and build number `1`.
+- The final first-release Bundle IDs use the maintainer-owned `vetcafe.net`
+  namespace: `net.vetcafe.hnrefined` for the app and
+  `net.vetcafe.hnrefined.extension` for the Safari extension.
 
 ## Current Workflow
 
@@ -146,7 +149,7 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Create the App Store Connect record, confirm the final Bundle ID and
+- Register the explicit App IDs, create the App Store Connect record, confirm
   distribution signing, validate an archive, and capture release screenshots.
 - Keep public README and App Store copy clear that HN Refined depends on the
   traditional Hacker News HTML structure, documents the iOS/iPadOS

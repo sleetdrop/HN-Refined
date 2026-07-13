@@ -6,6 +6,8 @@ The current audit and metadata draft are in `docs/release-readiness.md` and
 `docs/app-store-metadata.md`.
 
 - Keep extension permissions narrow and limited to Hacker News.
+- Register and use the final explicit Bundle IDs: `net.vetcafe.hnrefined` for
+  the app and `net.vetcafe.hnrefined.extension` for the Safari extension.
 - Confirm the manifest and host permissions match the first-version scope.
 - Confirm `activeTab` is used only for user-initiated popup preference updates
   and that preference messages target only Hacker News tabs in the current

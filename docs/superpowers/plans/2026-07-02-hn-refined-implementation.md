@@ -1518,7 +1518,7 @@ Expected: both commands succeed. If `safari-web-extension-converter` is missing,
 Run the converter from the repository root:
 
 ```bash
-xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier org.hnrefined.HNRefined --macos-only
+xcrun safari-web-extension-converter extension --project-location . --app-name HNRefined --bundle-identifier net.vetcafe.hnrefined --macos-only
 ```
 
 Expected: an Xcode project is created under `HNRefined/` or the converter reports the exact path it wrote.

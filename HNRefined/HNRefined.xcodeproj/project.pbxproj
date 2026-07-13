@@ -671,7 +671,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined.extension;
 				PRODUCT_NAME = "HNRefined Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -704,7 +704,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined.extension;
 				PRODUCT_NAME = "HNRefined Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -745,7 +745,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
 				PRODUCT_NAME = HNRefined;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -785,7 +785,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
 				PRODUCT_NAME = HNRefined;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -822,7 +822,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined.extension;
 				PRODUCT_NAME = "HNRefined Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -857,7 +857,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined.extension;
 				PRODUCT_NAME = "HNRefined Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -897,7 +897,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
 				PRODUCT_NAME = HNRefined;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
@@ -938,7 +938,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.hnrefined.HNRefined;
+				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
 				PRODUCT_NAME = HNRefined;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;

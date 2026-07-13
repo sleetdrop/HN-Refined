@@ -96,6 +96,11 @@ This builds into repo-local `.build/xcode-derived-data`, copies the app to
 entries, registers only that installed app, and opens Hacker News explicitly in
 Safari.
 
+The unregister step intentionally recognizes the pre-release
+`org.hnrefined.HNRefined` identifiers as well as the final
+`net.vetcafe.hnrefined` identifiers. Keep that narrow migration cleanup until
+old local development registrations are no longer relevant.
+
 Do not register builds from `/tmp` or random Xcode DerivedData paths. Those
 paths make Safari keep stale extension registrations and make toolbar popup
 debugging unreliable.

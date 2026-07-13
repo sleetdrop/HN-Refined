@@ -6,6 +6,8 @@ const script = fs.readFileSync("scripts/safari-dev.sh", "utf8");
 const developmentDoc = fs.readFileSync("docs/development.md", "utf8");
 const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const gitignore = fs.readFileSync(".gitignore", "utf8");
+const xcodeProject = fs.readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
+const hostViewController = fs.readFileSync("HNRefined/Shared (App)/ViewController.swift", "utf8");
 
 test("Safari development workflow uses stable local paths", () => {
   assert.match(script, /\.build\/xcode-derived-data/);
@@ -35,6 +37,26 @@ test("Safari development workflow uses stable local paths", () => {
 test("Safari development workflow avoids automatic Safari restarts", () => {
   assert.doesNotMatch(script, /tell application "Safari" to quit/);
   assert.doesNotMatch(script, /killall Safari/);
+});
+
+test("app and extension use the final vetcafe.net bundle identifiers", () => {
+  const appBundleId = "net.vetcafe.hnrefined";
+  const extensionBundleId = `${appBundleId}.extension`;
+
+  assert.ok(xcodeProject.includes(`PRODUCT_BUNDLE_IDENTIFIER = ${appBundleId};`));
+  assert.ok(xcodeProject.includes(`PRODUCT_BUNDLE_IDENTIFIER = ${extensionBundleId};`));
+  assert.ok(script.includes(`APP_ID="${appBundleId}"`));
+  assert.ok(script.includes(`EXTENSION_ID="${extensionBundleId}"`));
+  assert.ok(hostViewController.includes(`"${extensionBundleId}"`));
+  assert.doesNotMatch(xcodeProject, /org\.hnrefined/);
+  assert.doesNotMatch(hostViewController, /org\.hnrefined/);
+});
+
+test("local reinstall removes registrations from the pre-release bundle identifiers", () => {
+  assert.match(script, /LEGACY_APP_ID="org\.hnrefined\.HNRefined"/);
+  assert.match(script, /LEGACY_EXTENSION_ID="org\.hnrefined\.HNRefined\.Extension"/);
+  assert.match(script, /for app_id in "\$APP_ID" "\$LEGACY_APP_ID"/);
+  assert.match(script, /-v legacy="\$LEGACY_EXTENSION_ID"/);
 });
 
 test("npm exposes the Safari development workflow", () => {
