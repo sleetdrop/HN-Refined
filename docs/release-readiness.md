@@ -15,7 +15,8 @@ Last reviewed: 2026-07-13
 | Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                  |
 | App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.     |
 | Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                            |
-| Archive validation | Pending      | Archive the release configuration, validate, and inspect warnings before upload.                     |
+| Archive validation | Partial      | Unsigned macOS Release archive passes; iOS and signed App Store validation remain.                   |
+| Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                 |
 | Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                    |
 | Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                   |
 | Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                            |
@@ -55,3 +56,18 @@ Recheck these sources immediately before submission:
 | Release notes              | Pending  | Draft the first release notes after version alignment and archive validation.      |
 
 The source is ready to publish under the MIT License.
+
+## Pre-membership Release Evidence
+
+- The unsigned macOS Release archive succeeds, embeds the Safari extension,
+  declares the Utilities category, and contains both `arm64` and `x86_64`
+  binaries.
+- The iOS device archive compiles into the `iphoneos` Release pipeline but must
+  be rerun outside the agent sandbox because `actool` requires CoreSimulator
+  services even for the generic device archive.
+- A free Xcode Personal Team can install the app on the maintainer's iPhone for
+  a multi-day first-user test. Its provisioning profile expires after seven
+  days and can be renewed by rebuilding and reinstalling.
+- Paid membership is still required for App Store signing, upload validation,
+  TestFlight, and submission. Do not purchase it until the iOS archive and
+  physical-device burn-in pass.

@@ -175,3 +175,12 @@ test("first release version surfaces stay aligned", () => {
   assert.ok(buildVersions.length > 0);
   assert.ok(buildVersions.every((match) => match[1] === "1"));
 });
+
+test("macOS release metadata declares the Utilities App Store category", () => {
+  const xcodeProject = read("HNRefined/HNRefined.xcodeproj/project.pbxproj");
+  const categories = xcodeProject.match(
+    /INFOPLIST_KEY_LSApplicationCategoryType = "public\.app-category\.utilities";/g,
+  );
+
+  assert.equal(categories?.length, 2);
+});

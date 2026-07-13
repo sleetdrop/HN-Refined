@@ -28,6 +28,9 @@ The current audit and metadata draft are in `docs/release-readiness.md` and
   versions. iOS/iPadOS support is required for the first release. On iOS,
   confirm both `Allow Extension` and `news.ycombinator.com` set to `Allow`; do
   not assume Safari will prompt when the site permission remains `Ask`.
+- Before purchasing the developer membership, install the current Release
+  candidate on the maintainer's iPhone with a free Xcode Personal Team and use
+  it for several days as the primary Hacker News browsing path.
 - Private Browsing runtime behavior has been verified on current iPhone, iPad,
   and macOS test environments. Recheck it on release-candidate builds, including
   local preference behavior.
