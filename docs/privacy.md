@@ -20,3 +20,6 @@ Hacker News tabs in the current Safari window. HN Refined does not use this
 permission to inspect unrelated pages or collect browsing history.
 
 Before release, implementation must verify current Safari and App Store privacy requirements against current Apple documentation.
+
+Questions about this policy can be sent to `sleetdrop@gmail.com`. Security issues
+should follow `SECURITY.md` instead of using a public issue.

@@ -8,10 +8,9 @@ version and the default branch.
 
 ## Reporting a vulnerability
 
-Do not open a public issue for a suspected vulnerability. After the GitHub
-repository is published, use its private security advisory reporting flow. If
-private reporting is unavailable, contact the maintainer privately through the
-support channel listed on the App Store product page.
+Do not open a public issue for a suspected vulnerability. Use the repository's
+[private security advisory flow](https://github.com/sleetdrop/HN-Refined/security/advisories/new).
+If private reporting is unavailable, email `sleetdrop@gmail.com`.
 
 Include the affected version, platform, reproduction steps, impact, and any
 suggested mitigation. Do not include passwords, Hacker News session data, or

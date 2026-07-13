@@ -146,9 +146,11 @@ test("release docs keep App Store and open-source blockers explicit", () => {
   assert.match(contributing, /canonical WebExtension source/);
   assert.match(security, /Do not open a public issue/);
   assert.match(readiness, /License\s+\| Ready/);
-  assert.match(readiness, /Privacy policy URL\s+\| Blocked/);
+  assert.match(readiness, /Privacy policy URL\s+\| Ready/);
   assert.match(readiness, /Version alignment\s+\| Pending/);
   assert.match(metadata, /No, this app does not collect data/);
   assert.match(metadata, /Home Screen web apps are not supported/);
   assert.match(read("LICENSE"), /Copyright \(c\) 2026 HN Refined contributors/);
+  assert.match(metadata, /github\.com\/sleetdrop\/HN-Refined\/issues/);
+  assert.match(security, /sleetdrop@gmail\.com/);
 });

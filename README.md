@@ -42,8 +42,9 @@ markup changes around story title links by falling back from the current
 `.titleline` class to the surrounding story row structure, but it does not run a
 large compatibility engine or actively detect broad Hacker News redesigns. If a
 future Hacker News change makes the page look wrong, disable the Safari
-extension temporarily and report it with a GitHub issue. Developers are welcome
-to send a pull request with a small, auditable fix.
+extension temporarily and
+[open a GitHub issue](https://github.com/sleetdrop/HN-Refined/issues). Developers
+are welcome to send a pull request with a small, auditable fix.
 
 Purely static information pages, such as FAQ, guidelines, security, and legal
 pages, are outside the first-version styling target. Safari may also open some

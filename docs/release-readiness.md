@@ -11,7 +11,7 @@ Last reviewed: 2026-07-13
 | Host permissions   | Ready        | Limited to `https://news.ycombinator.com/*`.                                                         |
 | Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                |
 | Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                            |
-| Privacy policy URL | Blocked      | Publish `docs/privacy.md` at a stable public URL.                                                    |
+| Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                      |
 | Version alignment  | Pending      | Align WebExtension/package `0.1.0` with Xcode marketing version `1.0` before archive.                |
 | App record         | Human action | Create the App Store Connect record and confirm the final Bundle ID.                                 |
 | Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                            |
@@ -40,19 +40,18 @@ Recheck these sources immediately before submission:
 
 ## Open Source Audit
 
-| Area                       | Status                 | Evidence or next action                                                            |
-| -------------------------- | ---------------------- | ---------------------------------------------------------------------------------- |
-| License                    | Ready                  | MIT License in `LICENSE`.                                                          |
-| Contribution guide         | Ready                  | `CONTRIBUTING.md`.                                                                 |
-| Security reporting         | Ready with placeholder | `SECURITY.md`; enable GitHub private vulnerability reporting after publication.    |
-| Code of conduct            | Optional               | Add one if community participation grows.                                          |
-| CI                         | Ready                  | GitHub Actions runs `make check` with read-only repository permissions.            |
-| Reproducible dependencies  | Ready                  | `package-lock.json` is committed and CI can use the locked dependency graph.       |
-| Generated/source boundary  | Ready                  | `extension/` is canonical; Xcode resources are synchronized by repository tooling. |
-| Sensitive committed values | Ready                  | No personal team ID, signing identity, or maintainer email is tracked.             |
-| Public repository          | Blocked                | No Git remote is configured. Create the public repository and add its remote.      |
-| Issue and PR templates     | Pending                | Add after the public repository URL and support policy are final.                  |
-| Release notes              | Pending                | Draft the first release notes after version alignment and archive validation.      |
+| Area                       | Status   | Evidence or next action                                                            |
+| -------------------------- | -------- | ---------------------------------------------------------------------------------- |
+| License                    | Ready    | MIT License in `LICENSE`.                                                          |
+| Contribution guide         | Ready    | `CONTRIBUTING.md`.                                                                 |
+| Security reporting         | Ready    | GitHub private advisory URL and fallback email are documented.                     |
+| Code of conduct            | Optional | Add one if community participation grows.                                          |
+| CI                         | Ready    | GitHub Actions runs `make check` with read-only repository permissions.            |
+| Reproducible dependencies  | Ready    | `package-lock.json` is committed and CI can use the locked dependency graph.       |
+| Generated/source boundary  | Ready    | `extension/` is canonical; Xcode resources are synchronized by repository tooling. |
+| Sensitive committed values | Ready    | No personal Apple team ID, signing identity, or machine path is tracked.           |
+| Public repository          | Ready    | `https://github.com/sleetdrop/HN-Refined`.                                         |
+| Issue and PR templates     | Ready    | GitHub issue forms and pull request template are committed.                        |
+| Release notes              | Pending  | Draft the first release notes after version alignment and archive validation.      |
 
-The source is ready to publish under the MIT License after the public repository
-and support channels are created.
+The source is ready to publish under the MIT License.

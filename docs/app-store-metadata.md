@@ -1,7 +1,7 @@
 # App Store Metadata Draft
 
-This is a working draft for the first release. Replace every `TODO` URL before
-submission and verify field limits in App Store Connect.
+This is a working draft for the first release. Verify field limits in App Store
+Connect before submission.
 
 ## Product
 
@@ -9,8 +9,8 @@ submission and verify field limits in App Store Connect.
 - Version: `1.0`
 - Category: Utilities
 - Price: Free
-- Support URL: `TODO: public repository or support page URL`
-- Privacy policy URL: `TODO: public URL for docs/privacy.md`
+- Support URL: `https://github.com/sleetdrop/HN-Refined/issues`
+- Privacy policy URL: `https://github.com/sleetdrop/HN-Refined/blob/master/docs/privacy.md`
 
 ## Subtitle
 
@@ -67,7 +67,7 @@ advertising, remote configuration, remote code, or third-party SDKs.
 - Data collection: No, this app does not collect data.
 - Tracking: No.
 - Privacy choices URL: Not required because the app collects no data.
-- Privacy policy URL: Required; publish `docs/privacy.md` at a stable public URL.
+- Privacy policy URL: `https://github.com/sleetdrop/HN-Refined/blob/master/docs/privacy.md`
 
 ## Screenshot Plan
 

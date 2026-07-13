@@ -1,0 +1,46 @@
+name: Bug report
+description: Report a reproducible HN Refined problem
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not include passwords, session data, or other private information.
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      description: macOS, iOS, or iPadOS version and Safari version.
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Hacker News page
+      description: Page type or URL without private account parameters.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or additional context
+      description: Remove usernames, email addresses, and other private data first.
