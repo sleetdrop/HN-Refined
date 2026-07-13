@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-12
+Last updated: 2026-07-13
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -66,6 +66,9 @@ Hacker News behavior and information architecture.
 - App icon uses the full C4 design. Safari toolbar icons use the simplified
   B3f-2 small-size mark.
 - The macOS host app has a native status window instead of a blank window.
+- App Store and open-source readiness audits are tracked in
+  `docs/release-readiness.md`. Store metadata has a first draft, contribution and
+  security policies are present, and the project uses the MIT License.
 
 ## Current Workflow
 
@@ -141,9 +144,10 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Refresh App Store review, signing, privacy label, and distribution notes
-  against current Apple documentation before public release.
-- Add release/package preparation when the project is ready for App Store work.
+- Create the public repository, then replace support and privacy URL
+  placeholders.
+- Align release versions, create the App Store Connect record, validate an
+  archive, and capture release screenshots.
 - Keep public README and App Store copy clear that HN Refined depends on the
   traditional Hacker News HTML structure, documents the iOS/iPadOS
   `Allow Extension` plus `news.ycombinator.com` permission steps, and accepts

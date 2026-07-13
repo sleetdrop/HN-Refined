@@ -60,3 +60,9 @@ make check
 
 Start with `docs/project-status.md`, then see `docs/development.md` and
 `docs/safari.md`.
+
+## Contributing and security
+
+HN Refined is open-source software licensed under the MIT License. See
+`CONTRIBUTING.md` for the development and pull request workflow. Report security
+issues using the private process in `SECURITY.md`, not a public issue.

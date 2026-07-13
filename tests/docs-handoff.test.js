@@ -133,3 +133,22 @@ test("docs keep static information pages outside the styling target", () => {
   assert.match(development, /Do not add special selectors/);
   assert.match(status, /Do not add\s+compatibility code/);
 });
+
+test("release docs keep App Store and open-source blockers explicit", () => {
+  const readme = read("README.md");
+  const contributing = read("CONTRIBUTING.md");
+  const security = read("SECURITY.md");
+  const readiness = read("docs/release-readiness.md");
+  const metadata = read("docs/app-store-metadata.md");
+
+  assert.match(readme, /MIT License/);
+  assert.match(contributing, /make format && make check/);
+  assert.match(contributing, /canonical WebExtension source/);
+  assert.match(security, /Do not open a public issue/);
+  assert.match(readiness, /License\s+\| Ready/);
+  assert.match(readiness, /Privacy policy URL\s+\| Blocked/);
+  assert.match(readiness, /Version alignment\s+\| Pending/);
+  assert.match(metadata, /No, this app does not collect data/);
+  assert.match(metadata, /Home Screen web apps are not supported/);
+  assert.match(read("LICENSE"), /Copyright \(c\) 2026 HN Refined contributors/);
+});

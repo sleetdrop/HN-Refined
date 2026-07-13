@@ -2,6 +2,9 @@
 
 Use this checklist before preparing App Store submission materials. It is not a substitute for current Apple documentation or device testing.
 
+The current audit and metadata draft are in `docs/release-readiness.md` and
+`docs/app-store-metadata.md`.
+
 - Keep extension permissions narrow and limited to Hacker News.
 - Confirm the manifest and host permissions match the first-version scope.
 - Confirm `activeTab` is used only for user-initiated popup preference updates
