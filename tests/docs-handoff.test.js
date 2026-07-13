@@ -21,6 +21,7 @@ test("workflow docs and CI prefer Makefile entrypoints", () => {
   const safari = read("docs/safari.md");
   const themeContribution = read("docs/theme-contribution.md");
 
+  assert.match(ci, /npm ci/);
   assert.match(ci, /make check/);
   assert.match(readme, /make check/);
   assert.match(safari, /make safari-reinstall/);
