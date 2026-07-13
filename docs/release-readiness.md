@@ -12,11 +12,11 @@ Last reviewed: 2026-07-13
 | Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                |
 | Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                            |
 | Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                      |
-| Version alignment  | Pending      | Align WebExtension/package `0.1.0` with Xcode marketing version `1.0` before archive.                |
+| Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                  |
 | App record         | Human action | Create the App Store Connect record and confirm the final Bundle ID.                                 |
 | Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                            |
 | Archive validation | Pending      | Archive the release configuration, validate, and inspect warnings before upload.                     |
-| Store metadata     | Drafted      | Review `docs/app-store-metadata.md` and replace TODO URLs.                                           |
+| Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                    |
 | Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                   |
 | Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                            |
 

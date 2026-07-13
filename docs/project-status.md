@@ -69,6 +69,8 @@ Hacker News behavior and information architecture.
 - App Store and open-source readiness audits are tracked in
   `docs/release-readiness.md`. Store metadata has a first draft, contribution and
   security policies are present, and the project uses the MIT License.
+- First-release public version surfaces are aligned at `1.0.0`; Xcode uses
+  marketing version `1.0` and build number `1`.
 
 ## Current Workflow
 
@@ -144,10 +146,8 @@ points for a fresh context:
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
-- Create the public repository, then replace support and privacy URL
-  placeholders.
-- Align release versions, create the App Store Connect record, validate an
-  archive, and capture release screenshots.
+- Create the App Store Connect record, confirm the final Bundle ID and
+  distribution signing, validate an archive, and capture release screenshots.
 - Keep public README and App Store copy clear that HN Refined depends on the
   traditional Hacker News HTML structure, documents the iOS/iPadOS
   `Allow Extension` plus `news.ycombinator.com` permission steps, and accepts

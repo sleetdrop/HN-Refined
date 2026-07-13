@@ -150,10 +150,28 @@ test("release docs keep App Store and open-source blockers explicit", () => {
   assert.match(security, /Do not open a public issue/);
   assert.match(readiness, /License\s+\| Ready/);
   assert.match(readiness, /Privacy policy URL\s+\| Ready/);
-  assert.match(readiness, /Version alignment\s+\| Pending/);
+  assert.match(readiness, /Version alignment\s+\| Ready/);
   assert.match(metadata, /No, this app does not collect data/);
   assert.match(metadata, /Home Screen web apps are not supported/);
   assert.match(read("LICENSE"), /Copyright \(c\) 2026 HN Refined contributors/);
   assert.match(metadata, /github\.com\/sleetdrop\/HN-Refined\/issues/);
   assert.match(security, /sleetdrop@gmail\.com/);
+});
+
+test("first release version surfaces stay aligned", () => {
+  const packageJson = JSON.parse(read("package.json"));
+  const packageLock = JSON.parse(read("package-lock.json"));
+  const manifest = JSON.parse(read("extension/manifest.json"));
+  const xcodeProject = read("HNRefined/HNRefined.xcodeproj/project.pbxproj");
+  const marketingVersions = [...xcodeProject.matchAll(/MARKETING_VERSION = ([^;]+);/g)];
+  const buildVersions = [...xcodeProject.matchAll(/CURRENT_PROJECT_VERSION = ([^;]+);/g)];
+
+  assert.equal(packageJson.version, "1.0.0");
+  assert.equal(packageLock.version, "1.0.0");
+  assert.equal(packageLock.packages[""].version, "1.0.0");
+  assert.equal(manifest.version, "1.0.0");
+  assert.ok(marketingVersions.length > 0);
+  assert.ok(marketingVersions.every((match) => match[1] === "1.0"));
+  assert.ok(buildVersions.length > 0);
+  assert.ok(buildVersions.every((match) => match[1] === "1"));
 });
