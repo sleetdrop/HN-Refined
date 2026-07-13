@@ -151,8 +151,9 @@ points for a fresh context:
   can be sanity-checked for breakage, but they are not a required styling target.
 - Register the explicit App IDs, create the App Store Connect record, confirm
   distribution signing, validate an archive, and capture release screenshots.
-- Before purchasing the developer membership, complete the unsigned iOS
-  archive preflight and a multi-day physical-iPhone Personal Team burn-in.
+- Before purchasing the developer membership, complete a multi-day
+  physical-iPhone Personal Team burn-in. The unsigned iOS and macOS Release
+  archive preflights are complete.
 - Keep public README and App Store copy clear that HN Refined depends on the
   traditional Hacker News HTML structure, documents the iOS/iPadOS
   `Allow Extension` plus `news.ycombinator.com` permission steps, and accepts

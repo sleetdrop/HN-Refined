@@ -15,7 +15,7 @@ Last reviewed: 2026-07-13
 | Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                  |
 | App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.     |
 | Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                            |
-| Archive validation | Partial      | Unsigned macOS Release archive passes; iOS and signed App Store validation remain.                   |
+| Archive validation | Partial      | Unsigned iOS and macOS Release archives pass; signed App Store validation remains.                   |
 | Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                 |
 | Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                    |
 | Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                   |
@@ -62,9 +62,9 @@ The source is ready to publish under the MIT License.
 - The unsigned macOS Release archive succeeds, embeds the Safari extension,
   declares the Utilities category, and contains both `arm64` and `x86_64`
   binaries.
-- The iOS device archive compiles into the `iphoneos` Release pipeline but must
-  be rerun outside the agent sandbox because `actool` requires CoreSimulator
-  services even for the generic device archive.
+- The unsigned iOS Release archive succeeds outside the agent sandbox, embeds
+  the Safari extension, uses version `1.0` build `1`, and contains `arm64`
+  device binaries with the final Bundle IDs.
 - A free Xcode Personal Team can install the app on the maintainer's iPhone for
   a multi-day first-user test. Its provisioning profile expires after seven
   days and can be renewed by rebuilding and reinstalling.
