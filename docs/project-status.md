@@ -15,8 +15,8 @@ Hacker News behavior and information architecture.
 - No remote code, remote themes, analytics, arbitrary CSS, or third-party
   runtime resources are loaded.
 - Default desktop presentation is `Comfortable`.
-- Mobile responsive and standalone/PWA-like CSS rules are implemented for normal
-  Safari browsing surfaces.
+- Mobile responsive CSS rules are implemented for normal Safari browsing
+  surfaces.
 - The Xcode wrapper contains separate iOS, iPadOS, and macOS Safari extension
   targets generated from the Safari WebExtension converter. The repository-local
   build workflow syncs `extension/` into the Xcode wrapper before building.
@@ -27,11 +27,11 @@ Hacker News behavior and information architecture.
   Safari on iPhone 17 Pro / iOS 26.3 across news, newest, ask, show, jobs,
   item/comment, submit, and login surfaces, including system dark appearance.
   The login-style forms need the mobile form-width guard because iOS Safari
-  autofocus can otherwise pan/zoom horizontally on Hacker News' standalone login
+  autofocus can otherwise pan/zoom horizontally on Hacker News' top-level login
   markup. iPad Air 11-inch / iOS 26.3 simulator checks covered logged-out news,
   item/comment, and submit/login pages plus logged-in news, submit, threads,
   profile/settings, and item/comment pages. Portrait and landscape layouts and
-  fixed light and dark themes were checked. Standalone form spacing now applies
+  fixed light and dark themes were checked. Top-level form spacing now applies
   beyond the phone breakpoint so iPad forms do not touch the viewport edge. The
   popup and options page fit in both orientations, and popup and options
   preference changes update open Hacker News tabs without a manual refresh. The

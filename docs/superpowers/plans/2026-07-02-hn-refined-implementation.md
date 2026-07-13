@@ -1,8 +1,13 @@
 # HN Refined Implementation Plan
 
+> Historical document. PWA/Home Screen tasks and claims in this plan are
+> superseded. HN Refined supports iOS/iPadOS Safari, not Home Screen web app
+> containers. Use `docs/project-status.md` and `docs/development.md` for current
+> scope and workflow.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the first version of HN Refined as a CSS-first Safari Web Extension for Hacker News readability, with local preferences, structured themes, mobile/PWA-like adaptations, Private Browsing-safe defaults, and a narrow new-tab option.
+**Goal:** Build the first version of HN Refined as a CSS-first Safari Web Extension for Hacker News readability, with local preferences, structured themes, mobile Safari adaptations, Private Browsing-safe defaults, and a narrow new-tab option.
 
 **Architecture:** Create a vanilla WebExtension source tree first, then add Safari/Xcode packaging around it. Runtime behavior is split into CSS for presentation, a small content script for preference application and story-link behavior, and an extension options page for local settings. Theme contribution is build-time only: JSON tokens are validated and converted into CSS variables.
 
@@ -1310,13 +1315,6 @@ a:visited {
     overflow-wrap: anywhere;
   }
 }
-
-@media (display-mode: standalone) {
-  html[data-hnr-mobile="auto"] body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-}
 ```
 
 - [ ] **Step 4: Manual visual check**
@@ -1359,7 +1357,7 @@ HN Refined is a restrained Safari extension that improves Hacker News readabilit
 
 - Runs only on `news.ycombinator.com`.
 - Improves desktop readability with a comfortable default.
-- Improves mobile and PWA-like use with responsive CSS.
+- Improves iPhone and iPad Safari use with responsive CSS.
 - Provides local preferences for theme, font, density, width, mobile layout, and external story-link target behavior.
 - Does not collect data, load remote code, or modify Hacker News account actions.
 
@@ -1430,7 +1428,7 @@ Implementation must verify current Apple documentation for:
 - Local development without paid Apple Developer Program distribution.
 - iOS and iPadOS extension enabling.
 - Private Browsing behavior.
-- Whether extensions run inside iOS home-screen web app containers.
+- The documented exclusion of iOS/iPadOS Home Screen web app containers.
 
 ```
 
@@ -1608,7 +1606,7 @@ Confirm these are true before calling the implementation complete:
 - Theme files are JSON tokens only.
 - Content script is short, dependency-free, and only handles preferences plus external story-link target behavior.
 - Options UI stores local preferences and degrades safely if storage fails.
-- CSS includes desktop, mobile, comment-page, and standalone display rules.
+- CSS includes desktop, mobile Safari, and comment-page rules.
 - Docs cover privacy, Safari setup, theme contribution, and App Store preparation.
 
 - [ ] **Step 4: Commit final fixes**
@@ -1630,7 +1628,7 @@ Spec coverage:
 - Preference model is covered by Tasks 1, 5, and 6.
 - Link behavior is covered by Tasks 2 and 6.
 - Theme contribution is covered by Task 3 and Task 8.
-- Mobile, comments, standalone display, and Private Browsing behavior are covered by Tasks 5, 7, 8, 10, and 11.
+- Mobile Safari, comments, and Private Browsing behavior are covered by Tasks 5, 7, 8, 10, and 11.
 - Safety, privacy, and App Store readiness are covered by Tasks 4, 8, 9, 10, and 11.
 
 Red-flag scan:

@@ -375,10 +375,3 @@ html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
     max-width: calc(100vw - 32px);
   }
 }
-
-@media (display-mode: standalone) {
-  html[data-hnr-mobile="auto"] body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-}

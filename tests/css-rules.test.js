@@ -117,15 +117,16 @@ test("content CSS covers forms without special-casing static Hacker News pages",
   assert.match(css, /max-width:\s*calc\(100vw - 32px\)/);
 });
 
-test("standalone interactive forms keep page spacing beyond the phone breakpoint", () => {
+test("top-level interactive forms keep page spacing beyond the phone breakpoint", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const phoneMediaIndex = css.indexOf("@media (max-width: 700px)");
-  const standaloneFormIndex = css.indexOf(
+  const topLevelFormIndex = css.indexOf(
     'html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form)',
   );
 
   assert.ok(phoneMediaIndex >= 0);
-  assert.ok(standaloneFormIndex >= 0);
-  assert.ok(standaloneFormIndex < phoneMediaIndex);
-  assert.match(css.slice(standaloneFormIndex, phoneMediaIndex), /padding:\s*16px/);
+  assert.ok(topLevelFormIndex >= 0);
+  assert.ok(topLevelFormIndex < phoneMediaIndex);
+  assert.match(css.slice(topLevelFormIndex, phoneMediaIndex), /padding:\s*16px/);
+  assert.doesNotMatch(css, /display-mode:\s*standalone/);
 });

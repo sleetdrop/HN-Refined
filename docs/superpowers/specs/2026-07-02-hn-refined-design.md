@@ -3,6 +3,11 @@
 Date: 2026-07-02
 Status: Approved for planning
 
+> Historical document. The original PWA/Home Screen target in this design was
+> superseded after simulator validation and Apple documentation review. HN
+> Refined supports iOS/iPadOS Safari, not Home Screen web app containers. Use
+> `docs/project-status.md` as the current scope.
+
 ## Purpose
 
 HN Refined is an open-source Safari extension that improves the reading experience on Hacker News while preserving the original site's structure, habits, and low-friction web feel. It is an original-site enhancement, not a replacement Hacker News client.
@@ -45,7 +50,7 @@ Primary pieces:
   - Popup/options pages are the only settings surface.
 
 - `content.css`
-  - Owns baseline readability, desktop comfort rules, mobile responsive rules, PWA-like standalone adaptations, and comment-page readability.
+  - Owns baseline readability, desktop comfort rules, mobile Safari responsive rules, and comment-page readability.
   - Uses attributes on the root element, such as `html[data-hnr-theme]`, `html[data-hnr-density]`, and `html[data-hnr-font]`.
 
 - `content-script.js`
@@ -106,11 +111,11 @@ Preference responsibilities:
 - `readingWidth`
   - Controls desktop content width.
   - Defaults to `comfortable`.
-  - Does not control mobile layout; mobile layout is driven by viewport and display mode.
+  - Does not control mobile layout; mobile layout is driven by viewport width.
 
 - `mobileLayout`
   - Defaults to `auto`.
-  - Enables mobile responsive rules on narrow screens and PWA-like standalone windows.
+  - Enables mobile responsive rules on narrow Safari windows.
   - May offer `off` for users who want desktop-like density on narrow windows.
 
 - `openStoryLinksInNewTabs`
@@ -124,14 +129,13 @@ CSS application order:
 2. Theme variables.
 3. Desktop density, width, and font rules.
 4. Mobile responsive rules.
-5. Standalone display adaptations.
-6. Comment-page refinements.
+5. Comment-page refinements.
 
 This order keeps color, typography, layout density, mobile behavior, and link behavior independent.
 
-## Mobile and Home-Screen Behavior
+## Mobile Safari Behavior
 
-The first version includes mobile and PWA-like use as a core target.
+The first version includes iPhone and iPad Safari as core targets.
 
 For normal mobile Safari:
 
@@ -140,16 +144,8 @@ For normal mobile Safari:
 - Improve wrapping and spacing on story lists and comments.
 - Keep the original information hierarchy.
 
-For Hacker News added to the iOS home screen:
-
-- Add low-cost CSS adaptations for standalone display mode and iOS viewport quirks.
-- Account for safe-area insets so content is not obscured by status bars or the Home indicator.
-- Keep navigation and comment readability usable in app-like windows.
-- Do not add service workers, offline caching, notifications, install prompts, or a custom app shell.
-
-Technical risk:
-
-- Safari Web Extension injection behavior inside iOS home-screen web app containers must be tested on a real device or simulator. If extensions do not apply in that container, the extension falls back to normal mobile Safari optimization and the limitation must be documented.
+Home Screen web app containers are outside the supported surface. Normal mobile
+Safari is the fallback and supported environment.
 
 ## Private Browsing Behavior
 
@@ -280,7 +276,7 @@ Safari manual checks:
 - macOS Safari local developer extension loading.
 - iOS/iPadOS Safari extension enabling on simulator or device.
 - Private Browsing behavior when the extension is allowed.
-- iOS home-screen standalone behavior for Hacker News, with documented fallback if extension injection is not available.
+- iPhone and iPad Safari responsive behavior.
 - Extension disabled state restores original Hacker News.
 - External story links default to current-tab behavior and only change when the user enables the new-tab setting.
 
@@ -319,7 +315,6 @@ The extension should be able to truthfully say:
 These are implementation-time verification items, not product blockers:
 
 - Confirm the current Safari WebExtension API support and minimum version targets.
-- Confirm how Safari handles WebExtension injection in iOS home-screen web app containers.
 - Confirm Private Browsing storage behavior across macOS, iOS, and iPadOS.
 - Decide whether `storage.sync` is reliable enough for a future opt-in preference sync feature.
 - Choose the initial build toolchain after creating the Xcode project structure.

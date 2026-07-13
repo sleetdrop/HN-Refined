@@ -101,13 +101,13 @@ Current iOS evidence:
   to `Allow`.
 - Live Hacker News page injection and visual behavior were checked in iOS Safari
   on iPhone 17 Pro / iOS 26.3 for news, newest, ask, show, jobs, item/comment,
-  submit, and login pages, including system dark appearance. The standalone
+  submit, and login pages, including system dark appearance. The top-level
   login form relies on the mobile form-width guard to avoid iOS Safari autofocus
   panning/zooming horizontally.
 - iPad Air 11-inch / iOS 26.3 simulator checks covered logged-out news,
   item/comment, and submit/login pages plus logged-in news, submit, threads,
   profile/settings, and item/comment pages. Portrait and landscape layouts and
-  fixed light and dark themes were checked. The standalone form spacing rule
+  fixed light and dark themes were checked. The top-level form spacing rule
   applies outside the phone breakpoint so iPad login-style forms retain viewport
   padding.
 - The iPad popup and options page fit in portrait and landscape. Theme changes
@@ -121,7 +121,7 @@ Current iOS evidence:
   theme refresh worked as expected. A stale iPad private tab briefly rendered
   blank even with private extension access disabled; navigating the tab away
   and back restored Hacker News, so this was not attributed to the extension.
-- HN Refined does not guarantee iOS or iPadOS Home Screen web apps. Apple
+- HN Refined does not support iOS or iPadOS Home Screen web apps. Apple
   documents those web apps as independent app containers and documents Safari
   extension management in Safari, but does not document an equivalent
   extension-management surface for iOS/iPadOS Home Screen web apps. On iPhone 17

@@ -111,7 +111,7 @@ test("docs keep iOS and iPadOS in first-version release scope", () => {
   assert.match(readme, /news\.ycombinator\.com` is set to `Allow/);
   assert.match(readme, /Home Screen web apps are not a supported iOS or iPadOS surface/);
   assert.match(status, /Home Screen web apps.*outside the supported iOS\/iPadOS scope/s);
-  assert.match(safari, /does not guarantee iOS or iPadOS Home Screen web apps/);
+  assert.match(safari, /does not support iOS or iPadOS Home Screen web apps/);
   assert.match(
     appStoreChecklist,
     /disclose that iOS\/iPadOS Home Screen web apps are\s+unsupported/,
@@ -119,6 +119,8 @@ test("docs keep iOS and iPadOS in first-version release scope", () => {
   assert.match(appStoreChecklist, /iOS\/iPadOS support is required for the first release/);
   assert.match(appStoreChecklist, /Include iPhone and iPad enablement text/);
   assert.match(appStoreChecklist, /do\s+not assume Safari will prompt/);
+  assert.doesNotMatch(readme, /PWA-like/);
+  assert.doesNotMatch(status, /standalone\/PWA-like/);
 });
 
 test("docs keep static information pages outside the styling target", () => {

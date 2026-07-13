@@ -6,7 +6,7 @@ HN Refined is a restrained Safari extension that improves Hacker News readabilit
 
 - Runs only on `news.ycombinator.com`.
 - Improves desktop readability with a comfortable default.
-- Improves mobile and PWA-like use with responsive CSS.
+- Improves iPhone and iPad Safari readability with responsive CSS.
 - Provides local preferences for theme, font, density, width, and external
   story-link target behavior.
 - Does not collect data, load remote code, or modify Hacker News account actions.
