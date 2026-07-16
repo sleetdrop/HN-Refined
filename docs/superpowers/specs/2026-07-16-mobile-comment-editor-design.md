@@ -30,17 +30,26 @@ information pages, form submission, or Hacker News comment data.
 ## Interaction
 
 - The original textarea remains visible and focusable at all times.
-- Its initial mobile height is `4.5rem`, approximately three lines of writing.
-- On first focus, the textarea receives
-  `data-hnr-comment-editor-expanded="true"`.
-- The expanded height is `clamp(12rem, 40svh, 18rem)`.
-- The textarea remains expanded after losing focus. It resets naturally only
-  when Hacker News navigates, submits, or reloads the page.
-- Height changes have no animation. This avoids competing with Safari's virtual
-  keyboard and preserves the direct Hacker News feel.
+- Its initial mobile size is two native textarea rows.
+- First focus expands it once to six rows, a comfortable short-comment size on
+  iPhone. Later focus changes preserve the user's chosen size.
+- Two small controls appear immediately after the textarea: `▴` decreases its
+  rows and `▾` increases them.
+- Each control changes the size by four rows. The allowed range is 2 through 22
+  rows, producing the sequence `2, 6, 10, 14, 18, 22`.
+- The controls are native `button type="button"` elements with accessible names.
+  Their visible Unicode symbols remain typographically neutral instead of using
+  emoji artwork.
+- Touching a size control while editing preserves textarea focus and Safari's
+  virtual keyboard. Keyboard and assistive-technology activation still uses the
+  button's normal click behavior.
+- The selected row count lasts only for the current page. It resets naturally
+  when Hacker News navigates, submits, or reloads.
+- Size changes have no animation.
 
-No extra button, disclosure link, card, dialog, overlay, toolbar, or draft
-storage is introduced.
+No disclosure link, card, dialog, overlay, toolbar, or draft storage is
+introduced. The controls are styled like small Hacker News text affordances,
+not modern app chrome.
 
 ## Horizontal Spacing
 
@@ -55,15 +64,28 @@ measurement; do not add viewport-specific or font-specific selectors.
 
 ## JavaScript
 
-Add one delegated `focusin` listener to the existing content script. When the
-event target matches the comment-editor selector, set the expansion data
-attribute on that textarea.
+The existing content script enhances each matching textarea once. It records
+the original Hacker News `rows` value, initializes a separate mobile row count
+at 2, and inserts one control container immediately after the textarea. The
+implementation must not depend on Hacker News' optional `?` help link or on a
+specific table-row position.
+
+Use `window.matchMedia("(max-width: 700px)")` to apply the mobile row count. When
+the viewport is wider, restore the original Hacker News row count and hide the
+controls through CSS. Returning to the mobile breakpoint restores the user's
+current mobile row count.
+
+A delegated `focusin` listener changes the mobile row count from 2 to 6 only on
+the first focus. Control clicks clamp row changes to the 2 through 22 range and
+refresh the disabled state at each limit. A lightweight `pointerdown` guard
+prevents a touch adjustment from taking focus away from an active textarea;
+the `click` event remains the only event that changes rows.
 
 The listener must not:
 
 - Read or alter the comment text.
-- Prevent or synthesize focus, input, submit, or navigation events.
-- Insert or remove DOM elements.
+- Prevent or synthesize input, submit, or navigation events.
+- Replace or wrap the textarea.
 - Persist expansion state.
 - Depend on a specific table-row position or generated element id.
 
@@ -72,10 +94,10 @@ changes while binding to the form's semantic action and field name.
 
 ## Progressive Enhancement And Accessibility
 
-Without JavaScript, the original textarea and submit control remain usable; only
-the focus-driven expansion is absent. Keyboard focus, VoiceOver labeling, native
-text selection, spelling tools, and Hacker News submission semantics remain
-owned by Safari and the original page.
+Without JavaScript, the original Hacker News textarea size and submit control
+remain usable; only compact sizing and row controls are absent. Keyboard focus,
+VoiceOver labeling, native text selection, spelling tools, and Hacker News
+submission semantics remain owned by Safari and the original page.
 
 The compact state must not use `display: none`, `visibility: hidden`, clipping,
 or a custom replacement control.
@@ -85,22 +107,27 @@ or a custom replacement control.
 Automated checks must cover:
 
 - The selector accepts only comment-form textareas.
-- First focus adds the expansion attribute.
-- Repeated focus is harmless.
+- Mobile initialization uses 2 rows and preserves the original row count.
+- First focus changes 2 rows to 6 exactly once.
+- `▴` and `▾` change the size by four rows and clamp it to 2 through 22.
+- Control pointer interaction preserves an active textarea's focus.
+- Wider viewports restore the original Hacker News rows; returning to mobile
+  restores the selected mobile rows.
 - Unrelated textareas are unchanged.
-- Mobile CSS contains the compact height, expanded height, and right-gutter
-  width adjustment.
+- Mobile CSS contains the right-gutter width adjustment and HN-style control
+  presentation.
 - Desktop rules do not compact the comment editor.
 - The Xcode resource copy remains synchronized with `extension/`.
 
 Runtime checks must cover:
 
-- iPhone Safari before focus, while editing, and after focus leaves the field.
+- iPhone Safari at 2 rows, first-focus 6 rows, and each size limit.
 - Symmetric left and right visual gutters on iPhone 17.
 - Virtual-keyboard appearance without horizontal overflow or unexpected page
   jumps.
-- Comment text remains intact after focus changes and submits through Hacker
-  News normally.
+- Size controls do not dismiss the keyboard while editing.
+- Comment text remains intact across size and focus changes and submits through
+  Hacker News normally.
 - Light and dark themes and at least two font presets.
 - A desktop item page remains unchanged.
 
