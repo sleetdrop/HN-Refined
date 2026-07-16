@@ -18,6 +18,14 @@ test("content CSS keeps top navigation links on the active header color", () => 
   assert.match(css, /#hnmain\s+\.pagetop\s+a:visited/);
 });
 
+test("font presets override Hacker News comment fonts", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  for (const preset of ["system-sans", "hn-classic", "serif-reading", "mono-ish"]) {
+    assert.match(css, new RegExp(`html\\[data-hnr-font="${preset}"\\]\\s+\\.comment\\s*\\{`));
+  }
+});
+
 test("content CSS overrides Hacker News footer link colors", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
