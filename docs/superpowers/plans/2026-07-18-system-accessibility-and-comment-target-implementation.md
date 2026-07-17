@@ -237,7 +237,7 @@ Expected: the JavaScript diff is empty and the CSS/test commit succeeds.
 - Consumes: the CSS behavior completed in Task 1.
 - Produces: durable scope and verification guidance for future maintainers.
 
-- [ ] **Step 1: Add a failing documentation guard**
+- [x] **Step 1: Add a failing documentation guard**
 
 Append to `tests/docs-handoff.test.js`:
 
@@ -253,12 +253,12 @@ test("docs preserve automatic WebKit accessibility enhancements", () => {
     assert.match(doc, /CSS-only/);
   }
 
-  assert.match(development, /System, Light, and Dark/);
+  assert.match(development, /System,\s+Light,\s+and Dark/);
   assert.match(development, /direct comment permalink/);
 });
 ```
 
-- [ ] **Step 2: Run the documentation test and verify failure**
+- [x] **Step 2: Run the documentation test and verify failure**
 
 Run:
 
@@ -269,7 +269,7 @@ node --test tests/docs-handoff.test.js
 Expected: the new test fails because current operational docs do not describe
 the behavior.
 
-- [ ] **Step 3: Document implementation and acceptance boundaries**
+- [x] **Step 3: Document implementation and acceptance boundaries**
 
 Add an `Automatic Accessibility Enhancements` section to
 `docs/development.md` stating:
@@ -297,7 +297,7 @@ uses the exact terms `CSS-only`, `prefers-contrast: more`, `:focus-visible`, and
 `.comtr:target`, and records real Safari acceptance as pending until Task 3 is
 confirmed.
 
-- [ ] **Step 4: Run documentation and full checks**
+- [x] **Step 4: Run documentation and full checks**
 
 Run:
 
@@ -309,7 +309,7 @@ make check
 
 Expected: all documentation tests and the complete repository quality gate pass.
 
-- [ ] **Step 5: Commit the documentation boundary**
+- [x] **Step 5: Commit the documentation boundary**
 
 Run:
 

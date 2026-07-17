@@ -186,6 +186,22 @@ otherwise lets it inherit the muted table-cell color, but HN Refined treats this
 as primary reading content. Keep the semantic `#hnmain .toptext` color override
 separate from `.subtext`, scores, ages, domains, and other muted metadata.
 
+## Automatic Accessibility Enhancements
+
+HN Refined keeps system accessibility behavior automatic and CSS-only. The
+`prefers-contrast: more` media query strengthens secondary colors for System,
+Light, and Dark themes without adding a user preference. A shared
+`:focus-visible` rule exposes keyboard focus without forcing focus rings after
+ordinary pointer or touch interaction.
+
+Direct comment permalinks use `.comtr:target` for a restrained persistent marker
+and scroll margin. Keep this binding limited to Hacker News comment rows; do not
+add fragment observers, timers, animations, or DOM mutation.
+
+Real Safari checks must cover macOS keyboard navigation and Increase Contrast
+across all three theme choices, plus an iPhone or iPad direct comment permalink
+in portrait and landscape.
+
 ## Mobile Comment Editor
 
 The mobile comment-editor enhancement binds to the semantic Hacker News form

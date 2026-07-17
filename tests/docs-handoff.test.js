@@ -137,6 +137,21 @@ test("docs keep static information pages outside the styling target", () => {
   assert.match(status, /Do not add\s+compatibility code/);
 });
 
+test("docs preserve automatic WebKit accessibility enhancements", () => {
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+
+  for (const doc of [development, status]) {
+    assert.match(doc, /prefers-contrast: more/);
+    assert.match(doc, /:focus-visible/);
+    assert.match(doc, /\.comtr:target/);
+    assert.match(doc, /CSS-only/);
+  }
+
+  assert.match(development, /System,\s+Light,\s+and Dark/);
+  assert.match(development, /direct comment permalink/);
+});
+
 test("release docs keep App Store and open-source blockers explicit", () => {
   const readme = read("README.md");
   const contributing = read("CONTRIBUTING.md");
