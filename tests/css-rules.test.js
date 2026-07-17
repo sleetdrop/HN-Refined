@@ -2,6 +2,46 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 
+function hexChannels(hex) {
+  return [1, 3, 5].map((offset) => Number.parseInt(hex.slice(offset, offset + 2), 16));
+}
+
+function mixChannels(foreground, background, foregroundWeight) {
+  return foreground.map((channel, index) =>
+    Math.round(channel * foregroundWeight + background[index] * (1 - foregroundWeight)),
+  );
+}
+
+function relativeLuminance(channels) {
+  const linear = channels.map((channel) => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+
+  return linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+}
+
+function contrastRatio(foreground, background) {
+  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function readTheme(path) {
+  return JSON.parse(fs.readFileSync(path, "utf8")).tokens;
+}
+
+function contrastMixWeight(css, cssToken) {
+  const match = css.match(
+    new RegExp(
+      `--hnr-${cssToken}:\\s*color-mix\\(\\s*in srgb,\\s*var\\(--hnr-text-primary\\)\\s+(\\d+)%,\\s*var\\(--hnr-content-background\\)\\s*\\)`,
+    ),
+  );
+
+  assert.ok(match, `missing increased-contrast mix for ${cssToken}`);
+  return Number(match[1]) / 100;
+}
+
 test("content CSS overrides Hacker News title link colors", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
@@ -181,4 +221,57 @@ test("top-level interactive forms keep page spacing beyond the phone breakpoint"
   assert.ok(topLevelFormIndex < phoneMediaIndex);
   assert.match(css.slice(topLevelFormIndex, phoneMediaIndex), /padding:\s*16px/);
   assert.doesNotMatch(css, /display-mode:\s*standalone/);
+});
+
+test("system increased contrast strengthens secondary theme colors", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const contrastMediaIndex = css.indexOf("@media (prefers-contrast: more)");
+  const contrastMedia = css.slice(contrastMediaIndex);
+  const tokenPairs = [
+    ["text-muted", "textMuted"],
+    ["visited-link", "visitedLink"],
+    ["border-subtle", "borderSubtle"],
+    ["vote-arrow", "voteArrow"],
+  ];
+
+  assert.ok(contrastMediaIndex >= 0);
+
+  for (const themePath of ["extension/themes/hn-light.json", "extension/themes/hn-dark.json"]) {
+    const tokens = readTheme(themePath);
+    const primary = hexChannels(tokens.textPrimary);
+    const background = hexChannels(tokens.contentBackground);
+
+    for (const [cssToken, themeToken] of tokenPairs) {
+      const original = hexChannels(tokens[themeToken]);
+      const mixed = mixChannels(primary, background, contrastMixWeight(contrastMedia, cssToken));
+      assert.ok(
+        contrastRatio(mixed, background) > contrastRatio(original, background),
+        `${themePath} ${themeToken} contrast should increase`,
+      );
+    }
+  }
+});
+
+test("content CSS exposes keyboard focus without pointer-only focus styling", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(
+    css,
+    /:where\(a\[href\], button, input, select, textarea\):focus-visible\s*{[^}]*outline:\s*2px solid Highlight[^}]*outline-offset:\s*2px/s,
+  );
+  assert.doesNotMatch(
+    css,
+    /:where\(a\[href\], button, input, select, textarea\):focus(?!-visible)/,
+  );
+});
+
+test("fragment-targeted comments receive restrained orientation feedback", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /\.comtr:target\s*{[^}]*scroll-margin-block:\s*1\.5rem/s);
+  assert.match(
+    css,
+    /\.comtr:target\s+\.default\s*{[^}]*box-shadow:\s*inset 3px 0 0 0 var\(--hnr-top-bar-background[^}]*background:\s*color-mix\(/s,
+  );
+  assert.doesNotMatch(css, /animation:/);
 });

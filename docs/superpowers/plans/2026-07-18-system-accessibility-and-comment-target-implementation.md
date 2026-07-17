@@ -32,7 +32,7 @@
 - Consumes: existing `--hnr-text-primary`, `--hnr-content-background`, `--hnr-top-bar-background`, `--hnr-text-muted`, `--hnr-visited-link`, `--hnr-border-subtle`, and `--hnr-vote-arrow` theme variables.
 - Produces: automatic CSS behavior for increased contrast, keyboard focus, and fragment-targeted `.comtr` rows.
 
-- [ ] **Step 1: Add contrast calculation helpers to the CSS test**
+- [x] **Step 1: Add contrast calculation helpers to the CSS test**
 
 Add these helpers after the imports in `tests/css-rules.test.js`:
 
@@ -78,7 +78,7 @@ function contrastMixWeight(css, cssToken) {
 }
 ```
 
-- [ ] **Step 2: Add failing behavior tests**
+- [x] **Step 2: Add failing behavior tests**
 
 Append these tests to `tests/css-rules.test.js`:
 
@@ -137,7 +137,7 @@ test("fragment-targeted comments receive restrained orientation feedback", () =>
 });
 ```
 
-- [ ] **Step 3: Run the focused tests and verify failure**
+- [x] **Step 3: Run the focused tests and verify failure**
 
 Run:
 
@@ -148,7 +148,7 @@ node --test tests/css-rules.test.js
 Expected: the three new tests fail because the media query, focus rule, and
 targeted-comment rule do not exist.
 
-- [ ] **Step 4: Add the minimal CSS implementation**
+- [x] **Step 4: Add the minimal CSS implementation**
 
 Add this block before the responsive media queries in
 `extension/content/content.css`:
@@ -181,7 +181,7 @@ Add this block before the responsive media queries in
     );
     --hnr-visited-link: color-mix(
       in srgb,
-      var(--hnr-text-primary) 64%,
+      var(--hnr-text-primary) 74%,
       var(--hnr-content-background)
     );
     --hnr-border-subtle: color-mix(
@@ -198,7 +198,7 @@ Add this block before the responsive media queries in
 }
 ```
 
-- [ ] **Step 5: Run focused tests and verify green**
+- [x] **Step 5: Run focused tests and verify green**
 
 Run:
 
@@ -209,7 +209,7 @@ node --test tests/css-rules.test.js
 Expected: every CSS rule test passes, including calculated contrast improvement
 for both theme JSON files.
 
-- [ ] **Step 6: Confirm the JavaScript boundary and commit**
+- [x] **Step 6: Confirm the JavaScript boundary and commit**
 
 Run:
 
