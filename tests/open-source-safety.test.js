@@ -36,3 +36,19 @@ test("Xcode project does not commit a personal development team", () => {
   assert.doesNotMatch(project, /DEVELOPMENT_TEAM\s*=/);
   assert.doesNotMatch(project, /PROVISIONING_PROFILE_SPECIFIER\s*=/);
 });
+
+test("Xcode targets use an ignored optional local signing configuration", () => {
+  const localConfig = "HNRefined/Config/Signing.local.xcconfig";
+  const project = readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
+  const signingConfig = readFileSync("HNRefined/Config/Signing.xcconfig", "utf8");
+
+  assert.match(signingConfig, /#include\?\s+"Signing\.local\.xcconfig"/);
+  assert.doesNotThrow(() =>
+    execFileSync("git", ["check-ignore", "-q", localConfig], { stdio: "ignore" }),
+  );
+  assert.equal(
+    (project.match(/baseConfigurationReference = [^;]+ \/\* Signing\.xcconfig \*\//g) ?? []).length,
+    8,
+  );
+  assert.equal(trackedFiles.includes(localConfig), false);
+});

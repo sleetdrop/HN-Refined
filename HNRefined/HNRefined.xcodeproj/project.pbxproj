@@ -119,6 +119,7 @@
 		D61028352FFCFFBB00FEC7F0 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = Resources/icons; sourceTree = "<group>"; };
 		D61028362FFCFFBB00FEC7F0 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = Resources/manifest.json; sourceTree = "<group>"; };
 		D61028372FFCFFBB00FEC7F0 /* themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = themes; path = Resources/themes; sourceTree = "<group>"; };
+		D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +157,7 @@
 		D61027CF2FFCFFBA00FEC7F0 = {
 			isa = PBXGroup;
 			children = (
+				D61028492FFCFFBB00FEC7F0 /* Config */,
 				D61027D42FFCFFBA00FEC7F0 /* Shared (App) */,
 				D61027DD2FFCFFBB00FEC7F0 /* Shared (Extension) */,
 				D61027E52FFCFFBB00FEC7F0 /* iOS (App) */,
@@ -260,6 +262,14 @@
 			name = Resources;
 			path = "Shared (Extension)";
 			sourceTree = SOURCE_ROOT;
+		};
+		D61028492FFCFFBB00FEC7F0 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -653,6 +663,7 @@
 		};
 		D61028222FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -686,6 +697,7 @@
 		};
 		D61028232FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -720,6 +732,7 @@
 		};
 		D61028262FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -760,6 +773,7 @@
 		};
 		D61028272FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -801,6 +815,7 @@
 		};
 		D61028292FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -836,6 +851,7 @@
 		};
 		D610282A2FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -871,6 +887,7 @@
 		};
 		D610282D2FFCFFBB00FEC7F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -913,6 +930,7 @@
 		};
 		D610282E2FFCFFBB00FEC7F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D61028482FFCFFBB00FEC7F0 /* Signing.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

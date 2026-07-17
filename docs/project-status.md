@@ -79,6 +79,10 @@ Hacker News behavior and information architecture.
 - The final first-release Bundle IDs use the maintainer-owned `vetcafe.net`
   namespace: `net.vetcafe.hnrefined` for the app and
   `net.vetcafe.hnrefined.extension` for the Safari extension.
+- All iOS/macOS app and extension build configurations use a tracked shared
+  signing `.xcconfig` that optionally loads an ignored developer-local Team ID.
+  Interactive Xcode builds no longer require personal signing values in
+  `project.pbxproj`; CLI builds retain automatic certificate-based overrides.
 
 ## Current Workflow
 

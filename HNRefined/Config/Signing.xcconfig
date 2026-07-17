@@ -1,0 +1,2 @@
+// Developer-specific signing belongs in the ignored sibling file.
+#include? "Signing.local.xcconfig"

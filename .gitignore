@@ -6,3 +6,4 @@
 build/
 node_modules/
 HNRefined/**/xcuserdata/
+/HNRefined/Config/Signing.local.xcconfig

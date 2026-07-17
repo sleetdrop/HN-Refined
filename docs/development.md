@@ -220,7 +220,20 @@ and an unchanged desktop item page.
 ## Signing
 
 The committed project does not include a personal Apple development team id.
-That value is developer-local and should not be committed.
+That value is developer-local and should not be committed. All app and extension
+targets use `HNRefined/Config/Signing.xcconfig`, which optionally includes the
+ignored sibling file `Signing.local.xcconfig`.
+
+For interactive Xcode device builds, create the local file with your Team ID:
+
+```xcconfig
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+```
+
+Xcode resolves this value for iOS, iPadOS, and macOS Debug/Release builds without
+writing it into `project.pbxproj`. Do not select and persist a team at the target
+level after this file exists; target-level settings take precedence and make the
+shared project dirty again.
 
 To use a signed local build, first create an Apple Development signing identity
 in Xcode. The install script reads the first available `Apple Development`
@@ -246,5 +259,5 @@ clear that setting after restart, so verify it before treating missing toolbar
 UI as an extension bug.
 
 `HNREFINED_DEVELOPMENT_TEAM` is still available if automatic detection chooses
-the wrong team. The default local workflow avoids committing or requiring a
-project-level development team setting.
+the wrong team. Command-line build settings take precedence over the local
+configuration, so the existing Makefile workflow remains unchanged.
