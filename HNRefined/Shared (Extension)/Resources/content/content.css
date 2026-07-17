@@ -277,6 +277,49 @@ html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
   padding: 16px;
 }
 
+:where(a[href], button, input, select, textarea):focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+.comtr:target {
+  scroll-margin-block: 1.5rem;
+}
+
+.comtr:target .default {
+  box-shadow: inset 3px 0 0 0 var(--hnr-top-bar-background, #ff6600);
+  background: color-mix(
+    in srgb,
+    var(--hnr-top-bar-background, #ff6600) 10%,
+    var(--hnr-content-background, #f6f6ef)
+  );
+}
+
+@media (prefers-contrast: more) {
+  html {
+    --hnr-text-muted: color-mix(
+      in srgb,
+      var(--hnr-text-primary) 78%,
+      var(--hnr-content-background)
+    );
+    --hnr-visited-link: color-mix(
+      in srgb,
+      var(--hnr-text-primary) 74%,
+      var(--hnr-content-background)
+    );
+    --hnr-border-subtle: color-mix(
+      in srgb,
+      var(--hnr-text-primary) 48%,
+      var(--hnr-content-background)
+    );
+    --hnr-vote-arrow: color-mix(
+      in srgb,
+      var(--hnr-text-primary) 72%,
+      var(--hnr-content-background)
+    );
+  }
+}
+
 @media (max-width: 700px) {
   html[data-hnr-mobile="auto"] body {
     padding-bottom: calc(72px + env(safe-area-inset-bottom));

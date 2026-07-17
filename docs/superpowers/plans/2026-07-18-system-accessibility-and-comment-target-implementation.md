@@ -254,7 +254,7 @@ test("docs preserve automatic WebKit accessibility enhancements", () => {
   }
 
   assert.match(development, /System,\s+Light,\s+and Dark/);
-  assert.match(development, /direct comment permalink/);
+  assert.match(development, /parent.*root.*next.*prev/s);
 });
 ```
 
@@ -283,12 +283,13 @@ Light, and Dark themes without adding a user preference. A shared
 `:focus-visible` rule exposes keyboard focus without forcing focus rings after
 ordinary pointer or touch interaction.
 
-Direct comment permalinks use `.comtr:target` for a restrained persistent marker
+Hacker News' in-thread `parent`, `root`, `next`, and `prev` links use comment
+fragments. HN Refined applies `.comtr:target` for a restrained persistent marker
 and scroll margin. Keep this binding limited to Hacker News comment rows; do not
 add fragment observers, timers, animations, or DOM mutation.
 
 Real Safari checks must cover macOS keyboard navigation and Increase Contrast
-across all three theme choices, plus an iPhone or iPad direct comment permalink
+across all three theme choices, plus iPhone or iPad in-thread comment navigation
 in portrait and landscape.
 ```
 
@@ -333,7 +334,7 @@ Expected: the documentation commit succeeds with no unrelated files staged.
 - Consumes: committed CSS behavior and documented acceptance checklist.
 - Produces: installed Safari extension evidence and final project-status record.
 
-- [ ] **Step 1: Re-run the complete local gate**
+- [x] **Step 1: Re-run the complete local gate**
 
 Run:
 
@@ -344,7 +345,7 @@ make check
 
 Expected: formatting is clean and all tests pass.
 
-- [ ] **Step 2: Refresh the installed macOS Safari extension**
+- [x] **Step 2: Refresh the installed macOS Safari extension**
 
 Run:
 
@@ -367,15 +368,17 @@ With the maintainer observing Safari:
    and form fields; verify the system-colored outline is clear.
 3. Click or touch ordinary controls and verify keyboard-only focus treatment is
    not left on pointer interactions.
-4. Open a direct comment fragment and verify the selected comment keeps a thin
-   accent line and light background without shifting the comment layout.
+4. Use a comment's `parent`, `root`, `next`, or `prev` link and verify the
+   selected comment keeps a thin accent line and light background without
+   shifting the comment layout.
 
 - [ ] **Step 4: Perform iPhone or iPad Safari acceptance**
 
-Open a direct Hacker News comment permalink in portrait and landscape. Verify
-the target marker identifies the intended comment, respects indentation, and
-does not interfere with voting, collapsing, replying, or scrolling. Confirm
-ordinary touch interaction does not display inappropriate focus outlines.
+Use Hacker News' in-thread `parent`, `root`, `next`, or `prev` comment navigation
+in portrait and landscape. Verify the target marker identifies the intended
+comment, respects indentation, and does not interfere with voting, collapsing,
+replying, or scrolling. Confirm ordinary touch interaction does not display
+inappropriate focus outlines.
 
 - [ ] **Step 5: Record completed acceptance**
 

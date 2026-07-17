@@ -5,9 +5,9 @@
 ## Goal
 
 Use native WebKit and Apple platform preferences to improve contrast, keyboard
-navigation, and comment-link orientation while preserving Hacker News' compact,
-traditional interface. The enhancement must remain CSS-only, automatic,
-dependency-free, and auditable.
+navigation, and in-thread comment orientation while preserving Hacker News'
+compact, traditional interface. The enhancement must remain CSS-only,
+automatic, dependency-free, and auditable.
 
 ## Scope
 
@@ -17,8 +17,8 @@ pages:
 - Honor the Apple system's increased-contrast preference in every HN Refined
   theme, including explicitly selected Light and Dark themes.
 - Give keyboard users a clear focus indicator on links and form controls.
-- Make a fragment-targeted Hacker News comment visually identifiable after
-  Safari scrolls it into view.
+- Make a fragment-targeted Hacker News comment visually identifiable after an
+  in-thread `parent`, `root`, `next`, or `prev` link scrolls it into view.
 
 It does not add a preference, permission, content-script behavior, animation,
 or compatibility code for static information pages.
@@ -31,9 +31,9 @@ fall back to the current presentation without JavaScript detection.
 
 This is preferred over an Accessibility settings group because system contrast
 is an accessibility preference rather than a theme choice. It is also preferred
-over a contrast-only change because keyboard focus and comment-link orientation
-are closely related automatic accessibility improvements with the same small
-CSS-only implementation boundary.
+over a contrast-only change because keyboard focus and in-thread comment
+orientation are closely related automatic accessibility improvements with the
+same small CSS-only implementation boundary.
 
 ## Increased Contrast
 
@@ -79,8 +79,8 @@ Bind only to Hacker News comment rows with `.comtr:target`. Style the row's
 
 The marker remains visible while the comment ID remains the document fragment.
 It uses no animation, timer, DOM mutation, or generated label. Nested comment
-indentation, voting, collapsing, replying, and permalink behavior remain owned
-by Hacker News.
+indentation, voting, collapsing, replying, permalink behavior, and fragment
+navigation remain owned by Hacker News.
 
 ## Compatibility And Failure Behavior
 
@@ -114,7 +114,8 @@ Real Safari acceptance must cover:
   form controls in Light and Dark themes;
 - macOS Increase Contrast in System Settings with System, Light, and Dark
   extension themes;
-- an iPhone or iPad direct comment permalink in portrait and landscape; and
+- iPhone or iPad `parent`, `root`, `next`, and `prev` comment navigation in
+  portrait and landscape; and
 - confirmation that normal pointer/touch use does not leave inappropriate focus
   outlines.
 

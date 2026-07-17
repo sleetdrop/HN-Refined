@@ -149,7 +149,7 @@ test("docs preserve automatic WebKit accessibility enhancements", () => {
   }
 
   assert.match(development, /System,\s+Light,\s+and Dark/);
-  assert.match(development, /direct comment permalink/);
+  assert.match(development, /parent.*root.*next.*prev/s);
 });
 
 test("release docs keep App Store and open-source blockers explicit", () => {

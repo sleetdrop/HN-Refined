@@ -51,8 +51,9 @@ Hacker News behavior and information architecture.
 - Automatic accessibility enhancements remain CSS-only. The
   `prefers-contrast: more` media query strengthens secondary colors across all
   themes, `:focus-visible` exposes keyboard focus, and `.comtr:target` marks a
-  directly linked comment without JavaScript or a new setting. Real macOS and
-  iOS/iPadOS Safari acceptance is pending.
+  comment selected by Hacker News' in-thread fragment navigation without
+  JavaScript or a new setting. Real macOS and iOS/iPadOS Safari acceptance is
+  pending.
 - Mobile comment editors keep the original Hacker News form visible in a
   two-row compact state, expand to six rows on first focus, and expose small
   equal-size CSS triangle controls that adjust by four rows between 2 and 22.

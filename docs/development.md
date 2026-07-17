@@ -194,12 +194,13 @@ Light, and Dark themes without adding a user preference. A shared
 `:focus-visible` rule exposes keyboard focus without forcing focus rings after
 ordinary pointer or touch interaction.
 
-Direct comment permalinks use `.comtr:target` for a restrained persistent marker
+Hacker News' in-thread `parent`, `root`, `next`, and `prev` links use comment
+fragments. HN Refined applies `.comtr:target` for a restrained persistent marker
 and scroll margin. Keep this binding limited to Hacker News comment rows; do not
 add fragment observers, timers, animations, or DOM mutation.
 
 Real Safari checks must cover macOS keyboard navigation and Increase Contrast
-across all three theme choices, plus an iPhone or iPad direct comment permalink
+across all three theme choices, plus iPhone or iPad in-thread comment navigation
 in portrait and landscape.
 
 ## Mobile Comment Editor
