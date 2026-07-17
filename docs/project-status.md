@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-16
+Last updated: 2026-07-17
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -122,6 +122,10 @@ dark-theme work accidentally affected light-theme navigation colors.
 Hacker News declares its own font family on `.comment`. Keep comment nodes in
 every HN Refined font-preset selector so item-page comment bodies follow the
 selected font.
+
+Hacker News story submission text uses `.toptext` and otherwise inherits the
+site's muted `td` color. HN Refined treats `.toptext` as primary reading content
+while leaving story metadata muted.
 
 Mobile comment-editor behavior binds to
 `#hnmain form[action="comment"] textarea[name="text"]`. Keep its row controls

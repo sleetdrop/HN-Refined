@@ -181,6 +181,11 @@ their document-like HTML can be edited independently from the main Hacker News
 application. Do not add special selectors, compatibility layers, or active
 behavior just to restyle those static pages; document the limitation instead.
 
+On item pages, author-supplied story text is rendered in `.toptext`. Hacker News
+otherwise lets it inherit the muted table-cell color, but HN Refined treats this
+as primary reading content. Keep the semantic `#hnmain .toptext` color override
+separate from `.subtext`, scores, ages, domains, and other muted metadata.
+
 ## Mobile Comment Editor
 
 The mobile comment-editor enhancement binds to the semantic Hacker News form

@@ -118,6 +118,10 @@ a:visited {
   color: var(--hnr-text-muted, #828282);
 }
 
+#hnmain .toptext {
+  color: var(--hnr-text-primary, #000);
+}
+
 .subtext,
 .comhead,
 .score,

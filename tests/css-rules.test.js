@@ -18,6 +18,13 @@ test("content CSS keeps top navigation links on the active header color", () => 
   assert.match(css, /#hnmain\s+\.pagetop\s+a:visited/);
 });
 
+test("story submission text uses the primary reading color", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /#hnmain\s+\.toptext\s*{[^}]*color:\s*var\(--hnr-text-primary,\s*#000\)/s);
+  assert.doesNotMatch(css, /\.toptext[^}]*color:\s*var\(--hnr-text-muted/s);
+});
+
 test("font presets override Hacker News comment fonts", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
