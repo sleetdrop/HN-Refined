@@ -61,14 +61,70 @@ function createAnchor({
   };
 }
 
-function createContentScriptContext(initialPreferences, { selectorMatches = {} } = {}) {
+function createElement(tagName) {
+  const attributes = {};
+  const listeners = new Map();
+
+  return {
+    tagName: tagName.toUpperCase(),
+    children: [],
+    className: "",
+    textContent: "",
+    type: "",
+    title: "",
+    disabled: false,
+    append(...children) {
+      this.children.push(...children);
+    },
+    setAttribute(name, value) {
+      attributes[name] = value;
+    },
+    getAttribute(name) {
+      return attributes[name] ?? null;
+    },
+    addEventListener(type, listener) {
+      listeners.set(type, listener);
+    },
+    dispatch(type, event = {}) {
+      listeners.get(type)?.(event);
+    },
+  };
+}
+
+function createTextarea({ isCommentEditor = false, rows = 6 } = {}) {
+  return {
+    rows,
+    dataset: {},
+    insertedElement: null,
+    matches(selector) {
+      return isCommentEditor && selector === '#hnmain form[action="comment"] textarea[name="text"]';
+    },
+    insertAdjacentElement(position, element) {
+      assert.equal(position, "afterend");
+      this.insertedElement = element;
+    },
+  };
+}
+
+function createContentScriptContext(
+  initialPreferences,
+  { selectorMatches = {}, mobileMatches = false } = {},
+) {
   let storedPreferences = initialPreferences;
   let intervalId = 0;
   const windowListeners = new Map();
   const documentListeners = new Map();
   const intervalCallbacks = new Map();
+  const mediaQueryListeners = [];
   const runtimeMessageListeners = [];
   const storageChangeListeners = [];
+  const mobileQuery = {
+    matches: mobileMatches,
+    addEventListener(type, listener) {
+      assert.equal(type, "change");
+      mediaQueryListeners.push(listener);
+    },
+  };
 
   const context = {
     URL,
@@ -79,9 +135,11 @@ function createContentScriptContext(initialPreferences, { selectorMatches = {} }
       location: { href: "https://news.ycombinator.com/" },
       readyState: "complete",
       visibilityState: "visible",
+      activeElement: null,
       addEventListener(type, listener) {
         documentListeners.set(type, listener);
       },
+      createElement,
       querySelectorAll(selector) {
         return selectorMatches[selector] || [];
       },
@@ -94,6 +152,10 @@ function createContentScriptContext(initialPreferences, { selectorMatches = {} }
         intervalId += 1;
         intervalCallbacks.set(intervalId, { callback, delay });
         return intervalId;
+      },
+      matchMedia(query) {
+        assert.equal(query, "(max-width: 700px) and (any-pointer: coarse)");
+        return mobileQuery;
       },
     },
     browser: {
@@ -124,8 +186,17 @@ function createContentScriptContext(initialPreferences, { selectorMatches = {} }
     dispatchWindowEvent(type) {
       windowListeners.get(type)?.();
     },
-    dispatchDocumentEvent(type) {
-      documentListeners.get(type)?.();
+    dispatchDocumentEvent(type, event) {
+      documentListeners.get(type)?.(event);
+    },
+    setActiveElement(element) {
+      context.document.activeElement = element;
+    },
+    setMobileMatches(matches) {
+      mobileQuery.matches = matches;
+      for (const listener of mediaQueryListeners) {
+        listener({ matches });
+      }
     },
     dispatchStorageChange(nextPreferences, areaName) {
       for (const listener of storageChangeListeners) {
@@ -184,6 +255,133 @@ test("content script applies default attributes before async storage resolves", 
 
   assert.equal(context.document.documentElement.dataset.hnrTheme, "system");
   assert.equal(context.document.documentElement.dataset.hnrMobile, "auto");
+});
+
+test("mobile comment editors initialize at two rows and first focus expands once", () => {
+  const textarea = createTextarea({ isCommentEditor: true });
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form[action="comment"] textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  assert.equal(textarea.rows, 2);
+  context.dispatchDocumentEvent("focusin", { target: textarea });
+  assert.equal(textarea.rows, 6);
+
+  const decreaseButton = textarea.insertedElement.children[0];
+  decreaseButton.dispatch("click");
+  assert.equal(textarea.rows, 2);
+
+  context.dispatchDocumentEvent("focusin", { target: textarea });
+  assert.equal(textarea.rows, 2);
+});
+
+test("comment editor controls step by four rows and clamp between two and twenty-two", () => {
+  const textarea = createTextarea({ isCommentEditor: true });
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form[action="comment"] textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  const [decreaseButton, increaseButton] = textarea.insertedElement.children;
+  assert.equal(decreaseButton.textContent, "");
+  assert.equal(increaseButton.textContent, "");
+  assert.match(decreaseButton.className, /hnr-comment-editor-size-button--decrease/);
+  assert.match(increaseButton.className, /hnr-comment-editor-size-button--increase/);
+  assert.equal(decreaseButton.getAttribute("aria-label"), "Decrease comment editor height");
+  assert.equal(increaseButton.getAttribute("aria-label"), "Increase comment editor height");
+
+  for (let index = 0; index < 10; index += 1) {
+    increaseButton.dispatch("click");
+  }
+  assert.equal(textarea.rows, 22);
+  assert.equal(increaseButton.disabled, true);
+
+  for (let index = 0; index < 10; index += 1) {
+    decreaseButton.dispatch("click");
+  }
+  assert.equal(textarea.rows, 2);
+  assert.equal(decreaseButton.disabled, true);
+});
+
+test("comment editor controls preserve active textarea focus on pointer input", () => {
+  const textarea = createTextarea({ isCommentEditor: true });
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form[action="comment"] textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  const increaseButton = textarea.insertedElement.children[1];
+  let prevented = false;
+  context.setActiveElement(textarea);
+  increaseButton.dispatch("pointerdown", {
+    preventDefault() {
+      prevented = true;
+    },
+  });
+  assert.equal(prevented, true);
+
+  prevented = false;
+  context.setActiveElement(null);
+  increaseButton.dispatch("pointerdown", {
+    preventDefault() {
+      prevented = true;
+    },
+  });
+  assert.equal(prevented, false);
+});
+
+test("comment editors restore original rows outside the mobile breakpoint", () => {
+  const textarea = createTextarea({ isCommentEditor: true, rows: 8 });
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form[action="comment"] textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  const increaseButton = textarea.insertedElement.children[1];
+  increaseButton.dispatch("click");
+  increaseButton.dispatch("click");
+  assert.equal(textarea.rows, 10);
+
+  context.setMobileMatches(false);
+  assert.equal(textarea.rows, 8);
+
+  context.setMobileMatches(true);
+  assert.equal(textarea.rows, 10);
+});
+
+test("content script ignores unrelated textareas", () => {
+  const textarea = createTextarea({ rows: 8 });
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: { textarea: [textarea] },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  assert.equal(textarea.rows, 8);
+  assert.equal(textarea.insertedElement, null);
 });
 
 test("content script accepts Safari storage change events without an area name", async () => {

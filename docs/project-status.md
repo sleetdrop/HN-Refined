@@ -48,6 +48,11 @@ Hacker News behavior and information architecture.
   for them. Do not add compatibility code for this surface.
 - Theme, font, density, width, and external story-link target preferences
   exist.
+- Mobile comment editors keep the original Hacker News form visible in a
+  two-row compact state, expand to six rows on first focus, and expose small
+  equal-size CSS triangle controls that adjust by four rows between 2 and 22.
+  The enhancement requires a narrow viewport and a coarse pointer; desktop
+  comment textareas retain Hacker News' original rows and mouse resizing.
 - Mobile responsive layout is enabled by default instead of exposed as a
   first-version setting.
 - External story links open in the current tab by default. New-tab behavior is
@@ -117,6 +122,12 @@ dark-theme work accidentally affected light-theme navigation colors.
 Hacker News declares its own font family on `.comment`. Keep comment nodes in
 every HN Refined font-preset selector so item-page comment bodies follow the
 selected font.
+
+Mobile comment-editor behavior binds to
+`#hnmain form[action="comment"] textarea[name="text"]`. Keep its row controls
+inside the narrow coarse-pointer breakpoint, preserve textarea focus during
+touch adjustments, restore Hacker News' original rows outside that breakpoint,
+and do not read comment text or intercept the original form.
 
 ## Verification Baseline
 

@@ -181,6 +181,37 @@ their document-like HTML can be edited independently from the main Hacker News
 application. Do not add special selectors, compatibility layers, or active
 behavior just to restyle those static pages; document the limitation instead.
 
+## Mobile Comment Editor
+
+The mobile comment-editor enhancement binds to the semantic Hacker News form
+selector:
+
+```css
+#hnmain form[action="comment"] textarea[name="text"]
+```
+
+The content script preserves Hacker News' original `rows`, uses 2 rows on mobile,
+expands to 6 on first focus, and provides native buttons with equal-size CSS
+triangle icons that adjust by 4 rows within a 2 through 22 range. Pointer
+adjustments preserve an active textarea's focus and keyboard. CSS presents the
+controls on the Hacker News help row inside the phone breakpoint and uses a
+shared 28 px right gutter for the textarea and controls.
+
+Both JavaScript behavior and comment-editor CSS require
+`(max-width: 700px) and (any-pointer: coarse)`. Do not reduce this to a width-only
+query: narrow macOS Safari windows must retain Hacker News' native rows and
+mouse-driven textarea resizing. Other responsive page styling remains
+width-based.
+
+Do not replace the textarea, read its text, persist editor size, depend on the
+optional Hacker News `?` help link, or intercept the original form. Viewports
+outside the narrow coarse-pointer query must restore Hacker News' original row
+count.
+
+Real Safari checks must cover iPhone virtual-keyboard behavior, symmetric
+textarea gutters, all row limits, preserved text and focus during size changes,
+and an unchanged desktop item page.
+
 ## Signing
 
 The committed project does not include a personal Apple development team id.

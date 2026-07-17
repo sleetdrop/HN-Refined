@@ -11,12 +11,14 @@
 ## Global Constraints
 
 - Target only `#hnmain form[action="comment"] textarea[name="text"]`.
+- Require `(max-width: 700px) and (any-pointer: coarse)` so narrow desktop Safari
+  retains native mouse resizing.
 - Mobile sequence is `2, 6, 10, 14, 18, 22` rows.
 - First mobile focus changes 2 rows to 6 once; later focus never overrides user sizing.
-- `▴` decreases and `▾` increases by four rows; both are `button type="button"` with accessible labels.
+- Equal-size CSS up/down triangles decrease and increase by four rows; both controls are `button type="button"` with accessible labels.
 - Touch size adjustments preserve an active textarea's focus and Safari keyboard.
 - Wider viewports restore the original Hacker News `rows`; returning to mobile restores mobile state.
-- Mobile width and maximum width remain `calc(100% - 16px)` unless iPhone acceptance requires one shared value adjustment.
+- Mobile width and maximum width use `calc(100% - 28px)`, as established by physical-iPhone acceptance.
 - Do not read comment text, persist editor state, intercept submission, add dependencies, or introduce card/dialog UI.
 - Do not commit developer-local Xcode team values.
 - Do not commit implementation files until automated checks and real Safari acceptance pass.
@@ -126,19 +128,16 @@ Create a helper that returns a `span.hnr-comment-editor-controls` containing:
   type="button"
   aria-label="Decrease comment editor height"
   title="Decrease comment editor height"
->
-  ▴
-</button>
+></button>
 <button
   type="button"
   aria-label="Increase comment editor height"
   title="Increase comment editor height"
->
-  ▾
-</button>
+></button>
 ```
 
-Both buttons use class `hnr-comment-editor-size-button`. On `pointerdown`, call
+Both buttons use class `hnr-comment-editor-size-button` plus a direction modifier
+that draws an equal-size CSS triangle. On `pointerdown`, call
 `preventDefault()` only when `document.activeElement === editor`. On `click`,
 call `changeCommentEditorRows(editor, -4)` or
 `changeCommentEditorRows(editor, 4)`. Insert the span with
@@ -224,7 +223,7 @@ Update the mobile comment-editor test to assert:
 assert.doesNotMatch(desktopCss, /hnr-comment-editor-controls[^\n]*display:\s*flex/s);
 assert.match(
   mobileCss,
-  /#hnmain\s+form\[action="comment"\]\s+textarea\[name="text"\]\s*{[^}]*width:\s*calc\(100% - 16px\)[^}]*max-width:\s*calc\(100% - 16px\)/s,
+  /#hnmain\s+form\[action="comment"\]\s+textarea\[name="text"\]\s*{[^}]*width:\s*calc\(100% - 28px\)[^}]*max-width:\s*calc\(100% - 28px\)/s,
 );
 assert.match(mobileCss, /\.hnr-comment-editor-controls\s*{[^}]*display:\s*flex/s);
 assert.match(
@@ -251,8 +250,8 @@ uses the superseded fixed height and expansion attribute.
 Keep the semantic textarea rule inside `@media (max-width: 700px)` with only:
 
 ```css
-width: calc(100% - 16px);
-max-width: calc(100% - 16px);
+width: calc(100% - 28px);
+max-width: calc(100% - 28px);
 ```
 
 Add outside the media query:
@@ -270,6 +269,8 @@ html[data-hnr-mobile="auto"] #hnmain form[action="comment"] .hnr-comment-editor-
   display: flex;
   align-items: center;
   gap: 2px;
+  float: right;
+  margin-right: 28px;
 }
 
 html[data-hnr-mobile="auto"] .hnr-comment-editor-size-button {
@@ -357,7 +358,8 @@ On iPhone 17 Safari verify:
 
 1. Initial editor is 2 rows with symmetric gutters.
 2. First focus changes it to 6 rows without excessive growth.
-3. `▾` follows `6, 10, 14, 18, 22`; `▴` returns through the same sequence to 2.
+3. The down control follows `6, 10, 14, 18, 22`; the up control returns through
+   the same sequence to 2.
 4. Limit buttons disable correctly.
 5. Touch adjustments preserve the keyboard and comment text.
 6. Refocusing after manual shrink does not force 6 rows again.
@@ -365,8 +367,9 @@ On iPhone 17 Safari verify:
 
 On desktop Safari verify original textarea rows and form behavior remain unchanged.
 
-If gutters remain asymmetric, change only the shared `16px` subtraction and its
-test/docs value, then repeat automated and runtime checks.
+The physical-iPhone screenshot established a shared 28 px right gutter. If a
+later device remains asymmetric, change only that shared value and its test/docs
+value, then repeat automated and runtime checks.
 
 - [ ] **Step 6: Commit after acceptance**
 

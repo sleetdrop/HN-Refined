@@ -89,6 +89,43 @@ test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });
 
+test("mobile comment editors keep symmetric gutters and restrained size controls", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const touchMediaIndex = css.indexOf("@media (max-width: 700px) and (any-pointer: coarse)");
+  const desktopCss = css.slice(0, touchMediaIndex);
+  const mobileCss = css.slice(touchMediaIndex);
+
+  assert.notEqual(touchMediaIndex, -1);
+  assert.match(desktopCss, /\.hnr-comment-editor-controls\s*{[^}]*display:\s*none/s);
+  assert.doesNotMatch(desktopCss, /\.hnr-comment-editor-controls\s*{[^}]*display:\s*flex/s);
+  assert.match(
+    mobileCss,
+    /#hnmain\s+form\[action="comment"\]\s+textarea\[name="text"\]\s*{[^}]*width:\s*calc\(100% - 28px\)[^}]*max-width:\s*calc\(100% - 28px\)/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-editor-controls\s*{[^}]*display:\s*flex[^}]*float:\s*right[^}]*margin-right:\s*28px/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-editor-size-button\s*{[^}]*min-width:\s*32px[^}]*min-height:\s*32px[^}]*border:\s*0[^}]*background:\s*transparent/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-editor-size-button::before\s*{[^}]*content:\s*""[^}]*width:\s*0[^}]*height:\s*0/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-editor-size-button--decrease::before\s*{[^}]*border-bottom:\s*5px solid currentColor/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-editor-size-button--increase::before\s*{[^}]*border-top:\s*5px solid currentColor/s,
+  );
+  assert.match(mobileCss, /\.hnr-comment-editor-size-button:disabled/);
+  assert.doesNotMatch(mobileCss, /transition:/);
+});
+
 test("content CSS covers comment page reading and reply affordances", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 

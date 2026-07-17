@@ -13,6 +13,14 @@ const PREFERENCES_CHANGED_MESSAGE_TYPE = "hn-refined:preferences-changed";
 const PREFERENCE_REFRESH_INTERVAL_MS = 1000;
 const TITLELINE_STORY_ANCHOR_SELECTOR = ".titleline a[href]";
 const STORY_ROW_ANCHOR_SELECTOR = ".athing:not(.comtr) a[href]";
+const COMMENT_EDITOR_SELECTOR = '#hnmain form[action="comment"] textarea[name="text"]';
+const MOBILE_COMMENT_EDITOR_QUERY = "(max-width: 700px) and (any-pointer: coarse)";
+const COMMENT_EDITOR_MIN_ROWS = 2;
+const COMMENT_EDITOR_FOCUS_ROWS = 6;
+const COMMENT_EDITOR_ROW_STEP = 4;
+const COMMENT_EDITOR_MAX_ROWS = 22;
+const commentEditorStates = new WeakMap();
+const mobileCommentEditorQuery = window.matchMedia(MOBILE_COMMENT_EDITOR_QUERY);
 
 const ALLOWED = {
   theme: ["system", "light", "dark"],
@@ -258,17 +266,134 @@ function observePageActivation() {
   });
 }
 
+function clampCommentEditorRows(rows) {
+  return Math.min(COMMENT_EDITOR_MAX_ROWS, Math.max(COMMENT_EDITOR_MIN_ROWS, rows));
+}
+
+function applyCommentEditorRows(editor, state) {
+  editor.rows = mobileCommentEditorQuery.matches ? state.mobileRows : state.originalRows;
+  state.decreaseButton.disabled = state.mobileRows <= COMMENT_EDITOR_MIN_ROWS;
+  state.increaseButton.disabled = state.mobileRows >= COMMENT_EDITOR_MAX_ROWS;
+}
+
+function changeCommentEditorRows(editor, delta) {
+  const state = commentEditorStates.get(editor);
+  if (!state) {
+    return;
+  }
+
+  state.mobileRows = clampCommentEditorRows(state.mobileRows + delta);
+  applyCommentEditorRows(editor, state);
+}
+
+function createCommentEditorSizeButton(editor, direction, label, delta) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = `hnr-comment-editor-size-button hnr-comment-editor-size-button--${direction}`;
+  button.title = label;
+  button.setAttribute("aria-label", label);
+  button.addEventListener("pointerdown", (event) => {
+    if (document.activeElement === editor) {
+      event.preventDefault();
+    }
+  });
+  button.addEventListener("click", () => changeCommentEditorRows(editor, delta));
+  return button;
+}
+
+function createCommentEditorControls(editor) {
+  const controls = document.createElement("span");
+  controls.className = "hnr-comment-editor-controls";
+  controls.append(
+    createCommentEditorSizeButton(
+      editor,
+      "decrease",
+      "Decrease comment editor height",
+      -COMMENT_EDITOR_ROW_STEP,
+    ),
+    createCommentEditorSizeButton(
+      editor,
+      "increase",
+      "Increase comment editor height",
+      COMMENT_EDITOR_ROW_STEP,
+    ),
+  );
+  return controls;
+}
+
+function enhanceCommentEditor(editor) {
+  if (commentEditorStates.has(editor)) {
+    return;
+  }
+
+  const controls = createCommentEditorControls(editor);
+  const [decreaseButton, increaseButton] = controls.children;
+  const state = {
+    originalRows: editor.rows,
+    mobileRows: COMMENT_EDITOR_MIN_ROWS,
+    focusedOnce: false,
+    controls,
+    decreaseButton,
+    increaseButton,
+  };
+
+  commentEditorStates.set(editor, state);
+  editor.insertAdjacentElement("afterend", controls);
+  applyCommentEditorRows(editor, state);
+}
+
+function enhanceCommentEditors() {
+  for (const editor of document.querySelectorAll(COMMENT_EDITOR_SELECTOR)) {
+    enhanceCommentEditor(editor);
+  }
+}
+
+function handleCommentEditorFocus(event) {
+  const editor = event.target;
+  const state = commentEditorStates.get(editor);
+  if (!state || state.focusedOnce || !mobileCommentEditorQuery.matches) {
+    return;
+  }
+
+  state.focusedOnce = true;
+  state.mobileRows = Math.max(state.mobileRows, COMMENT_EDITOR_FOCUS_ROWS);
+  applyCommentEditorRows(editor, state);
+}
+
+function refreshCommentEditorViewports() {
+  for (const editor of document.querySelectorAll(COMMENT_EDITOR_SELECTOR)) {
+    const state = commentEditorStates.get(editor);
+    if (state) {
+      applyCommentEditorRows(editor, state);
+    }
+  }
+}
+
+function observeCommentEditors() {
+  document.addEventListener("focusin", handleCommentEditorFocus);
+  mobileCommentEditorQuery.addEventListener("change", refreshCommentEditorViewports);
+}
+
 function start() {
   applyPreferences(DEFAULT_PREFERENCES);
   refreshPreferences();
   observePreferences();
   observePageActivation();
+  observeCommentEditors();
   startPreferenceRefreshFallback();
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", updateStoryTargets, { once: true });
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+        updateStoryTargets();
+        enhanceCommentEditors();
+      },
+      { once: true },
+    );
   } else {
     updateStoryTargets();
+    enhanceCommentEditors();
   }
 }
 

@@ -17,8 +17,9 @@ the right viewport edge. This is a layout issue, not a font-dependent issue.
 
 ## Scope
 
-Apply the behavior only below the existing 700 px mobile breakpoint and only to
-Hacker News comment editors matching the semantic form structure:
+Apply the behavior only below the existing 700 px mobile breakpoint when a
+coarse pointer is available, and only to Hacker News comment editors matching
+the semantic form structure:
 
 ```css
 #hnmain form[action="comment"] textarea[name="text"]
@@ -33,13 +34,13 @@ information pages, form submission, or Hacker News comment data.
 - Its initial mobile size is two native textarea rows.
 - First focus expands it once to six rows, a comfortable short-comment size on
   iPhone. Later focus changes preserve the user's chosen size.
-- Two small controls appear immediately after the textarea: `▴` decreases its
-  rows and `▾` increases them.
+- Two small controls appear immediately after the textarea: the upward triangle
+  decreases its rows and the downward triangle increases them.
 - Each control changes the size by four rows. The allowed range is 2 through 22
   rows, producing the sequence `2, 6, 10, 14, 18, 22`.
 - The controls are native `button type="button"` elements with accessible names.
-  Their visible Unicode symbols remain typographically neutral instead of using
-  emoji artwork.
+  Equal-size CSS triangles avoid font-dependent Unicode glyph rendering without
+  adding image or font assets.
 - Touching a size control while editing preserves textarea focus and Safari's
   virtual keyboard. Keyboard and assistive-technology activation still uses the
   button's normal click behavior.
@@ -53,9 +54,11 @@ not modern app chrome.
 
 ## Horizontal Spacing
 
-On mobile, the comment textarea uses `calc(100% - 16px)` for both width and
-maximum width. The remaining 16 px becomes the missing right gutter and balances
-the left offset already created by Hacker News' table columns.
+On mobile, the comment textarea uses `calc(100% - 28px)` for both width and
+maximum width. The 28 px subtraction balances the left offset created by Hacker
+News' table columns on the physical-iPhone acceptance screenshot. The controls
+float right with the same 28 px gutter so they share the Hacker News help row
+without modifying or depending on the optional help link.
 
 The iPhone acceptance pass must compare both textarea borders against the
 viewport edges. If Safari's rendered Hacker News geometry differs from the
@@ -70,10 +73,11 @@ at 2, and inserts one control container immediately after the textarea. The
 implementation must not depend on Hacker News' optional `?` help link or on a
 specific table-row position.
 
-Use `window.matchMedia("(max-width: 700px)")` to apply the mobile row count. When
-the viewport is wider, restore the original Hacker News row count and hide the
-controls through CSS. Returning to the mobile breakpoint restores the user's
-current mobile row count.
+Use `window.matchMedia("(max-width: 700px) and (any-pointer: coarse)")` to apply
+the mobile row count. Outside that query, restore the original Hacker News row
+count and hide the controls through CSS. Returning to the touch breakpoint
+restores the user's current mobile row count. This keeps narrow macOS Safari
+windows on Hacker News' native mouse-resizable textarea.
 
 A delegated `focusin` listener changes the mobile row count from 2 to 6 only on
 the first focus. Control clicks clamp row changes to the 2 through 22 range and
@@ -109,10 +113,10 @@ Automated checks must cover:
 - The selector accepts only comment-form textareas.
 - Mobile initialization uses 2 rows and preserves the original row count.
 - First focus changes 2 rows to 6 exactly once.
-- `▴` and `▾` change the size by four rows and clamp it to 2 through 22.
+- The up and down controls change the size by four rows and clamp it to 2 through 22.
 - Control pointer interaction preserves an active textarea's focus.
-- Wider viewports restore the original Hacker News rows; returning to mobile
-  restores the selected mobile rows.
+- Viewports outside the narrow coarse-pointer query restore the original Hacker
+  News rows; returning to mobile restores the selected mobile rows.
 - Unrelated textareas are unchanged.
 - Mobile CSS contains the right-gutter width adjustment and HN-style control
   presentation.
@@ -129,7 +133,7 @@ Runtime checks must cover:
 - Comment text remains intact across size and focus changes and submits through
   Hacker News normally.
 - Light and dark themes and at least two font presets.
-- A desktop item page remains unchanged.
+- A desktop item page, including a narrow macOS Safari window, remains unchanged.
 
 Run `make format`, `make check`, the relevant Safari build workflow, and real
 Safari validation before committing the implementation.
