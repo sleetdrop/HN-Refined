@@ -1,10 +1,10 @@
-# System Accessibility and Comment Target Implementation Plan
+# System Accessibility Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add automatic increased contrast, keyboard focus visibility, and targeted-comment orientation to Hacker News without adding JavaScript, settings, permissions, or dependencies.
+**Goal:** Add automatic increased contrast and keyboard focus visibility to Hacker News without adding JavaScript, settings, permissions, or dependencies.
 
-**Architecture:** Extend the existing content stylesheet with progressive WebKit CSS: `prefers-contrast: more` overrides semantic theme variables, `:focus-visible` exposes keyboard focus, and `.comtr:target` marks fragment-linked comments. Source-level tests validate selector boundaries and calculate that the proposed color mixes improve contrast for both committed themes.
+**Architecture:** Extend the existing content stylesheet with progressive WebKit CSS: `prefers-contrast: more` overrides semantic theme variables and `:focus-visible` exposes keyboard focus. Source-level tests validate selector boundaries and calculate that the proposed color mixes improve contrast for both committed themes.
 
 **Tech Stack:** CSS custom properties, WebKit media queries and selectors, Node.js built-in test runner, existing theme JSON and Makefile workflow.
 
@@ -14,7 +14,7 @@
 - Do not add preferences, permissions, dependencies, animations, timers, or DOM mutations.
 - Increased contrast applies to System, Light, and Dark extension themes.
 - Preserve visual hierarchy rather than converting all secondary colors to primary text.
-- Bind comment feedback only to Hacker News `.comtr:target` rows.
+- Leave Hacker News fragment navigation and target visuals unchanged.
 - Unsupported CSS features must fall back to the current validated presentation.
 - Static information pages remain outside the styling target.
 
@@ -30,7 +30,7 @@
 **Interfaces:**
 
 - Consumes: existing `--hnr-text-primary`, `--hnr-content-background`, `--hnr-top-bar-background`, `--hnr-text-muted`, `--hnr-visited-link`, `--hnr-border-subtle`, and `--hnr-vote-arrow` theme variables.
-- Produces: automatic CSS behavior for increased contrast, keyboard focus, and fragment-targeted `.comtr` rows.
+- Produces: automatic CSS behavior for increased contrast and keyboard focus.
 
 - [x] **Step 1: Add contrast calculation helpers to the CSS test**
 
@@ -125,15 +125,10 @@ test("content CSS exposes keyboard focus without pointer-only focus styling", ()
   );
 });
 
-test("fragment-targeted comments receive restrained orientation feedback", () => {
+test("content CSS leaves Hacker News fragment-target visuals unchanged", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
-  assert.match(css, /\.comtr:target\s*{[^}]*scroll-margin-block:\s*1\.5rem/s);
-  assert.match(
-    css,
-    /\.comtr:target\s+\.default\s*{[^}]*box-shadow:\s*inset 3px 0 0 0 var\(--hnr-top-bar-background[^}]*background:\s*color-mix\(/s,
-  );
-  assert.doesNotMatch(css, /animation:/);
+  assert.doesNotMatch(css, /\.comtr:target|\.togg:target|:has\(:target\)/);
 });
 ```
 
@@ -145,8 +140,7 @@ Run:
 node --test tests/css-rules.test.js
 ```
 
-Expected: the three new tests fail because the media query, focus rule, and
-targeted-comment rule do not exist.
+Expected: the contrast and focus tests fail because their rules do not exist.
 
 - [x] **Step 4: Add the minimal CSS implementation**
 
@@ -157,19 +151,6 @@ Add this block before the responsive media queries in
 :where(a[href], button, input, select, textarea):focus-visible {
   outline: 2px solid Highlight;
   outline-offset: 2px;
-}
-
-.comtr:target {
-  scroll-margin-block: 1.5rem;
-}
-
-.comtr:target .default {
-  box-shadow: inset 3px 0 0 0 var(--hnr-top-bar-background, #ff6600);
-  background: color-mix(
-    in srgb,
-    var(--hnr-top-bar-background, #ff6600) 10%,
-    var(--hnr-content-background, #f6f6ef)
-  );
 }
 
 @media (prefers-contrast: more) {
@@ -249,12 +230,11 @@ test("docs preserve automatic WebKit accessibility enhancements", () => {
   for (const doc of [development, status]) {
     assert.match(doc, /prefers-contrast: more/);
     assert.match(doc, /:focus-visible/);
-    assert.match(doc, /\.comtr:target/);
     assert.match(doc, /CSS-only/);
   }
 
   assert.match(development, /System,\s+Light,\s+and Dark/);
-  assert.match(development, /parent.*root.*next.*prev/s);
+  assert.match(development, /fragment navigation.*owned by Hacker News/is);
 });
 ```
 
@@ -283,20 +263,20 @@ Light, and Dark themes without adding a user preference. A shared
 `:focus-visible` rule exposes keyboard focus without forcing focus rings after
 ordinary pointer or touch interaction.
 
-Hacker News' in-thread `parent`, `root`, `next`, and `prev` links use comment
-fragments. HN Refined applies `.comtr:target` for a restrained persistent marker
-and scroll margin. Keep this binding limited to Hacker News comment rows; do not
-add fragment observers, timers, animations, or DOM mutation.
+Comment fragment navigation and its target visuals remain owned by Hacker News.
+Do not add `:target` styling, fragment observers, timers, or DOM mutation to
+mark the selected comment; doing so changes the site's basic visual language and
+is inconsistent across macOS and iOS WebKit because Hacker News repeats comment
+IDs.
 
 Real Safari checks must cover macOS keyboard navigation and Increase Contrast
-across all three theme choices, plus iPhone or iPad in-thread comment navigation
-in portrait and landscape.
+across all three theme choices, plus Increase Contrast on iPhone or iPad.
 ```
 
 Add a matching Current Implementation bullet to `docs/project-status.md` that
-uses the exact terms `CSS-only`, `prefers-contrast: more`, `:focus-visible`, and
-`.comtr:target`, and records real Safari acceptance as pending until Task 3 is
-confirmed.
+uses the exact terms `CSS-only`, `prefers-contrast: more`, and `:focus-visible`,
+records the Hacker News fragment-visual boundary, and records real Safari
+acceptance as pending until Task 3 is confirmed.
 
 - [x] **Step 4: Run documentation and full checks**
 
@@ -357,7 +337,7 @@ make safari-doctor
 Expected: the stable repo-local app is installed, its package resources pass the
 doctor checks, and Hacker News opens in Safari.
 
-- [ ] **Step 3: Perform macOS Safari acceptance**
+- [x] **Step 3: Perform macOS Safari acceptance**
 
 With the maintainer observing Safari:
 
@@ -368,19 +348,17 @@ With the maintainer observing Safari:
    and form fields; verify the system-colored outline is clear.
 3. Click or touch ordinary controls and verify keyboard-only focus treatment is
    not left on pointer interactions.
-4. Use a comment's `parent`, `root`, `next`, or `prev` link and verify the
-   selected comment keeps a thin accent line and light background without
-   shifting the comment layout.
+4. Use a comment's `parent`, `root`, `next`, or `prev` link and verify HN Refined
+   does not add a target marker or change Hacker News' fragment navigation.
 
-- [ ] **Step 4: Perform iPhone or iPad Safari acceptance**
+- [x] **Step 4: Perform iPhone or iPad Safari acceptance**
 
-Use Hacker News' in-thread `parent`, `root`, `next`, or `prev` comment navigation
-in portrait and landscape. Verify the target marker identifies the intended
-comment, respects indentation, and does not interfere with voting, collapsing,
-replying, or scrolling. Confirm ordinary touch interaction does not display
-inappropriate focus outlines.
+Enable Increase Contrast on iPhone or iPad and verify secondary colors become
+stronger without flattening the visual hierarchy. Confirm ordinary touch
+interaction does not display inappropriate focus outlines, and Hacker News'
+fragment navigation retains its native presentation.
 
-- [ ] **Step 5: Record completed acceptance**
+- [x] **Step 5: Record completed acceptance**
 
 After the maintainer confirms both platforms, replace the pending acceptance
 sentence in `docs/project-status.md` with a concise record naming the tested

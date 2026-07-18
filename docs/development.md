@@ -186,6 +186,15 @@ otherwise lets it inherit the muted table-cell color, but HN Refined treats this
 as primary reading content. Keep the semantic `#hnmain .toptext` color override
 separate from `.subtext`, scores, ages, domains, and other muted metadata.
 
+## Font Preset Scope
+
+Font presets apply to Hacker News reading content and its page-level navigation,
+title, metadata, footer, and comment typography. Hacker News declares Verdana
+directly on several of these classes, so the shared `--hnr-font-family` binding
+must continue to cover each explicit site font selector. Native form editing
+fonts and HN Refined's Popup and Options UI remain independent of the reading
+preset.
+
 ## Automatic Accessibility Enhancements
 
 HN Refined keeps system accessibility behavior automatic and CSS-only. The
@@ -194,14 +203,14 @@ Light, and Dark themes without adding a user preference. A shared
 `:focus-visible` rule exposes keyboard focus without forcing focus rings after
 ordinary pointer or touch interaction.
 
-Hacker News' in-thread `parent`, `root`, `next`, and `prev` links use comment
-fragments. HN Refined applies `.comtr:target` for a restrained persistent marker
-and scroll margin. Keep this binding limited to Hacker News comment rows; do not
-add fragment observers, timers, animations, or DOM mutation.
+Comment fragment navigation and its target visuals remain owned by Hacker News.
+Do not add `:target` styling, fragment observers, timers, or DOM mutation to
+mark the selected comment; doing so changes the site's basic visual language and
+is inconsistent across macOS and iOS WebKit because Hacker News repeats comment
+IDs.
 
 Real Safari checks must cover macOS keyboard navigation and Increase Contrast
-across all three theme choices, plus iPhone or iPad in-thread comment navigation
-in portrait and landscape.
+across all three theme choices, plus Increase Contrast on iPhone or iPad.
 
 ## Mobile Comment Editor
 

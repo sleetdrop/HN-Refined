@@ -50,10 +50,11 @@ Hacker News behavior and information architecture.
   exist.
 - Automatic accessibility enhancements remain CSS-only. The
   `prefers-contrast: more` media query strengthens secondary colors across all
-  themes, `:focus-visible` exposes keyboard focus, and `.comtr:target` marks a
-  comment selected by Hacker News' in-thread fragment navigation without
-  JavaScript or a new setting. Real macOS and iOS/iPadOS Safari acceptance is
-  pending.
+  themes, and `:focus-visible` exposes keyboard focus without JavaScript or a
+  new setting. Comment fragment navigation and target visuals remain owned by
+  Hacker News. Real Safari acceptance passed on macOS for Increase Contrast and
+  keyboard focus, and on the iPhone simulator for Increase Contrast and ordinary
+  touch behavior.
 - Mobile comment editors keep the original Hacker News form visible in a
   two-row compact state, expand to six rows on first focus, and expose small
   equal-size CSS triangle controls that adjust by four rows between 2 and 22.
@@ -129,9 +130,11 @@ guards for popup-driven preference changes:
 Theme and style changes must be checked in both light and dark modes. Previous
 dark-theme work accidentally affected light-theme navigation colors.
 
-Hacker News declares its own font family on `.comment`. Keep comment nodes in
-every HN Refined font-preset selector so item-page comment bodies follow the
-selected font.
+Hacker News declares Verdana directly on navigation, title, metadata, footer,
+and comment classes. Keep those explicit site font selectors in the shared
+`--hnr-font-family` binding so every HN Refined preset remains visually
+consistent. Native form editing fonts and extension-owned settings UI remain
+independent.
 
 Hacker News story submission text uses `.toptext` and otherwise inherits the
 site's muted `td` color. HN Refined treats `.toptext` as primary reading content

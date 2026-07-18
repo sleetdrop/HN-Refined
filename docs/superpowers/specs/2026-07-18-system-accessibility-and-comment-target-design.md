@@ -1,24 +1,22 @@
-# System Accessibility and Comment Target Design
+# System Accessibility Design
 
 **Date:** 2026-07-18
 
 ## Goal
 
-Use native WebKit and Apple platform preferences to improve contrast, keyboard
-navigation, and in-thread comment orientation while preserving Hacker News'
-compact, traditional interface. The enhancement must remain CSS-only,
-automatic, dependency-free, and auditable.
+Use native WebKit and Apple platform preferences to improve contrast and
+keyboard navigation while preserving Hacker News' compact, traditional
+interface. The enhancement must remain CSS-only, automatic, dependency-free,
+and auditable.
 
 ## Scope
 
-This change covers three related behaviors on normal interactive Hacker News
+This change covers two related behaviors on normal interactive Hacker News
 pages:
 
 - Honor the Apple system's increased-contrast preference in every HN Refined
   theme, including explicitly selected Light and Dark themes.
 - Give keyboard users a clear focus indicator on links and form controls.
-- Make a fragment-targeted Hacker News comment visually identifiable after an
-  in-thread `parent`, `root`, `next`, or `prev` link scrolls it into view.
 
 It does not add a preference, permission, content-script behavior, animation,
 or compatibility code for static information pages.
@@ -31,9 +29,9 @@ fall back to the current presentation without JavaScript detection.
 
 This is preferred over an Accessibility settings group because system contrast
 is an accessibility preference rather than a theme choice. It is also preferred
-over a contrast-only change because keyboard focus and in-thread comment
-orientation are closely related automatic accessibility improvements with the
-same small CSS-only implementation boundary.
+over a contrast-only change because keyboard focus is a closely related
+automatic accessibility improvement with the same small CSS-only implementation
+boundary.
 
 ## Increased Contrast
 
@@ -67,20 +65,13 @@ Do not remove Safari's existing focus styles and do not add `:focus` rules that
 would show the keyboard indicator after ordinary touch or pointer interaction.
 Existing Popup and Options focus behavior remains unchanged.
 
-## Targeted Comment Feedback
+## Hacker News Visual Ownership
 
-Bind only to Hacker News comment rows with `.comtr:target`. Style the row's
-`.default` content cell with:
-
-- a narrow inset line using the active HN Refined header/accent color;
-- a very lightly mixed accent background; and
-- block-axis scroll margin so browser fragment positioning leaves breathing
-  room around the selected comment where WebKit applies scroll margin.
-
-The marker remains visible while the comment ID remains the document fragment.
-It uses no animation, timer, DOM mutation, or generated label. Nested comment
-indentation, voting, collapsing, replying, permalink behavior, and fragment
-navigation remain owned by Hacker News.
+Comment fragment navigation and target visuals remain owned by Hacker News.
+Real Safari validation found that Hacker News repeats comment IDs and macOS and
+iOS WebKit resolve them differently. More importantly, adding a persistent line
+or background changes the site's basic visual language. Do not add `:target`
+styling or a JavaScript fallback for this behavior.
 
 ## Compatibility And Failure Behavior
 
@@ -90,11 +81,7 @@ All behavior is progressive enhancement:
 - Browsers that do not support `color-mix()` ignore only the mixed-color
   declarations.
 - Browsers without `:focus-visible` retain their native focus behavior.
-- Pages without a targeted `.comtr` are unchanged.
-
-The selectors depend on Hacker News' established `.comtr` and `.default`
-comment structure. This is within the project's documented stable-binding
-boundary and does not justify a broader compatibility script.
+- Hacker News fragment navigation retains its native presentation.
 
 ## Verification
 
@@ -103,8 +90,7 @@ Automated checks must verify:
 - the increased-contrast media query and theme-variable overrides exist;
 - focus-visible covers links and native form controls without a broad `:focus`
   replacement;
-- comment targeting is limited to `.comtr:target` and includes the marker and
-  scroll margin;
+- content CSS does not style Hacker News fragment targets;
 - content JavaScript is unchanged; and
 - generated and source theme validation still passes.
 
@@ -114,14 +100,13 @@ Real Safari acceptance must cover:
   form controls in Light and Dark themes;
 - macOS Increase Contrast in System Settings with System, Light, and Dark
   extension themes;
-- iPhone or iPad `parent`, `root`, `next`, and `prev` comment navigation in
-  portrait and landscape; and
+- iPhone or iPad Increase Contrast; and
 - confirmation that normal pointer/touch use does not leave inappropriate focus
   outlines.
 
 ## Documentation
 
 Update `docs/project-status.md` and `docs/development.md` with the automatic
-system-contrast, keyboard-focus, and targeted-comment behavior and its Safari
-acceptance requirements. No README or App Store preference documentation is
-needed because the feature has no user-facing control.
+system-contrast and keyboard-focus behavior, the Hacker News visual-ownership
+boundary, and Safari acceptance requirements. No README or App Store preference
+documentation is needed because the feature has no user-facing control.

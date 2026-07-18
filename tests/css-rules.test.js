@@ -65,12 +65,36 @@ test("story submission text uses the primary reading color", () => {
   assert.doesNotMatch(css, /\.toptext[^}]*color:\s*var\(--hnr-text-muted/s);
 });
 
-test("font presets override Hacker News comment fonts", () => {
+test("font presets override Hacker News reading and metadata fonts", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
   for (const preset of ["system-sans", "hn-classic", "serif-reading", "mono-ish"]) {
-    assert.match(css, new RegExp(`html\\[data-hnr-font="${preset}"\\]\\s+\\.comment\\s*\\{`));
+    assert.match(
+      css,
+      new RegExp(`html\\[data-hnr-font="${preset}"\\]\\s*\\{[^}]*--hnr-font-family:`, "s"),
+    );
   }
+
+  const presetSelectors = [
+    "body",
+    "td",
+    ".default",
+    ".admin",
+    ".title",
+    ".subtext",
+    ".yclinks",
+    ".pagetop",
+    ".comhead",
+    ".comment",
+  ];
+  const selectorList = presetSelectors
+    .map((selector) => `html\\[data-hnr-font\\]\\s+${selector.replace(".", "\\.")}`)
+    .join(",\\s*");
+
+  assert.match(
+    css,
+    new RegExp(`${selectorList}\\s*\\{[^}]*font-family:\\s*var\\(--hnr-font-family\\)`, "s"),
+  );
 });
 
 test("content CSS overrides Hacker News footer link colors", () => {
@@ -265,13 +289,8 @@ test("content CSS exposes keyboard focus without pointer-only focus styling", ()
   );
 });
 
-test("fragment-targeted comments receive restrained orientation feedback", () => {
+test("content CSS leaves Hacker News fragment-target visuals unchanged", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
-  assert.match(css, /\.comtr:target\s*{[^}]*scroll-margin-block:\s*1\.5rem/s);
-  assert.match(
-    css,
-    /\.comtr:target\s+\.default\s*{[^}]*box-shadow:\s*inset 3px 0 0 0 var\(--hnr-top-bar-background[^}]*background:\s*color-mix\(/s,
-  );
-  assert.doesNotMatch(css, /animation:/);
+  assert.doesNotMatch(css, /\.comtr:target|\.togg:target|:has\(:target\)/);
 });

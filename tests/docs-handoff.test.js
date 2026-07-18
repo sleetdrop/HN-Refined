@@ -144,12 +144,22 @@ test("docs preserve automatic WebKit accessibility enhancements", () => {
   for (const doc of [development, status]) {
     assert.match(doc, /prefers-contrast: more/);
     assert.match(doc, /:focus-visible/);
-    assert.match(doc, /\.comtr:target/);
     assert.match(doc, /CSS-only/);
   }
 
   assert.match(development, /System,\s+Light,\s+and Dark/);
-  assert.match(development, /parent.*root.*next.*prev/s);
+  assert.match(development, /fragment navigation.*owned by Hacker News/is);
+});
+
+test("docs preserve complete Hacker News font preset coverage", () => {
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+
+  for (const doc of [development, status]) {
+    assert.match(doc, /--hnr-font-family/);
+    assert.match(doc, /navigation.*title.*metadata.*footer.*comment/is);
+    assert.match(doc, /form editing\s+fonts/i);
+  }
 });
 
 test("release docs keep App Store and open-source blockers explicit", () => {

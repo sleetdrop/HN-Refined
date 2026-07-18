@@ -35,28 +35,33 @@ html[data-hnr-width="wide"] #hnmain {
   max-width: 1280px;
 }
 
-html[data-hnr-font="system-sans"] body,
-html[data-hnr-font="system-sans"] td,
-html[data-hnr-font="system-sans"] .comment {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+html[data-hnr-font="system-sans"] {
+  --hnr-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-html[data-hnr-font="hn-classic"] body,
-html[data-hnr-font="hn-classic"] td,
-html[data-hnr-font="hn-classic"] .comment {
-  font-family: Verdana, Geneva, sans-serif;
+html[data-hnr-font="hn-classic"] {
+  --hnr-font-family: Verdana, Geneva, sans-serif;
 }
 
-html[data-hnr-font="serif-reading"] body,
-html[data-hnr-font="serif-reading"] td,
-html[data-hnr-font="serif-reading"] .comment {
-  font-family: ui-serif, Georgia, "Times New Roman", serif;
+html[data-hnr-font="serif-reading"] {
+  --hnr-font-family: ui-serif, Georgia, "Times New Roman", serif;
 }
 
-html[data-hnr-font="mono-ish"] body,
-html[data-hnr-font="mono-ish"] td,
-html[data-hnr-font="mono-ish"] .comment {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+html[data-hnr-font="mono-ish"] {
+  --hnr-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html[data-hnr-font] body,
+html[data-hnr-font] td,
+html[data-hnr-font] .default,
+html[data-hnr-font] .admin,
+html[data-hnr-font] .title,
+html[data-hnr-font] .subtext,
+html[data-hnr-font] .yclinks,
+html[data-hnr-font] .pagetop,
+html[data-hnr-font] .comhead,
+html[data-hnr-font] .comment {
+  font-family: var(--hnr-font-family);
 }
 
 html[data-hnr-density="comfortable"] .title {
@@ -280,19 +285,6 @@ html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
 :where(a[href], button, input, select, textarea):focus-visible {
   outline: 2px solid Highlight;
   outline-offset: 2px;
-}
-
-.comtr:target {
-  scroll-margin-block: 1.5rem;
-}
-
-.comtr:target .default {
-  box-shadow: inset 3px 0 0 0 var(--hnr-top-bar-background, #ff6600);
-  background: color-mix(
-    in srgb,
-    var(--hnr-top-bar-background, #ff6600) 10%,
-    var(--hnr-content-background, #f6f6ef)
-  );
 }
 
 @media (prefers-contrast: more) {
