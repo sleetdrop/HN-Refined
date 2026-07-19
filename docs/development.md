@@ -171,6 +171,11 @@ does not report website permission, so the site-permission instruction must
 remain visible even when the extension is on. Do not add private Settings URLs
 or raise the deployment target solely for this status display.
 
+The macOS host explicitly loads the packaged `AppIcon.icns` as its runtime icon.
+Keep this guard while its user-visible product name is separated from the stable
+wrapper and executable names; otherwise the running app can show an incomplete
+white document mark in the Dock even though Finder resolves the bundle icon.
+
 ## Safari Popup Preference Refresh
 
 Do not regress popup theme changes back to active-tab-only messaging. Safari's

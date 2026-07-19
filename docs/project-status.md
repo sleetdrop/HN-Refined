@@ -100,7 +100,9 @@ Hacker News behavior and information architecture.
   `SFSafariExtensionManager` reports and refreshes enabled state; older systems
   and lookup failures retain static instructions. Enabled state does not reveal
   website permission. The macOS host continues to show extension state and open
-  Safari Settings.
+  Safari Settings. It also loads the packaged `AppIcon.icns` as its runtime icon
+  so the Dock receives the complete mark despite the separated visible and
+  internal product names.
 - App Store and open-source readiness audits are tracked in
   `docs/release-readiness.md`. Store metadata has a first draft, contribution and
   security policies are present, and the project uses the MIT License.

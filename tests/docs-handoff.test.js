@@ -196,6 +196,15 @@ test("docs preserve host app onboarding and progressive status behavior", () => 
   }
 });
 
+test("docs preserve the macOS runtime icon regression guard", () => {
+  for (const relativePath of ["docs/development.md", "docs/project-status.md"]) {
+    const doc = read(relativePath);
+    assert.match(doc, /AppIcon\.icns/);
+    assert.match(doc, /Dock/);
+    assert.match(doc, /runtime icon/i);
+  }
+});
+
 test("docs preserve the first-release preference surface", () => {
   const development = read("docs/development.md");
   const status = read("docs/project-status.md");

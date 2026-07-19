@@ -11,7 +11,10 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Override point for customization after application launch.
+        if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
+           let icon = NSImage(contentsOfFile: iconPath) {
+            NSApp.applicationIconImage = icon
+        }
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

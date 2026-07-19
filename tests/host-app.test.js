@@ -7,6 +7,7 @@ const hostHtml = fs.readFileSync("HNRefined/Shared (App)/Resources/Base.lproj/Ma
 const hostScript = fs.readFileSync("HNRefined/Shared (App)/Resources/Script.js", "utf8");
 const hostCss = fs.readFileSync("HNRefined/Shared (App)/Resources/Style.css", "utf8");
 const project = fs.readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
+const macAppDelegate = fs.readFileSync("HNRefined/macOS (App)/AppDelegate.swift", "utf8");
 const macStoryboard = fs.readFileSync("HNRefined/macOS (App)/Base.lproj/Main.storyboard", "utf8");
 
 test("host app uses spaced user-visible product names without renaming build products", () => {
@@ -90,4 +91,10 @@ test("host app still opens Safari settings for its embedded extension", () => {
   assert.match(viewController, /SFSafariExtensionManager\.getStateOfSafariExtension/);
   assert.match(viewController, /SFSafariApplication\.showPreferencesForExtension/);
   assert.match(viewController, /extensionBundleIdentifier/);
+});
+
+test("macOS host sets its runtime icon from the packaged app icon", () => {
+  assert.match(macAppDelegate, /path\(forResource: "AppIcon", ofType: "icns"\)/);
+  assert.match(macAppDelegate, /NSImage\(contentsOfFile: iconPath\)/);
+  assert.match(macAppDelegate, /NSApp\.applicationIconImage = icon/);
 });
