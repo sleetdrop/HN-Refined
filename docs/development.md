@@ -186,6 +186,12 @@ otherwise lets it inherit the muted table-cell color, but HN Refined treats this
 as primary reading content. Keep the semantic `#hnmain .toptext` color override
 separate from `.subtext`, scores, ages, domains, and other muted metadata.
 
+On narrow item pages, `.toptext` uses `overflow-wrap: anywhere` so long
+author-supplied URLs cannot widen Hacker News' nested tables. The direct content
+cell of `#bigbox` keeps a 12 px inline-end gutter clear of Safari's overlay
+scroll indicator. Keep both rules mobile-only; do not replace them with global
+overflow clipping or fixed table layout.
+
 ## Font Preset Scope
 
 Font presets apply to Hacker News reading content and its page-level navigation,

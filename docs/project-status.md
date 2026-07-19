@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-17
+Last updated: 2026-07-19
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -62,6 +62,10 @@ Hacker News behavior and information architecture.
   comment textareas retain Hacker News' original rows and mouse resizing.
 - Mobile responsive layout is enabled by default instead of exposed as a
   first-version setting.
+- Narrow item pages wrap long author-supplied `.toptext` content before it can
+  widen Hacker News' nested tables. The `#bigbox` content cell also reserves a
+  12 px inline-end gutter from Safari's overlay scroll indicator without
+  changing Hacker News' table layout or hiding overflow.
 - External story links open in the current tab by default. New-tab behavior is
   opt-in and applies only to external story title links.
 - Story-link behavior prefers Hacker News' current `.titleline` markup and has
@@ -145,6 +149,11 @@ Mobile comment-editor behavior binds to
 inside the narrow coarse-pointer breakpoint, preserve textarea focus during
 touch adjustments, restore Hacker News' original rows outside that breakpoint,
 and do not read comment text or intercept the original form.
+
+Mobile item overflow handling binds to `.toptext` and the direct content cell of
+`#bigbox`. Keep its wrapping and inline-end gutter inside the width-based mobile
+breakpoint. Do not replace this targeted fix with `overflow-x: hidden`, fixed
+table layout, or JavaScript content inspection.
 
 ## Verification Baseline
 

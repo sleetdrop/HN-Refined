@@ -323,6 +323,15 @@ html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
     margin-bottom: calc(72px + env(safe-area-inset-bottom));
   }
 
+  html[data-hnr-mobile="auto"] #bigbox > td {
+    box-sizing: border-box;
+    padding-inline-end: 12px;
+  }
+
+  html[data-hnr-mobile="auto"] #hnmain .toptext {
+    overflow-wrap: anywhere;
+  }
+
   html[data-hnr-mobile="auto"] .titleline {
     display: inline-block;
     padding-block: 7px;

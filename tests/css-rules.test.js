@@ -160,6 +160,22 @@ test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });
 
+test("mobile item pages wrap story text and preserve a right gutter", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileMediaIndex = css.indexOf("@media (max-width: 700px)");
+  const desktopCss = css.slice(0, mobileMediaIndex);
+  const mobileCss = css.slice(mobileMediaIndex);
+
+  assert.notEqual(mobileMediaIndex, -1);
+  assert.doesNotMatch(desktopCss, /\.toptext\s*{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(mobileCss, /#hnmain\s+\.toptext\s*{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(
+    mobileCss,
+    /#bigbox\s*>\s*td\s*{[^}]*box-sizing:\s*border-box[^}]*padding-inline-end:\s*12px/s,
+  );
+  assert.doesNotMatch(css, /overflow-x:\s*hidden|table-layout:\s*fixed/);
+});
+
 test("mobile comment editors keep symmetric gutters and restrained size controls", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const touchMediaIndex = css.indexOf("@media (max-width: 700px) and (any-pointer: coarse)");
