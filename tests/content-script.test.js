@@ -8,7 +8,6 @@ const lightPreferences = {
   fontPreset: "system-sans",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
-  mobileLayout: "auto",
   openStoryLinksInNewTabs: false,
 };
 
@@ -254,6 +253,16 @@ test("content script applies default attributes before async storage resolves", 
   vm.runInContext(script, context);
 
   assert.equal(context.document.documentElement.dataset.hnrTheme, "system");
+  assert.equal(context.document.documentElement.dataset.hnrMobile, "auto");
+});
+
+test("content script ignores legacy mobile layout preferences", async () => {
+  const context = createContentScriptContext({ ...darkPreferences, mobileLayout: "off" });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+  await nextMicrotask();
+
   assert.equal(context.document.documentElement.dataset.hnrMobile, "auto");
 });
 

@@ -8,8 +8,12 @@ const customPreferences = {
   fontPreset: "serif-reading",
   desktopDensity: "classic-ish",
   readingWidth: "wide",
-  mobileLayout: "off",
   openStoryLinksInNewTabs: true,
+};
+
+const legacyPreferences = {
+  ...customPreferences,
+  mobileLayout: "off",
 };
 
 function restoreBrowserApi(originalBrowser, originalChrome) {
@@ -28,6 +32,30 @@ test("readPreferences calls strict promise-style storage get without callbacks",
           const [key] = args;
           assert.equal(key, "hnRefinedPreferences");
           return { hnRefinedPreferences: customPreferences };
+        },
+      },
+    },
+  };
+  globalThis.chrome = undefined;
+
+  try {
+    assert.deepEqual(await readPreferences(), {
+      preferences: customPreferences,
+      persisted: true,
+    });
+  } finally {
+    restoreBrowserApi(originalBrowser, originalChrome);
+  }
+});
+
+test("readPreferences drops legacy mobile layout state", async () => {
+  const originalBrowser = globalThis.browser;
+  const originalChrome = globalThis.chrome;
+  globalThis.browser = {
+    storage: {
+      local: {
+        async get() {
+          return { hnRefinedPreferences: legacyPreferences };
         },
       },
     },

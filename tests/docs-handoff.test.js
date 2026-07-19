@@ -162,6 +162,18 @@ test("docs preserve complete Hacker News font preset coverage", () => {
   }
 });
 
+test("docs preserve the first-release preference surface", () => {
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+
+  for (const doc of [development, status]) {
+    assert.match(doc, /HN Classic.*default/is);
+    assert.match(doc, /Mono-ish/);
+    assert.match(doc, /mobile layout.*automatic/is);
+    assert.match(doc, /legacy.*mobileLayout/is);
+  }
+});
+
 test("release docs keep App Store and open-source blockers explicit", () => {
   const readme = read("README.md");
   const contributing = read("CONTRIBUTING.md");

@@ -194,12 +194,22 @@ overflow clipping or fixed table layout.
 
 ## Font Preset Scope
 
+HN Classic is the default font preset so installing the extension preserves
+Hacker News' Verdana identity. System Sans and Serif provide deliberate reading
+alternatives. Mono-ish remains an intentional retro option, not the default
+prose recommendation.
+
 Font presets apply to Hacker News reading content and its page-level navigation,
 title, metadata, footer, and comment typography. Hacker News declares Verdana
 directly on several of these classes, so the shared `--hnr-font-family` binding
 must continue to cover each explicit site font selector. Native form editing
 fonts and HN Refined's Popup and Options UI remain independent of the reading
 preset.
+
+Mobile layout is automatic and is not a user preference. The content script
+always applies `data-hnr-mobile="auto"` for the responsive CSS binding. Shared
+and content-script normalization must discard the legacy `mobileLayout` state,
+including an old `off` value, so it cannot disable current mobile fixes.
 
 ## Automatic Accessibility Enhancements
 

@@ -1,9 +1,8 @@
 const DEFAULT_PREFERENCES = {
   theme: "system",
-  fontPreset: "system-sans",
+  fontPreset: "hn-classic",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
-  mobileLayout: "auto",
   openStoryLinksInNewTabs: false,
 };
 
@@ -27,7 +26,6 @@ const ALLOWED = {
   fontPreset: ["hn-classic", "system-sans", "serif-reading", "mono-ish"],
   desktopDensity: ["comfortable", "classic-ish"],
   readingWidth: ["comfortable", "wide"],
-  mobileLayout: ["auto", "off"],
 };
 
 let preferences = DEFAULT_PREFERENCES;
@@ -72,7 +70,6 @@ function normalize(raw = {}) {
     fontPreset: enumOrDefault("fontPreset", next.fontPreset),
     desktopDensity: enumOrDefault("desktopDensity", next.desktopDensity),
     readingWidth: enumOrDefault("readingWidth", next.readingWidth),
-    mobileLayout: enumOrDefault("mobileLayout", next.mobileLayout),
     openStoryLinksInNewTabs:
       typeof next.openStoryLinksInNewTabs === "boolean"
         ? next.openStoryLinksInNewTabs
@@ -88,7 +85,7 @@ function applyPreferences(nextPreferences) {
   root.dataset.hnrFont = preferences.fontPreset;
   root.dataset.hnrDensity = preferences.desktopDensity;
   root.dataset.hnrWidth = preferences.readingWidth;
-  root.dataset.hnrMobile = preferences.mobileLayout;
+  root.dataset.hnrMobile = "auto";
 }
 
 function isHackerNewsInternalUrl(href) {

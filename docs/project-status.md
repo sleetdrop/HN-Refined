@@ -48,6 +48,8 @@ Hacker News behavior and information architecture.
   for them. Do not add compatibility code for this surface.
 - Theme, font, density, width, and external story-link target preferences
   exist.
+- HN Classic is the default font preset. System Sans, Serif, and the intentional
+  retro Mono-ish option remain explicit alternatives.
 - Automatic accessibility enhancements remain CSS-only. The
   `prefers-contrast: more` media query strengthens secondary colors across all
   themes, and `:focus-visible` exposes keyboard focus without JavaScript or a
@@ -60,8 +62,10 @@ Hacker News behavior and information architecture.
   equal-size CSS triangle controls that adjust by four rows between 2 and 22.
   The enhancement requires a narrow viewport and a coarse pointer; desktop
   comment textareas retain Hacker News' original rows and mouse resizing.
-- Mobile responsive layout is enabled by default instead of exposed as a
-  first-version setting.
+- Mobile layout is automatic instead of exposed as a first-version setting.
+  Preference normalization discards the legacy `mobileLayout` state, while the
+  content script always applies the existing `data-hnr-mobile="auto"` CSS
+  binding.
 - Narrow item pages wrap long author-supplied `.toptext` content before it can
   widen Hacker News' nested tables. The `#bigbox` content cell also reserves a
   12 px inline-end gutter from Safari's overlay scroll indicator without
@@ -78,7 +82,8 @@ Hacker News behavior and information architecture.
   story-link new-tab toggle, and a lightweight full settings entry.
 - Full settings page is `extension/options/options.html`.
 - Full settings are grouped by where preferences apply: shared appearance,
-  desktop reading, and link behavior.
+  reading layout, and link behavior. Reading layout names Mac and wider iPad
+  layouts rather than implying that every density effect is desktop-only.
 - App icon uses the full C4 design. Safari toolbar icons use the simplified
   B3f-2 small-size mark.
 - The macOS host app has a native status window instead of a blank window.
@@ -139,6 +144,11 @@ and comment classes. Keep those explicit site font selectors in the shared
 `--hnr-font-family` binding so every HN Refined preset remains visually
 consistent. Native form editing fonts and extension-owned settings UI remain
 independent.
+
+HN Classic remains the default font, and Mono-ish remains available as an
+intentional retro choice. Mobile layout remains automatic: do not restore a
+user-facing switch or accept the legacy `mobileLayout` preference. Keep setting
+`data-hnr-mobile="auto"` so responsive fixes cannot be disabled by stale storage.
 
 Hacker News story submission text uses `.toptext` and otherwise inherits the
 site's muted `td` color. HN Refined treats `.toptext` as primary reading content

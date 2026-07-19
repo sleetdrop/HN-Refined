@@ -9,10 +9,9 @@ import {
 test("default preferences match the approved spec", () => {
   assert.deepEqual(DEFAULT_PREFERENCES, {
     theme: "system",
-    fontPreset: "system-sans",
+    fontPreset: "hn-classic",
     desktopDensity: "comfortable",
     readingWidth: "comfortable",
-    mobileLayout: "auto",
     openStoryLinksInNewTabs: false,
   });
 });
@@ -27,7 +26,7 @@ test("allowed preferences expose only first-version options", () => {
   ]);
   assert.deepEqual(ALLOWED_PREFERENCES.desktopDensity, ["comfortable", "classic-ish"]);
   assert.deepEqual(ALLOWED_PREFERENCES.readingWidth, ["comfortable", "wide"]);
-  assert.deepEqual(ALLOWED_PREFERENCES.mobileLayout, ["auto", "off"]);
+  assert.equal(ALLOWED_PREFERENCES.mobileLayout, undefined);
 });
 
 test("normalizePreferences falls back for invalid or missing values", () => {
@@ -37,7 +36,7 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       fontPreset: "serif-reading",
       desktopDensity: "huge",
       readingWidth: "wide",
-      mobileLayout: "auto",
+      mobileLayout: "off",
       openStoryLinksInNewTabs: "yes",
     }),
     {
@@ -45,7 +44,6 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       fontPreset: "serif-reading",
       desktopDensity: "comfortable",
       readingWidth: "wide",
-      mobileLayout: "auto",
       openStoryLinksInNewTabs: false,
     },
   );

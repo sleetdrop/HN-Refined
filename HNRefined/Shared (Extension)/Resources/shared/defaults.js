@@ -1,9 +1,8 @@
 export const DEFAULT_PREFERENCES = Object.freeze({
   theme: "system",
-  fontPreset: "system-sans",
+  fontPreset: "hn-classic",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
-  mobileLayout: "auto",
   openStoryLinksInNewTabs: false,
 });
 
@@ -12,7 +11,6 @@ export const ALLOWED_PREFERENCES = Object.freeze({
   fontPreset: Object.freeze(["hn-classic", "system-sans", "serif-reading", "mono-ish"]),
   desktopDensity: Object.freeze(["comfortable", "classic-ish"]),
   readingWidth: Object.freeze(["comfortable", "wide"]),
-  mobileLayout: Object.freeze(["auto", "off"]),
 });
 
 function enumOrDefault(key, value) {
@@ -27,7 +25,6 @@ export function normalizePreferences(raw = {}) {
     fontPreset: enumOrDefault("fontPreset", preferences.fontPreset),
     desktopDensity: enumOrDefault("desktopDensity", preferences.desktopDensity),
     readingWidth: enumOrDefault("readingWidth", preferences.readingWidth),
-    mobileLayout: enumOrDefault("mobileLayout", preferences.mobileLayout),
     openStoryLinksInNewTabs:
       typeof preferences.openStoryLinksInNewTabs === "boolean"
         ? preferences.openStoryLinksInNewTabs

@@ -33,14 +33,23 @@ test("popup exposes only quick settings and full settings entry", () => {
 });
 
 test("full settings page groups only meaningful user-facing controls", () => {
-  for (const heading of ["Appearance", "Desktop Reading", "Links"]) {
+  for (const heading of ["Appearance", "Reading Layout", "Links"]) {
     assert.match(optionsHtml, new RegExp(`>${heading}<`));
   }
 
-  assert.match(optionsHtml, /Desktop reading settings mainly affect wide Hacker News layouts/);
+  assert.match(optionsHtml, /Reading layout settings mainly affect Mac and wider iPad layouts/);
+  assert.match(optionsHtml, /Reading Density/);
+  assert.match(optionsHtml, /<option value="classic-ish">Classic<\/option>/);
+  assert.match(optionsHtml, /<option value="comfortable">Focused<\/option>/);
+  assert.match(optionsHtml, /<option value="serif-reading">Serif<\/option>/);
+  assert.match(optionsHtml, /<option value="mono-ish">Mono-ish<\/option>/);
   assert.doesNotMatch(optionsHtml, /Mobile Reading/);
   assert.doesNotMatch(optionsHtml, /Mobile Layout/);
   assert.doesNotMatch(optionsHtml, /id="mobileLayout"/);
+
+  const fontOptions = optionsHtml.match(/<select id="fontPreset">([\s\S]*?)<\/select>/)?.[1];
+  assert.ok(fontOptions);
+  assert.ok(fontOptions.indexOf('value="hn-classic"') < fontOptions.indexOf('value="system-sans"'));
 
   for (const fieldId of [
     "theme",

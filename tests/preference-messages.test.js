@@ -11,7 +11,6 @@ const preferences = {
   fontPreset: "system-sans",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
-  mobileLayout: "auto",
   openStoryLinksInNewTabs: false,
 };
 

@@ -6,7 +6,6 @@ const existingPreferences = {
   fontPreset: "serif-reading",
   desktopDensity: "classic-ish",
   readingWidth: "wide",
-  mobileLayout: "off",
   openStoryLinksInNewTabs: true,
 };
 
