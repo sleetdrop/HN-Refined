@@ -72,6 +72,9 @@ Hacker News behavior and information architecture.
   widen Hacker News' nested tables. The `#bigbox` content cell also reserves a
   12 px inline-end gutter from Safari's overlay scroll indicator without
   changing Hacker News' table layout or hiding overflow.
+- The narrow footer Algolia search preserves Hacker News' centered two-line
+  presentation. Its input is block-level and centered inside 12 px inline form
+  gutters so font presets cannot force the field beyond the viewport.
 - External story links open in the current tab by default. New-tab behavior is
   opt-in and applies only to external story title links.
 - Story-link behavior prefers Hacker News' current `.titleline` markup and has

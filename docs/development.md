@@ -192,6 +192,12 @@ cell of `#bigbox` keeps a 12 px inline-end gutter clear of Safari's overlay
 scroll indicator. Keep both rules mobile-only; do not replace them with global
 overflow clipping or fixed table layout.
 
+The mobile footer search keeps Hacker News' established centered two-line
+presentation. Bind only to the semantic Algolia form action, keep `Search:`
+centered, and give its block-level input 12 px inline form gutters. Do not let
+the shared mobile input width put the label and field back on one overflowing
+line, and do not apply this exception to other forms.
+
 ## Font Preset Scope
 
 HN Classic is the default font preset so installing the extension preserves

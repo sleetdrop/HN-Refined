@@ -171,6 +171,15 @@ test("docs preserve the Apple-native retro mono stack", () => {
   }
 });
 
+test("docs preserve the mobile footer search layout", () => {
+  for (const relativePath of ["docs/development.md", "docs/project-status.md"]) {
+    const doc = read(relativePath);
+    assert.match(doc, /Algolia/);
+    assert.match(doc, /two-line/);
+    assert.match(doc, /12 px/);
+  }
+});
+
 test("docs preserve the first-release preference surface", () => {
   const development = read("docs/development.md");
   const status = read("docs/project-status.md");

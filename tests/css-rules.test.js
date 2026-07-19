@@ -181,6 +181,20 @@ test("mobile item pages wrap story text and preserve a right gutter", () => {
   assert.doesNotMatch(css, /overflow-x:\s*hidden|table-layout:\s*fixed/);
 });
 
+test("mobile footer search preserves Hacker News' centered two-line layout", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+
+  assert.match(
+    mobileCss,
+    /#hnmain\s+form\[action\$="hn\.algolia\.com\/"\]\s*{[^}]*box-sizing:\s*border-box[^}]*padding-inline:\s*12px[^}]*text-align:\s*center/s,
+  );
+  assert.match(
+    mobileCss,
+    /#hnmain\s+form\[action\$="hn\.algolia\.com\/"\]\s+input\[name="q"\]\s*{[^}]*display:\s*block[^}]*margin-inline:\s*auto/s,
+  );
+});
+
 test("mobile comment editors keep symmetric gutters and restrained size controls", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const touchMediaIndex = css.indexOf("@media (max-width: 700px) and (any-pointer: coarse)");

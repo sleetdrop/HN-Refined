@@ -413,6 +413,18 @@ html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
     width: 100%;
   }
 
+  html[data-hnr-mobile="auto"] #hnmain form[action$="hn.algolia.com/"] {
+    box-sizing: border-box;
+    padding-inline: 12px;
+    text-align: center;
+  }
+
+  html[data-hnr-mobile="auto"] #hnmain form[action$="hn.algolia.com/"] input[name="q"] {
+    display: block;
+    margin-block: 4px 0;
+    margin-inline: auto;
+  }
+
   html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) table,
   html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) tbody,
   html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) tr,
