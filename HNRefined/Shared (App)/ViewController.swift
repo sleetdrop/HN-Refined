@@ -6,13 +6,13 @@
 //
 
 import WebKit
+import SafariServices
 
 #if os(iOS)
 import UIKit
 typealias PlatformViewController = UIViewController
 #elseif os(macOS)
 import Cocoa
-import SafariServices
 typealias PlatformViewController = NSViewController
 #endif
 
@@ -21,24 +21,38 @@ let extensionBundleIdentifier = "net.vetcafe.hnrefined.extension"
 class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
     @IBOutlet var webView: WKWebView!
+    private var webContentReady = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.webView.navigationDelegate = self
 
-#if os(iOS)
-        self.webView.scrollView.isScrollEnabled = false
-#endif
-
         self.webView.configuration.userContentController.add(self, name: "controller")
+
+#if os(iOS)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+#endif
 
         self.webView.loadFileURL(Bundle.main.url(forResource: "Main", withExtension: "html")!, allowingReadAccessTo: Bundle.main.resourceURL!)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webContentReady = true
+
 #if os(iOS)
-        webView.evaluateJavaScript("show('ios')")
+        webView.evaluateJavaScript("show('ios')") { [weak self] _, _ in
+            self?.refreshExtensionState()
+        }
 #elseif os(macOS)
         webView.evaluateJavaScript("show('mac')")
 
@@ -58,6 +72,26 @@ class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMess
         }
 #endif
     }
+
+#if os(iOS)
+    @objc private func applicationDidBecomeActive() {
+        refreshExtensionState()
+    }
+
+    private func refreshExtensionState() {
+        guard webContentReady else { return }
+
+        if #available(iOS 26.2, *) {
+            SFSafariExtensionManager.getStateOfExtension(withIdentifier: extensionBundleIdentifier) { [weak self] state, error in
+                guard let self, let state, error == nil else { return }
+
+                DispatchQueue.main.async {
+                    self.webView.evaluateJavaScript("show('ios', \(state.isEnabled))")
+                }
+            }
+        }
+    }
+#endif
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
 #if os(macOS)

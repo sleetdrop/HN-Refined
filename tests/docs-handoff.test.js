@@ -180,6 +180,22 @@ test("docs preserve the mobile footer search layout", () => {
   }
 });
 
+test("docs preserve host app onboarding and progressive status behavior", () => {
+  for (const relativePath of [
+    "docs/development.md",
+    "docs/project-status.md",
+    "docs/release-readiness.md",
+  ]) {
+    const doc = read(relativePath);
+    assert.match(doc, /HN Refined/);
+    assert.match(doc, /Settings.*Apps.*Safari.*Extensions.*HN Refined/s);
+    assert.match(doc, /iOS 26\.2/);
+    assert.match(doc, /SFSafariExtensionManager/);
+    assert.match(doc, /news\.ycombinator\.com/);
+    assert.match(doc, /website permission|site permission/i);
+  }
+});
+
 test("docs preserve the first-release preference surface", () => {
   const development = read("docs/development.md");
   const status = read("docs/project-status.md");

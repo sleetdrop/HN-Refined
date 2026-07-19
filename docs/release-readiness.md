@@ -1,25 +1,26 @@
 # Release Readiness
 
-Last reviewed: 2026-07-13
+Last reviewed: 2026-07-19
 
 ## App Store Audit
 
-| Area               | Status       | Evidence or next action                                                                              |
-| ------------------ | ------------ | ---------------------------------------------------------------------------------------------------- |
-| Current SDK        | Ready        | Xcode 26.3 and iOS 26.3 SDK satisfy Apple's 2026 upload baseline.                                    |
-| Safari runtime     | Ready        | macOS, iPhone, and iPad normal and Private Browsing checks are recorded in `docs/project-status.md`. |
-| Host permissions   | Ready        | Limited to `https://news.ycombinator.com/*`.                                                         |
-| Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                |
-| Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                            |
-| Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                      |
-| Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                  |
-| App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.     |
-| Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                            |
-| Archive validation | Partial      | Unsigned iOS and macOS Release archives pass; signed App Store validation remains.                   |
-| Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                 |
-| Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                    |
-| Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                   |
-| Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                            |
+| Area               | Status       | Evidence or next action                                                                                                                                 |
+| ------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Current SDK        | Ready        | Xcode 26.3 and iOS 26.3 SDK satisfy Apple's 2026 upload baseline.                                                                                       |
+| Safari runtime     | Ready        | macOS, iPhone, and iPad normal and Private Browsing checks are recorded in `docs/project-status.md`.                                                    |
+| Host onboarding    | Ready        | `HN Refined` shows `Settings > Apps > Safari > Extensions > HN Refined`, `Allow Extension`, and the `news.ycombinator.com` site permission requirement. |
+| Host permissions   | Ready        | Limited to `https://news.ycombinator.com/*`.                                                                                                            |
+| Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                                                                   |
+| Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                                                                               |
+| Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                                                                         |
+| Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                                                                     |
+| App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.                                                        |
+| Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                                                                               |
+| Archive validation | Partial      | Unsigned iOS and macOS Release archives pass; signed App Store validation remains.                                                                      |
+| Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                                                                    |
+| Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                                                                       |
+| Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                                                                      |
+| Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                                                                               |
 
 Apple review requirements relevant to this project:
 
@@ -30,6 +31,13 @@ Apple review requirements relevant to this project:
 - App Store uploads after April 28, 2026 must use the iOS/iPadOS 26 SDK or later.
 - App Store screenshots require one to ten accepted images per required platform
   set.
+
+The iPhone/iPad containing app uses `SFSafariExtensionManager` on iOS 26.2 and
+later to report enabled state, with static guidance on older systems or lookup
+failure. This status does not include website permission, so the complete
+`Settings > Apps > Safari > Extensions > HN Refined` path and the instruction to
+set the `news.ycombinator.com` site permission to `Allow` remain visible in every
+state.
 
 Recheck these sources immediately before submission:
 

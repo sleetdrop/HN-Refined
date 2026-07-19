@@ -91,7 +91,16 @@ Hacker News behavior and information architecture.
   layouts rather than implying that every density effect is desktop-only.
 - App icon uses the full C4 design. Safari toolbar icons use the simplified
   B3f-2 small-size mark.
-- The macOS host app has a native status window instead of a blank window.
+- The containing app uses the user-visible name `HN Refined` while preserving
+  existing Xcode target names, wrapper/executable paths, Swift modules, and
+  bundle identifiers. Its iPhone/iPad help page
+  gives the complete `Settings > Apps > Safari > Extensions > HN Refined` path
+  and keeps both `Allow Extension` and the `news.ycombinator.com` site permission
+  requirement visible. On iOS 26.2 and iPadOS 26.2 or later,
+  `SFSafariExtensionManager` reports and refreshes enabled state; older systems
+  and lookup failures retain static instructions. Enabled state does not reveal
+  website permission. The macOS host continues to show extension state and open
+  Safari Settings.
 - App Store and open-source readiness audits are tracked in
   `docs/release-readiness.md`. Store metadata has a first draft, contribution and
   security policies are present, and the project uses the MIT License.

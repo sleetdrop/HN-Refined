@@ -154,6 +154,23 @@ or return the site permission to `Ask`. After reinstalling, recheck `Allow
 Extension` and set `news.ycombinator.com` to `Allow` before judging page
 injection or popup behavior.
 
+## Containing App Onboarding
+
+The containing app's user-visible name is `HN Refined`; Xcode target names,
+product paths, Swift modules, and bundle identifiers intentionally retain their
+existing internal names. On iPhone and iPad, the local help page always shows
+the complete path `Settings > Apps > Safari > Extensions > HN Refined`, then
+requires both `Allow Extension` and the `news.ycombinator.com` site permission
+set to `Allow`.
+
+On iOS 26.2 and iPadOS 26.2 or later, the containing app uses
+`SFSafariExtensionManager` as a progressive enhancement to report whether the
+extension is on and refreshes that state when the app returns to the foreground.
+Older systems and lookup failures retain static setup guidance. Enabled state
+does not report website permission, so the site-permission instruction must
+remain visible even when the extension is on. Do not add private Settings URLs
+or raise the deployment target solely for this status display.
+
 ## Safari Popup Preference Refresh
 
 Do not regress popup theme changes back to active-tab-only messaging. Safari's

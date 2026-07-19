@@ -669,7 +669,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -703,7 +703,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -740,7 +740,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -759,7 +759,10 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
-				PRODUCT_NAME = HNRefined;
+				EXECUTABLE_NAME = HNRefined;
+				PRODUCT_MODULE_NAME = HNRefined;
+				PRODUCT_NAME = "HN Refined";
+				WRAPPER_NAME = HNRefined.app;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -781,7 +784,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -800,7 +803,10 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
-				PRODUCT_NAME = HNRefined;
+				EXECUTABLE_NAME = HNRefined;
+				PRODUCT_MODULE_NAME = HNRefined;
+				PRODUCT_NAME = "HN Refined";
+				WRAPPER_NAME = HNRefined.app;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -824,7 +830,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -860,7 +866,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "HNRefined Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -899,7 +905,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -916,7 +922,10 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
-				PRODUCT_NAME = HNRefined;
+				EXECUTABLE_NAME = HNRefined;
+				PRODUCT_MODULE_NAME = HNRefined;
+				PRODUCT_NAME = "HN Refined";
+				WRAPPER_NAME = HNRefined.app;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -942,7 +951,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = HNRefined;
+				INFOPLIST_KEY_CFBundleDisplayName = "HN Refined";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -959,7 +968,10 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.vetcafe.hnrefined;
-				PRODUCT_NAME = HNRefined;
+				EXECUTABLE_NAME = HNRefined;
+				PRODUCT_MODULE_NAME = HNRefined;
+				PRODUCT_NAME = "HN Refined";
+				WRAPPER_NAME = HNRefined.app;
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
