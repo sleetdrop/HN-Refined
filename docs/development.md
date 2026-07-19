@@ -197,7 +197,9 @@ overflow clipping or fixed table layout.
 HN Classic is the default font preset so installing the extension preserves
 Hacker News' Verdana identity. System Sans and Serif provide deliberate reading
 alternatives. Mono-ish remains an intentional retro option, not the default
-prose recommendation.
+prose recommendation. Its Apple-native stack starts with Menlo, falls back to
+Monaco for the older Mac character, and retains `ui-monospace` as the WebKit
+system fallback. Do not bundle a font for this optional preset.
 
 Font presets apply to Hacker News reading content and its page-level navigation,
 title, metadata, footer, and comment typography. Hacker News declares Verdana

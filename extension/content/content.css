@@ -48,7 +48,7 @@ html[data-hnr-font="serif-reading"] {
 }
 
 html[data-hnr-font="mono-ish"] {
-  --hnr-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --hnr-font-family: Menlo, Monaco, ui-monospace, monospace;
 }
 
 html[data-hnr-font] body,

@@ -49,7 +49,9 @@ Hacker News behavior and information architecture.
 - Theme, font, density, width, and external story-link target preferences
   exist.
 - HN Classic is the default font preset. System Sans, Serif, and the intentional
-  retro Mono-ish option remain explicit alternatives.
+  retro Mono-ish option remain explicit alternatives. Mono-ish uses the
+  Apple-native `Menlo, Monaco, ui-monospace, monospace` stack without bundled
+  font resources.
 - Automatic accessibility enhancements remain CSS-only. The
   `prefers-contrast: more` media query strengthens secondary colors across all
   themes, and `:focus-visible` exposes keyboard focus without JavaScript or a

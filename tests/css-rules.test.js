@@ -95,6 +95,11 @@ test("font presets override Hacker News reading and metadata fonts", () => {
     css,
     new RegExp(`${selectorList}\\s*\\{[^}]*font-family:\\s*var\\(--hnr-font-family\\)`, "s"),
   );
+
+  assert.match(
+    css,
+    /html\[data-hnr-font="mono-ish"\]\s*{[^}]*--hnr-font-family:\s*Menlo, Monaco, ui-monospace, monospace/s,
+  );
 });
 
 test("content CSS overrides Hacker News footer link colors", () => {

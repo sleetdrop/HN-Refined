@@ -162,6 +162,15 @@ test("docs preserve complete Hacker News font preset coverage", () => {
   }
 });
 
+test("docs preserve the Apple-native retro mono stack", () => {
+  for (const relativePath of ["docs/development.md", "docs/project-status.md"]) {
+    const doc = read(relativePath);
+    assert.match(doc, /Menlo/);
+    assert.match(doc, /Monaco/);
+    assert.match(doc, /ui-monospace/);
+  }
+});
+
 test("docs preserve the first-release preference surface", () => {
   const development = read("docs/development.md");
   const status = read("docs/project-status.md");
