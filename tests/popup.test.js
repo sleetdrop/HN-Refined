@@ -6,6 +6,7 @@ const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const popupHtml = fs.readFileSync("extension/popup/popup.html", "utf8");
 const popupCss = fs.readFileSync("extension/popup/popup.css", "utf8");
 const optionsHtml = fs.readFileSync("extension/options/options.html", "utf8");
+const optionsCss = fs.readFileSync("extension/options/options.css", "utf8");
 const xcodeProject = fs.readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
 
 test("manifest separates toolbar popup from full settings page", () => {
@@ -77,6 +78,37 @@ test("full settings page groups only meaningful user-facing controls", () => {
   ]) {
     assert.match(optionsHtml, new RegExp(`id="${fieldId}"`));
   }
+});
+
+test("full settings page uses continuous native system rows", () => {
+  assert.equal(optionsHtml.match(/class="setting-row(?: [^"]+)?"/g)?.length, 5);
+  assert.match(
+    optionsHtml,
+    /<label class="setting-row">\s*<span class="setting-label">Theme<\/span>\s*<select id="theme">/s,
+  );
+  assert.match(
+    optionsHtml,
+    /<label class="setting-row setting-row-stack-narrow">\s*<span class="setting-label">Reading Density<\/span>\s*<select id="desktopDensity">/s,
+  );
+  assert.match(
+    optionsHtml,
+    /<label class="setting-row setting-row-switch">\s*<span class="setting-label">Open external story links in new tabs<\/span>\s*<input id="openStoryLinksInNewTabs" type="checkbox" switch\s*\/>/s,
+  );
+
+  assert.match(
+    optionsCss,
+    /\.setting-row\s*{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\) minmax\(128px, 190px\);[^}]*min-height: 42px;/s,
+  );
+  assert.match(
+    optionsCss,
+    /\.setting-row-switch\s*{[^}]*grid-template-columns: minmax\(0, 1fr\) auto;/s,
+  );
+  assert.match(optionsCss, /@media \(max-width: 520px\)/);
+  assert.match(optionsCss, /\.setting-row-stack-narrow\s*{[^}]*grid-template-columns: 1fr;/s);
+  assert.match(optionsCss, /@media \(any-pointer: coarse\)/);
+  assert.match(optionsCss, /min-height: 44px/);
+  assert.match(optionsCss, /:focus-visible/);
+  assert.doesNotMatch(optionsCss, /#(?:007aff|0a84ff|006cff)/i);
 });
 
 test("Xcode packages toolbar popup resources into the Safari extension", () => {

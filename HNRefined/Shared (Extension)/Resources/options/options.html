@@ -20,8 +20,8 @@
           <p>Applies anywhere Hacker News is refined.</p>
         </div>
 
-        <label>
-          Theme
+        <label class="setting-row">
+          <span class="setting-label">Theme</span>
           <select id="theme">
             <option value="system">System</option>
             <option value="light">Light</option>
@@ -29,8 +29,8 @@
           </select>
         </label>
 
-        <label>
-          Font
+        <label class="setting-row">
+          <span class="setting-label">Font</span>
           <select id="fontPreset">
             <option value="hn-classic">HN Classic</option>
             <option value="system-sans">System Sans</option>
@@ -46,16 +46,16 @@
           <p>Reading layout settings mainly affect Mac and wider iPad layouts.</p>
         </div>
 
-        <label>
-          Reading Density
+        <label class="setting-row setting-row-stack-narrow">
+          <span class="setting-label">Reading Density</span>
           <select id="desktopDensity">
             <option value="comfortable">Comfortable</option>
             <option value="classic-ish">Classic</option>
           </select>
         </label>
 
-        <label>
-          Reading Width
+        <label class="setting-row">
+          <span class="setting-label">Reading Width</span>
           <select id="readingWidth">
             <option value="comfortable">Focused</option>
             <option value="wide">Wide</option>
@@ -69,9 +69,9 @@
           <p>Controls only external story title links.</p>
         </div>
 
-        <label class="checkbox">
-          <input id="openStoryLinksInNewTabs" type="checkbox" />
-          Open external story links in new tabs
+        <label class="setting-row setting-row-switch">
+          <span class="setting-label">Open external story links in new tabs</span>
+          <input id="openStoryLinksInNewTabs" type="checkbox" switch />
         </label>
       </section>
     </main>

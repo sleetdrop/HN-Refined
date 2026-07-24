@@ -12,8 +12,8 @@ body {
 
 main {
   display: grid;
-  width: min(720px, calc(100% - 32px));
-  gap: 16px;
+  width: min(680px, calc(100% - 32px));
+  gap: 0;
   margin: 0 auto;
   padding: 24px 0 32px;
 }
@@ -21,6 +21,7 @@ main {
 header {
   display: grid;
   gap: 4px;
+  margin-bottom: 16px;
 }
 
 h1 {
@@ -38,14 +39,15 @@ header p,
 
 section {
   display: grid;
-  gap: 12px;
-  padding-block: 14px;
+  gap: 0;
+  padding-block: 16px;
   border-top: 1px solid color-mix(in srgb, CanvasText 14%, transparent);
 }
 
 .section-heading {
   display: grid;
   gap: 3px;
+  margin-bottom: 8px;
 }
 
 h2 {
@@ -54,32 +56,77 @@ h2 {
   font-weight: 650;
 }
 
-label {
+.setting-row {
   display: grid;
-  gap: 5px;
+  grid-template-columns: minmax(0, 1fr) minmax(128px, 190px);
+  min-height: 42px;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid color-mix(in srgb, CanvasText 9%, transparent);
   font-weight: 550;
 }
 
-select {
+.setting-row:last-child {
+  border-bottom: 0;
+}
+
+.setting-label {
+  min-width: 0;
+}
+
+.setting-row select {
+  width: 100%;
   min-height: 32px;
   font: inherit;
 }
 
-.checkbox {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+.setting-row-switch {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.setting-row-switch input {
+  margin: 0;
+  accent-color: AccentColor;
+}
+
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
 }
 
 .status {
-  margin: 0;
-  padding: 8px;
+  margin: 0 0 16px;
+  padding: 8px 10px;
   border: 1px solid color-mix(in srgb, CanvasText 25%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, CanvasText 4%, Canvas);
 }
 
 @media (max-width: 520px) {
   main {
-    width: min(100% - 24px, 720px);
+    width: min(100% - 24px, 680px);
     padding-block: 18px 24px;
+  }
+
+  .setting-row-stack-narrow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding-block: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .setting-row:not(.setting-row-switch) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding-block: 8px;
+  }
+}
+
+@media (any-pointer: coarse) {
+  .setting-row,
+  .setting-row select {
+    min-height: 44px;
   }
 }
