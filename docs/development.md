@@ -190,6 +190,14 @@ light or dark in the toolbar popup only takes effect after manually refreshing
 the Hacker News page. Keep the compact popup limited to high-frequency controls:
 theme, external story-link new-tab behavior, and the full settings entry.
 
+The shared macOS, iPhone, and iPad popup uses dynamic system colors and Safari's
+native `switch` control. Keep the selected theme segment and enabled switch on
+the system accent color, while `All Settings` remains a neutral navigation row.
+Fine-pointer layouts stay compact; coarse-pointer theme segments, the switch
+row, and the settings entry keep a minimum 44 px activation height. Check light
+and dark appearance, system accent colors, keyboard focus on macOS, and touch
+behavior on iPhone and iPad after popup style changes.
+
 ## Hacker News Page Scope
 
 HN Refined targets the normal interactive Hacker News surfaces: front page,

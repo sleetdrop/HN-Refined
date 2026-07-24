@@ -58,6 +58,16 @@ test("docs preserve the Safari popup refresh regression guard", () => {
   assert.doesNotMatch(privacy, /currently open Hacker News tab/);
 });
 
+test("development docs preserve the system-native popup contract", () => {
+  const development = read("docs/development.md");
+
+  assert.match(development, /native `switch`/);
+  assert.match(development, /system accent color/);
+  assert.match(development, /44 px/);
+  assert.match(development, /macOS, iPhone, and iPad/);
+  assert.match(development, /light\s+and dark appearance/);
+});
+
 test("agent docs require continuous docs and harness maintenance", () => {
   const agents = read("AGENTS.md");
   const development = read("docs/development.md");
