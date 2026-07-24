@@ -13,13 +13,14 @@ body {
 
 main {
   display: grid;
-  gap: 12px;
+  gap: 0;
   padding: 14px;
 }
 
 header {
   display: grid;
   gap: 6px;
+  margin-bottom: 16px;
 }
 
 h1 {
@@ -39,6 +40,10 @@ fieldset {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+fieldset + fieldset {
+  margin-top: 16px;
 }
 
 legend {
@@ -72,16 +77,23 @@ legend {
 }
 
 .segmented-control span {
-  display: block;
-  padding: 7px 8px;
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
   text-align: center;
   font-size: 13px;
   line-height: 1.2;
 }
 
 .segmented-control input:checked + span {
-  color: Canvas;
-  background: CanvasText;
+  color: AccentColorText;
+  background: AccentColor;
+}
+
+.segmented-control input:not(:checked):active + span {
+  background: color-mix(in srgb, CanvasText 10%, Canvas);
 }
 
 .segmented-control input:focus-visible + span {
@@ -113,8 +125,6 @@ legend {
 
 .single-option input {
   flex: 0 0 auto;
-  width: 34px;
-  height: 20px;
   margin: 0;
   accent-color: AccentColor;
 }
@@ -126,8 +136,8 @@ legend {
 
 footer {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 1px;
+  margin-top: 14px;
+  border-top: 1px solid color-mix(in srgb, CanvasText 16%, transparent);
 }
 
 button {
@@ -135,14 +145,26 @@ button {
 }
 
 .settings-link {
+  display: flex;
   width: 100%;
-  min-height: 28px;
+  min-height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2px;
   border: 0;
   border-radius: 6px;
-  color: LinkText;
+  color: CanvasText;
   background: transparent;
   font-size: 13px;
-  text-align: right;
+  font-weight: 500;
+  text-align: left;
+}
+
+.settings-chevron {
+  color: color-mix(in srgb, CanvasText 58%, transparent);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .settings-link:active {
@@ -152,4 +174,19 @@ button {
 .settings-link:focus-visible {
   outline: 2px solid Highlight;
   outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .segmented-control input:not(:checked):hover + span,
+  .settings-link:hover {
+    background: color-mix(in srgb, CanvasText 6%, Canvas);
+  }
+}
+
+@media (any-pointer: coarse) {
+  .segmented-control span,
+  .single-option,
+  .settings-link {
+    min-height: 44px;
+  }
 }

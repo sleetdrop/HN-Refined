@@ -4,6 +4,7 @@ import test from "node:test";
 
 const manifest = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8"));
 const popupHtml = fs.readFileSync("extension/popup/popup.html", "utf8");
+const popupCss = fs.readFileSync("extension/popup/popup.css", "utf8");
 const optionsHtml = fs.readFileSync("extension/options/options.html", "utf8");
 const xcodeProject = fs.readFileSync("HNRefined/HNRefined.xcodeproj/project.pbxproj", "utf8");
 
@@ -30,6 +31,22 @@ test("popup exposes only quick settings and full settings entry", () => {
   for (const fullSettingsId of ["fontPreset", "desktopDensity", "readingWidth", "mobileLayout"]) {
     assert.doesNotMatch(popupHtml, new RegExp(`id="${fullSettingsId}"`));
   }
+});
+
+test("popup uses native system controls and adaptive interaction styling", () => {
+  assert.match(popupHtml, /<input id="openStoryLinksInNewTabs" type="checkbox" switch\s*\/>/);
+  assert.match(popupHtml, /class="settings-chevron" aria-hidden="true">›<\/span>/);
+
+  assert.match(
+    popupCss,
+    /\.segmented-control input:checked \+ span\s*{[^}]*color: AccentColorText;[^}]*background: AccentColor;/s,
+  );
+  assert.match(popupCss, /\.single-option input\s*{[^}]*accent-color: AccentColor;/s);
+  assert.doesNotMatch(popupCss, /LinkText/);
+  assert.match(popupCss, /\.settings-link\s*{[^}]*color: CanvasText;/s);
+  assert.match(popupCss, /@media \(hover: hover\)/);
+  assert.match(popupCss, /@media \(any-pointer: coarse\)/);
+  assert.match(popupCss, /min-height: 44px/);
 });
 
 test("full settings page groups only meaningful user-facing controls", () => {
