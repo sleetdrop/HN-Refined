@@ -35,12 +35,15 @@
         <legend>Story links</legend>
         <label class="single-option">
           <span>Open in new tabs</span>
-          <input id="openStoryLinksInNewTabs" type="checkbox" />
+          <input id="openStoryLinksInNewTabs" type="checkbox" switch />
         </label>
       </fieldset>
 
       <footer>
-        <button id="open-settings" class="settings-link" type="button">All Settings</button>
+        <button id="open-settings" class="settings-link" type="button">
+          <span>All Settings</span>
+          <span class="settings-chevron" aria-hidden="true">›</span>
+        </button>
       </footer>
     </main>
 
