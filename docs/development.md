@@ -198,6 +198,20 @@ row, and the settings entry keep a minimum 44 px activation height. Check light
 and dark appearance, system accent colors, keyboard focus on macOS, and touch
 behavior on iPhone and iPad after popup style changes.
 
+The full settings page shares the same restrained system-native language. Keep
+its existing sections and preference behavior, using continuous setting rows,
+native `select` controls, and Safari's native `switch` control for external
+story-link behavior. Mac and wider iPad layouts keep labels left and controls
+right within a maximum content width of 680 px. Narrow layouts stack only the
+approved long row unless the viewport becomes too narrow for any select row;
+coarse-pointer rows and controls keep a minimum 44 px activation height.
+
+After options-page visual changes, check system light and dark appearance,
+accent colors, and keyboard focus on Mac; check portrait, landscape, touch
+targets, native pickers, native switches, and horizontal overflow on iPhone and
+iPad. Confirm that options changes still refresh open Hacker News tabs without a
+manual reload.
+
 ## Hacker News Page Scope
 
 HN Refined targets the normal interactive Hacker News surfaces: front page,

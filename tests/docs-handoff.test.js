@@ -68,6 +68,18 @@ test("development docs preserve the system-native popup contract", () => {
   assert.match(development, /light\s+and dark appearance/);
 });
 
+test("development docs preserve the system-native settings surfaces contract", () => {
+  const development = read("docs/development.md");
+
+  assert.match(development, /full settings page/i);
+  assert.match(development, /continuous setting rows/i);
+  assert.match(development, /native `select` controls/i);
+  assert.match(development, /native `switch` control/i);
+  assert.match(development, /maximum content width of 680 px/i);
+  assert.match(development, /minimum 44 px activation height/i);
+  assert.match(development, /Mac.*iPhone.*iPad/s);
+});
+
 test("agent docs require continuous docs and harness maintenance", () => {
   const agents = read("AGENTS.md");
   const development = read("docs/development.md");
