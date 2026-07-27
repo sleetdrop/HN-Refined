@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-19
+Last updated: 2026-07-21
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -225,6 +225,22 @@ points for a fresh context:
   traditional Hacker News HTML structure, documents the iOS/iPadOS
   `Allow Extension` plus `news.ycombinator.com` permission steps, and accepts
   GitHub issues or pull requests for future site-compatibility fixes.
+
+## Deferred Product Ideas
+
+Keyboard navigation is deliberately outside the `1.0` feature scope. Keep the
+first release frozen and focus on personal burn-in and publication; there is no
+current plan to begin `1.1` work before `1.0` ships.
+
+Revisit keyboard navigation after the first release as an exploratory feature,
+not as an already specified backlog item. The earlier discussion was
+brainstorming rather than a settled key map or interaction design. One direction
+worth evaluating is offering Vi-style and Emacs-style bindings, analogous to
+Readline's two editing modes and potentially familiar to Hacker News users. Do
+not treat either mode, any individual shortcut, the supported page surfaces, or
+the eventual release version as decided. When work resumes, define the useful
+actions and conflict/focus behavior first, then dogfood a small opt-in design
+before choosing the public scope.
 
 ## Historical Planning Docs
 
