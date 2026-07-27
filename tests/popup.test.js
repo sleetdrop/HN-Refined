@@ -107,7 +107,11 @@ test("full settings page uses continuous native system rows", () => {
   assert.match(optionsCss, /\.setting-row-stack-narrow\s*{[^}]*grid-template-columns: 1fr;/s);
   assert.match(optionsCss, /@media \(any-pointer: coarse\)/);
   assert.match(optionsCss, /min-height: 44px/);
-  assert.match(optionsCss, /:focus-visible/);
+  assert.doesNotMatch(optionsCss, /select:focus-visible/);
+  assert.match(
+    optionsCss,
+    /input:focus-visible\s*{[^}]*outline: 2px solid Highlight;[^}]*outline-offset: 2px;/s,
+  );
   assert.doesNotMatch(optionsCss, /#(?:007aff|0a84ff|006cff)/i);
 });
 

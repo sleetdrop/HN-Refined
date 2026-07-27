@@ -77,6 +77,7 @@ test("development docs preserve the system-native settings surfaces contract", (
   assert.match(development, /native `switch` control/i);
   assert.match(development, /maximum content width of 680 px/i);
   assert.match(development, /minimum 44 px activation height/i);
+  assert.match(development, /Safari owns the native select focus appearance/i);
   assert.match(development, /Mac.*iPhone.*iPad/s);
 });
 

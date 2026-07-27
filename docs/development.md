@@ -205,6 +205,9 @@ story-link behavior. Mac and wider iPad layouts keep labels left and controls
 right within a maximum content width of 680 px. Narrow layouts stack only the
 approved long row unless the viewport becomes too narrow for any select row;
 coarse-pointer rows and controls keep a minimum 44 px activation height.
+Safari owns the native select focus appearance; do not add a separate custom
+outline, while the native switch keeps its explicit system-color focus
+indication.
 
 After options-page visual changes, check system light and dark appearance,
 accent colors, and keyboard focus on Mac; check portrait, landscape, touch
