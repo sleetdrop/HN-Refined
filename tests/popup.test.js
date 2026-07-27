@@ -88,8 +88,9 @@ test("full settings page uses continuous native system rows", () => {
   );
   assert.match(
     optionsHtml,
-    /<label class="setting-row setting-row-stack-narrow">\s*<span class="setting-label">Reading Density<\/span>\s*<select id="desktopDensity">/s,
+    /<label class="setting-row">\s*<span class="setting-label">Reading Density<\/span>\s*<select id="desktopDensity">/s,
   );
+  assert.doesNotMatch(optionsHtml, /setting-row-stack-narrow/);
   assert.match(
     optionsHtml,
     /<label class="setting-row setting-row-switch">\s*<span class="setting-label">Open external story links in new tabs<\/span>\s*<input id="openStoryLinksInNewTabs" type="checkbox" switch\s*\/>/s,
@@ -104,7 +105,11 @@ test("full settings page uses continuous native system rows", () => {
     /\.setting-row-switch\s*{[^}]*grid-template-columns: minmax\(0, 1fr\) auto;/s,
   );
   assert.match(optionsCss, /@media \(max-width: 520px\)/);
-  assert.match(optionsCss, /\.setting-row-stack-narrow\s*{[^}]*grid-template-columns: 1fr;/s);
+  assert.doesNotMatch(optionsCss, /\.setting-row-stack-narrow/);
+  assert.match(
+    optionsCss,
+    /@media \(max-width: 360px\)\s*{\s*\.setting-row:not\(\.setting-row-switch\)\s*{[^}]*grid-template-columns: 1fr;/s,
+  );
   assert.match(optionsCss, /@media \(any-pointer: coarse\)/);
   assert.match(optionsCss, /min-height: 44px/);
   assert.doesNotMatch(optionsCss, /select:focus-visible/);
