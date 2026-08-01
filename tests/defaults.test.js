@@ -12,6 +12,7 @@ test("default preferences match the approved spec", () => {
     fontPreset: "hn-classic",
     desktopDensity: "comfortable",
     readingWidth: "comfortable",
+    threadFocusEnabled: true,
     openStoryLinksInNewTabs: false,
   });
 });
@@ -26,6 +27,7 @@ test("allowed preferences expose only first-version options", () => {
   ]);
   assert.deepEqual(ALLOWED_PREFERENCES.desktopDensity, ["comfortable", "classic-ish"]);
   assert.deepEqual(ALLOWED_PREFERENCES.readingWidth, ["comfortable", "wide"]);
+  assert.equal(ALLOWED_PREFERENCES.threadFocusEnabled, undefined);
   assert.equal(ALLOWED_PREFERENCES.mobileLayout, undefined);
 });
 
@@ -36,6 +38,7 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       fontPreset: "serif-reading",
       desktopDensity: "huge",
       readingWidth: "wide",
+      threadFocusEnabled: "yes",
       mobileLayout: "off",
       openStoryLinksInNewTabs: "yes",
     }),
@@ -44,9 +47,29 @@ test("normalizePreferences falls back for invalid or missing values", () => {
       fontPreset: "serif-reading",
       desktopDensity: "comfortable",
       readingWidth: "wide",
+      threadFocusEnabled: true,
       openStoryLinksInNewTabs: false,
     },
   );
+});
+
+test("normalizePreferences preserves an explicit thread-focus choice over legacy state", () => {
+  assert.equal(
+    normalizePreferences({ threadFocusEnabled: false, deepThreadMode: "on-demand" })
+      .threadFocusEnabled,
+    false,
+  );
+});
+
+test("normalizePreferences migrates legacy deep-thread modes to the Boolean preference", () => {
+  assert.equal(
+    normalizePreferences({ deepThreadMode: "indentation-only" }).threadFocusEnabled,
+    false,
+  );
+  assert.equal(normalizePreferences({ deepThreadMode: "on-demand" }).threadFocusEnabled, true);
+  assert.equal(normalizePreferences({ deepThreadMode: "automatic" }).threadFocusEnabled, true);
+  assert.equal(normalizePreferences({ deepThreadMode: "sideways" }).threadFocusEnabled, true);
+  assert.equal("deepThreadMode" in normalizePreferences({ deepThreadMode: "on-demand" }), false);
 });
 
 test("normalizePreferences treats null as missing preferences", () => {

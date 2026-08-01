@@ -15,6 +15,10 @@ test("manifest separates toolbar popup from full settings page", () => {
   assert.equal(manifest.options_ui.open_in_tab, true);
   assert.deepEqual(manifest.permissions, ["storage", "activeTab"]);
   assert.deepEqual(manifest.host_permissions, ["https://news.ycombinator.com/*"]);
+  assert.deepEqual(manifest.content_scripts[0].js, [
+    "content/deep-comments.js",
+    "content/content-script.js",
+  ]);
 });
 
 test("popup exposes only quick settings and full settings entry", () => {
@@ -51,16 +55,20 @@ test("popup uses native system controls and adaptive interaction styling", () =>
 });
 
 test("full settings page groups only meaningful user-facing controls", () => {
-  for (const heading of ["Appearance", "Reading Layout", "Links"]) {
+  for (const heading of ["Appearance", "Reading Layout", "Mobile Comment Threads", "Links"]) {
     assert.match(optionsHtml, new RegExp(`>${heading}<`));
   }
 
-  assert.match(optionsHtml, /Reading layout settings mainly affect Mac and wider iPad layouts/);
+  assert.match(optionsHtml, /Controls page width and density on Mac and wider iPad layouts/);
+  assert.match(optionsHtml, /Focus isolates one comment and its replies/);
   assert.match(optionsHtml, /Reading Density/);
   assert.match(optionsHtml, /<option value="classic-ish">Classic<\/option>/);
   assert.match(optionsHtml, /<option value="comfortable">Focused<\/option>/);
   assert.match(optionsHtml, /<option value="serif-reading">Serif<\/option>/);
   assert.match(optionsHtml, /<option value="mono-ish">Mono-ish<\/option>/);
+  assert.match(optionsHtml, /<input id="threadFocusEnabled" type="checkbox" switch\s*\/>/);
+  assert.doesNotMatch(optionsHtml, /id="deepThreadMode"/);
+  assert.doesNotMatch(optionsHtml, /Starting Level|Focus Links/);
   assert.doesNotMatch(optionsHtml, /Mobile Reading/);
   assert.doesNotMatch(optionsHtml, /Mobile Layout/);
   assert.doesNotMatch(optionsHtml, /id="mobileLayout"/);
@@ -74,6 +82,7 @@ test("full settings page groups only meaningful user-facing controls", () => {
     "fontPreset",
     "desktopDensity",
     "readingWidth",
+    "threadFocusEnabled",
     "openStoryLinksInNewTabs",
   ]) {
     assert.match(optionsHtml, new RegExp(`id="${fieldId}"`));
@@ -81,7 +90,7 @@ test("full settings page groups only meaningful user-facing controls", () => {
 });
 
 test("full settings page uses continuous native system rows", () => {
-  assert.equal(optionsHtml.match(/class="setting-row(?: [^"]+)?"/g)?.length, 5);
+  assert.equal(optionsHtml.match(/class="setting-row(?: [^"]+)?"/g)?.length, 6);
   assert.match(
     optionsHtml,
     /<label class="setting-row">\s*<span class="setting-label">Theme<\/span>\s*<select id="theme">/s,

@@ -241,6 +241,54 @@ test("docs preserve the first-release preference surface", () => {
   }
 });
 
+test("docs preserve thread-focus ancestry behavior and the pre-release alignment pause", () => {
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+  const privacy = read("docs/privacy.md");
+  const appStoreChecklist = read("docs/app-store-checklist.md");
+  const releaseReadiness = read("docs/release-readiness.md");
+
+  for (const doc of [development, status]) {
+    assert.match(doc, /Thread Focus.*default.*(?:on|enabled)/is);
+    assert.match(doc, /every.*comment.*repl(?:y|ies).*focus/is);
+    assert.match(doc, /five.*authors.*complete/is);
+    assert.match(doc, /first.*ellipsis.*final three/is);
+    assert.match(doc, /ellipsis.*expand.*without.*History/is);
+    assert.match(doc, /ancestor.*link.*zoom|zoom.*ancestor.*link/is);
+    assert.match(doc, /all.*first.*line|first.*line.*all/is);
+    assert.match(doc, /ancestor.*muted|muted.*ancestor/is);
+    assert.match(doc, /final.*parent.*current.*(?:pair|together|wrapping)/is);
+    assert.match(doc, /nearest common.*ancestor/is);
+    assert.match(doc, /original.*(?:root|parent|prev|next).*target.*unchanged/is);
+    assert.match(doc, /off.*indentation.*remain/is);
+    assert.match(doc, /scroll(?:ing)?.*never.*focus/is);
+    assert.match(doc, /coarse pointer.*700 px|700 px.*coarse pointer/is);
+    assert.match(doc, /rotat.*(?:must not|no longer|cannot|keeps?).*exit.*Focus/is);
+    assert.match(doc, /vanilla JavaScript/i);
+    assert.match(doc, /Safari\/WebKit/i);
+    assert.match(doc, /collapse.*scope.*separate/is);
+    assert.match(doc, /next\s*\|\s*focus\s*\[–\]/i);
+    assert.match(doc, /site header.*hidden.*focus guide.*top boundary/is);
+    assert.match(doc, /story.*reply form.*footer.*hidden/is);
+    assert.match(doc, /fail(?:s|-closed).*HN.*structure/is);
+    assert.match(doc, /Back.*previous.*view.*Forward/is);
+    assert.match(doc, /all.*entire.*Focus/is);
+    assert.match(doc, /root.*(?:depth zero|zero indent|rebases? to zero)/is);
+  }
+
+  assert.match(privacy, /Thread Focus preference/i);
+  assert.match(privacy, /focus state.*page-local.*ephemeral/is);
+  assert.match(appStoreChecklist, /Thread Focus/i);
+  assert.match(appStoreChecklist, /compact.*author.*ancestry.*expand/is);
+  assert.match(appStoreChecklist, /all.*first.*line/is);
+  assert.match(appStoreChecklist, /final.*parent.*current.*pair/is);
+  assert.match(appStoreChecklist, /site header.*hidden.*guide.*top boundary/is);
+  assert.match(releaseReadiness, /release preparation.*paused/is);
+  assert.match(releaseReadiness, /physical.*iPhone.*confirmed/is);
+  assert.match(releaseReadiness, /multi-day.*burn-in/is);
+  assert.match(releaseReadiness, /Hacker News.*color semantics/is);
+});
+
 test("release docs keep App Store and open-source blockers explicit", () => {
   const readme = read("README.md");
   const contributing = read("CONTRIBUTING.md");

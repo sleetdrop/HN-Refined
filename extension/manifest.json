@@ -15,7 +15,7 @@
     {
       "matches": ["https://news.ycombinator.com/*"],
       "css": ["generated/themes.css", "content/content.css"],
-      "js": ["content/content-script.js"],
+      "js": ["content/deep-comments.js", "content/content-script.js"],
       "run_at": "document_start"
     }
   ],

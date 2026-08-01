@@ -3,6 +3,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   fontPreset: "hn-classic",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
+  threadFocusEnabled: true,
   openStoryLinksInNewTabs: false,
 });
 
@@ -17,6 +18,18 @@ function enumOrDefault(key, value) {
   return ALLOWED_PREFERENCES[key].includes(value) ? value : DEFAULT_PREFERENCES[key];
 }
 
+function threadFocusEnabledOrDefault(preferences) {
+  if (typeof preferences.threadFocusEnabled === "boolean") {
+    return preferences.threadFocusEnabled;
+  }
+
+  if (preferences.deepThreadMode === "indentation-only") {
+    return false;
+  }
+
+  return DEFAULT_PREFERENCES.threadFocusEnabled;
+}
+
 export function normalizePreferences(raw = {}) {
   const preferences = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
 
@@ -25,6 +38,7 @@ export function normalizePreferences(raw = {}) {
     fontPreset: enumOrDefault("fontPreset", preferences.fontPreset),
     desktopDensity: enumOrDefault("desktopDensity", preferences.desktopDensity),
     readingWidth: enumOrDefault("readingWidth", preferences.readingWidth),
+    threadFocusEnabled: threadFocusEnabledOrDefault(preferences),
     openStoryLinksInNewTabs:
       typeof preferences.openStoryLinksInNewTabs === "boolean"
         ? preferences.openStoryLinksInNewTabs

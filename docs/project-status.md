@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-07-21
+Last updated: 2026-08-01
 
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
@@ -68,6 +68,67 @@ Hacker News behavior and information architecture.
   Preference normalization discards the legacy `mobileLayout` state, while the
   content script always applies the existing `data-hnr-mobile="auto"` CSS
   binding.
+- Deep mobile comment threads use progressively compressed indentation instead
+  of flattening every depth beyond three to the same 32 px offset. A dedicated
+  vanilla JavaScript controller for Safari/WebKit now exposes `focus` on every
+  comment with replies when the default-enabled Thread Focus preference is on.
+  Turning it off removes Focus UI while indentation remains. Focus is
+  page-local and ephemeral; only the Boolean preference is stored.
+- Automatic deep-thread scope was removed after physical iPhone 17 testing
+  showed it could interrupt momentum scrolling and oscillate at subtree
+  boundaries. Its layout rebase changed text wrapping above the viewport while
+  offset compensation called `scrollBy` from the scroll path. Scrolling now
+  never activates, creates, rebases, exits, or otherwise changes focus; scope
+  entry requires the user's explicit `focus` action. Legacy Indentation only
+  migrates to Thread Focus off; other old values migrate to the default on.
+- Existing HN navigation remains authoritative inside focused comments. An
+  inside target retains the current view; another target in the same top-level
+  comment tree widens only to the nearest common comment ancestor, while a
+  target in another top-level tree exits Focus. The original `root`, `parent`,
+  `prev`, and `next` target remains unchanged. HN collapse and HN Refined scope
+  remain separate state layers, so `[–]` and `[n more]` keep their current state
+  across Focus. Scrolling never changes Focus.
+- Explicit focus follows the native action grammar `next | focus [–]`. The
+  focused root rebases to depth zero and descendants retain only relative
+  indentation. The site header is hidden with the story, reply form, spacer
+  rows, footer, and outside comments, making the focus guide the top boundary
+  above the selected subtree. Focus eligibility follows a coarse pointer rather
+  than the 700 px narrow-layout breakpoint. Rotating an iPhone must not exit
+  Focus View; progressive narrow-screen indentation remains width-based.
+- Narrowing, ancestor-link zoom, and minimal navigation widening each create a
+  complete Focus View History entry. Safari Back restores the previous view,
+  Forward reapplies it, and `all` leaves the entire Focus session. Guide
+  ancestry contains only original comment authors: five authors or fewer remain
+  complete; longer paths initially show the first author, an ellipsis, and the
+  final three. The ellipsis can expand the complete chain without changing
+  Focus History, URL, or scroll position. Ancestor links zoom to their exact
+  comments. Compact and expanded paths align `all` with their first visual line,
+  keep ancestor authors muted, emphasize only the current plain-text author,
+  use CSS-owned spacing after `focused:`, and keep the final parent/current pair
+  together when wrapping. Explicit `[deleted]` comments retain their structural
+  step; other missing authors fail closed.
+- Focus surface and History validation fail closed to the complete thread when
+  the expected HN structure or nested stack cannot be resolved. The earlier
+  physical-iPhone build exposed a CSS cascade error that prevented the intended
+  zero-indent root; automated coverage now locks the corrected selector order.
+- Physical iPhone testing of
+  `https://news.ycombinator.com/item?id=49098510#49101840` exposed that the prior
+  guide represented clicked Focus History rather than original comment depth:
+  direct focus showed only one author and pushed it to the far right. The
+  current accepted revision derives structural author ancestry,
+  compacts only long chains, offers explicit expansion and ancestor zoom, and
+  coordinates original HN destinations through the nearest common ancestor.
+  The revision passes the complete 165-test local gate, iOS build, signed macOS
+  Safari reinstall, and package doctor. iPhone 17 Pro / iOS 26.3 Simulator
+  checks cover complete, compact, and expanded ancestry; light and dark themes;
+  Back/Forward, `all`, collapse preservation, and Focus retention through
+  portrait/landscape rotation. A subsequent physical iPhone pass confirmed that
+  this revision now follows the intended interaction direction. Multi-day
+  device use remains the burn-in path for smaller follow-up adjustments rather
+  than a blocker on the hierarchy correction itself. Release preparation stays
+  paused for the second HN-alignment correction: audit HN Refined's color use
+  against Hacker News' own color semantics and restrained visual language, then
+  correct places where readability enhancements changed that meaning.
 - Narrow item pages wrap long author-supplied `.toptext` content before it can
   widen Hacker News' nested tables. The `#bigbox` content cell also reserves a
   12 px inline-end gutter from Safari's overlay scroll indicator without
@@ -181,6 +242,29 @@ Mobile item overflow handling binds to `.toptext` and the direct content cell of
 breakpoint. Do not replace this targeted fix with `overflow-x: hidden`, fixed
 table layout, or JavaScript content inspection.
 
+Deep-thread handling binds only to `.comment-tree .comtr`, `td.ind[indent]`,
+comment row IDs, existing HN navigation links, and a fail-closed check of HN's
+`#hnmain`, `#bigbox`, direct comment-tree cell, and site-header row structure.
+Keep the implementation in reviewable vanilla JavaScript for Safari/WebKit.
+Thread Focus is a default-on Boolean; every comment with replies may offer
+`focus`, while turning it off removes Focus UI and indentation remains. Legacy
+Indentation only migrates to off and other old values migrate to on. Scrolling
+never activates or changes focus. Preserve the action grammar
+`next | focus [–]`. Focus hides the site header, story, reply
+form, spacers, footer, and outside comments; the focus guide becomes the top
+boundary above the selected subtree. The root rebases to depth zero. Back
+restores the previous view and Forward reapplies it, while `all` leaves the
+entire Focus session. Coarse-pointer eligibility remains independent of the
+700 px breakpoint so rotation cannot exit Focus. Five authors or fewer remain complete; longer ancestry
+shows the first author, an ellipsis, and the final three until the ellipsis
+expands it without a History change. The guide aligns `all` to the first line,
+mutes ancestors, emphasizes only the current author, and keeps the final parent
+and current author together across wraps. Ancestor links zoom to exact comments.
+A same-page target outside the current subtree widens to the nearest common
+ancestor without changing the original target. Keep HN collapse and HN Refined
+scope as separate state layers, and never overwrite HN's `coll` class, inline
+display, toggle text, or descendant count.
+
 ## Verification Baseline
 
 Before claiming a code change is complete:
@@ -213,6 +297,19 @@ relevant docs and tests in the same change.
 These are not all required for the next task, but they are useful starting
 points for a fresh context:
 
+- Continue multi-day physical-iPhone burn-in of Thread Focus on and off,
+  including uninterrupted long scrolling, original HN navigation, collapse,
+  true zero-indent narrowing, the fixed A1 top boundary, complete and compact
+  author ancestry, ellipsis expansion, ancestor zoom, minimal widening,
+  first-line `all` alignment, muted/current hierarchy, final-pair wrapping,
+  direct and nested focus, `all`, and Safari Back/Forward. Treat observations as
+  follow-up refinement unless they reveal a regression in the accepted
+  direction.
+- Complete the second HN-alignment correction identified in the pre-release
+  article review: analyze where HN's colors carry meaning, compare HN Refined's
+  overrides in light and dark themes, and correct semantic drift without adding
+  decorative color. Release work remains paused until this correction is
+  implemented and verified.
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.
@@ -228,9 +325,9 @@ points for a fresh context:
 
 ## Deferred Product Ideas
 
-Keyboard navigation is deliberately outside the `1.0` feature scope. Keep the
-first release frozen and focus on personal burn-in and publication; there is no
-current plan to begin `1.1` work before `1.0` ships.
+Keyboard navigation is deliberately outside the `1.0` feature scope. Apart from
+the two explicitly approved HN-alignment corrections, keep the first release
+feature-frozen; there is no current plan to begin `1.1` work before `1.0` ships.
 
 Revisit keyboard navigation after the first release as an exploratory feature,
 not as an already specified backlog item. The earlier discussion was

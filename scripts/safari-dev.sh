@@ -213,6 +213,7 @@ doctor() {
   test -f "$resources/manifest.json"
   test -f "$resources/popup/popup.html"
   test -f "$resources/options/options.html"
+  test -f "$resources/content/deep-comments.js"
   test -f "$resources/content/content-script.js"
   test -f "$resources/icons/icon-16.png"
   test -f "$resources/icons/icon-19.png"

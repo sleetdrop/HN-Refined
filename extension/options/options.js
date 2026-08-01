@@ -6,6 +6,7 @@ const fields = {
   fontPreset: document.querySelector("#fontPreset"),
   desktopDensity: document.querySelector("#desktopDensity"),
   readingWidth: document.querySelector("#readingWidth"),
+  threadFocusEnabled: document.querySelector("#threadFocusEnabled"),
   openStoryLinksInNewTabs: document.querySelector("#openStoryLinksInNewTabs"),
 };
 
@@ -21,6 +22,7 @@ function render(preferences) {
   fields.fontPreset.value = preferences.fontPreset;
   fields.desktopDensity.value = preferences.desktopDensity;
   fields.readingWidth.value = preferences.readingWidth;
+  fields.threadFocusEnabled.checked = preferences.threadFocusEnabled;
   fields.openStoryLinksInNewTabs.checked = preferences.openStoryLinksInNewTabs;
 }
 
@@ -30,6 +32,7 @@ function readForm() {
     fontPreset: fields.fontPreset.value,
     desktopDensity: fields.desktopDensity.value,
     readingWidth: fields.readingWidth.value,
+    threadFocusEnabled: fields.threadFocusEnabled.checked,
     openStoryLinksInNewTabs: fields.openStoryLinksInNewTabs.checked,
   };
 }

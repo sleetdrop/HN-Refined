@@ -45,3 +45,42 @@ Keep the Safari popup preference refresh guard intact:
 - Popup preference changes notify all current-window Hacker News tabs.
 - Content scripts tolerate Safari storage change events without `areaName`.
 - The visible-page preference refresh fallback is intentional.
+
+Keep deep-thread scope compatible with Hacker News navigation and collapse:
+
+- Thread Focus is a default-on Boolean preference. When enabled, every comment
+  with replies may offer `focus`; when disabled, focus UI is removed while
+  progressive indentation remains.
+- Scrolling never activates, rebases, or exits a local comment scope. Scope is
+  entered only through the user's `focus` action.
+- Thread Focus eligibility follows a coarse pointer rather than the 700 px
+  narrow-layout breakpoint. Rotating a touch device must not exit Focus View;
+  progressive narrow-screen indentation remains width-based.
+- Preserve HN's comment-action grammar as `next | focus [–]`; do not add a
+  separator between `focus` and the native collapse toggle.
+- Focus hides the site header, story content, reply form, spacers, footer, and
+  outside comments. The focus guide is the top boundary above the selected
+  subtree until focus exits.
+- Page narrowing must fail closed if HN's expected `#hnmain`, `#bigbox`, direct
+  comment-tree cell, and site-header row structure cannot be resolved.
+- Original `root`, `parent`, `prev`, and `next` targets remain authoritative.
+- The focused root rebases to depth zero. Every explicit narrow or wide
+  transition creates one complete Focus View History entry: Back restores the
+  previous view, Forward reapplies it, and `all` leaves the entire Focus
+  session. The current focused root does not offer a redundant `focus` action.
+- The guide contains only original comment authors, never the story/topic
+  author. Five authors or fewer remain complete. Longer paths initially show
+  the first author, an ellipsis, and the final three; the ellipsis expands the
+  complete path without changing History, URL, Focus, or scroll position.
+  Expansion lasts for the current Focus session. Give `/` equal CSS-owned
+  spacing on both sides and give `focused:` its visible gap through CSS rather
+  than trailing text whitespace. Align `all` with the first visual path line,
+  keep ancestor authors muted, emphasize only the current author, and keep the
+  final parent/current pair in one wrapping unit. Ancestor authors are links
+  that zoom Focus to that exact comment; the current author remains plain text.
+- Targets inside the current focus retain it. Other same-page targets widen to
+  the nearest common original comment ancestor, or exit Focus when the target
+  belongs to another top-level comment tree. Never rewrite the original HN
+  `root`, `parent`, `prev`, or `next` target.
+- HN collapse and HN Refined scope remain separate layers; do not overwrite
+  HN's collapse class, inline visibility, toggle text, or descendant count.

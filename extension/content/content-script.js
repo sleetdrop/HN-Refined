@@ -3,6 +3,7 @@ const DEFAULT_PREFERENCES = {
   fontPreset: "hn-classic",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
+  threadFocusEnabled: true,
   openStoryLinksInNewTabs: false,
 };
 
@@ -29,6 +30,7 @@ const ALLOWED = {
 };
 
 let preferences = DEFAULT_PREFERENCES;
+let deepCommentsController = null;
 
 function browserApi() {
   return globalThis.browser || globalThis.chrome;
@@ -62,6 +64,18 @@ function enumOrDefault(key, value) {
   return ALLOWED[key].includes(value) ? value : DEFAULT_PREFERENCES[key];
 }
 
+function threadFocusEnabledOrDefault(next) {
+  if (typeof next.threadFocusEnabled === "boolean") {
+    return next.threadFocusEnabled;
+  }
+
+  if (next.deepThreadMode === "indentation-only") {
+    return false;
+  }
+
+  return DEFAULT_PREFERENCES.threadFocusEnabled;
+}
+
 function normalize(raw = {}) {
   const next = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
 
@@ -70,6 +84,7 @@ function normalize(raw = {}) {
     fontPreset: enumOrDefault("fontPreset", next.fontPreset),
     desktopDensity: enumOrDefault("desktopDensity", next.desktopDensity),
     readingWidth: enumOrDefault("readingWidth", next.readingWidth),
+    threadFocusEnabled: threadFocusEnabledOrDefault(next),
     openStoryLinksInNewTabs:
       typeof next.openStoryLinksInNewTabs === "boolean"
         ? next.openStoryLinksInNewTabs
@@ -86,6 +101,21 @@ function applyPreferences(nextPreferences) {
   root.dataset.hnrDensity = preferences.desktopDensity;
   root.dataset.hnrWidth = preferences.readingWidth;
   root.dataset.hnrMobile = "auto";
+  delete root.dataset.hnrDeepThreads;
+  updateDeepComments(preferences.threadFocusEnabled);
+}
+
+function updateDeepComments(enabled) {
+  if (!deepCommentsController) {
+    deepCommentsController = globalThis.HNRefinedDeepComments?.createController?.({
+      document,
+      window,
+    });
+    deepCommentsController?.start(enabled);
+    return;
+  }
+
+  deepCommentsController.setEnabled(enabled);
 }
 
 function isHackerNewsInternalUrl(href) {

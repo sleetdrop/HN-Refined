@@ -200,8 +200,8 @@ behavior on iPhone and iPad after popup style changes.
 
 The full settings page shares the same restrained system-native language. Keep
 its existing sections and preference behavior, using continuous setting rows,
-native `select` controls, and Safari's native `switch` control for external
-story-link behavior. Mac and wider iPad layouts keep labels left and controls
+native `select` controls, and Safari's native `switch` controls for Thread
+Focus and external story-link behavior. Mac and wider iPad layouts keep labels left and controls
 right within a maximum content width of 680 px. Select rows stay side by side
 above 360 px, including at ordinary iPhone widths. At 360 px and below, all
 non-switch select rows stack together; coarse-pointer rows and controls keep a
@@ -314,6 +314,98 @@ count.
 Real Safari checks must cover iPhone virtual-keyboard behavior, symmetric
 textarea gutters, all row limits, preserved text and focus during size changes,
 and an unchanged desktop item page.
+
+## Mobile Comment Threads
+
+Thread Focus is a default-on Boolean preference named `threadFocusEnabled`.
+When it is enabled, every comment with replies can expose `focus`, regardless
+of its original depth. A leaf and the current focused root do not expose the
+action. Turning Thread Focus off removes its UI and exits an active Focus View,
+while progressively compressed indentation remains. Legacy
+`deepThreadMode: "indentation-only"` migrates to `false`; every other legacy,
+missing, or invalid value migrates to the default `true`, unless the new Boolean
+is already present.
+
+Thread Focus device eligibility uses a coarse pointer
+(`any-pointer: coarse`), independently of the 700 px narrow-layout breakpoint.
+Rotating an iPhone to landscape must not exit Focus View. Progressive
+indentation and the rest of the narrow page treatment remain width-based; do
+not reintroduce a viewport-width listener that exits Focus during rotation.
+
+The inserted action preserves HN's existing grammar as `next | focus [–]`,
+with a separator before `focus` and only whitespace before the native collapse
+toggle. In focus, the site header is hidden with the story content, reply form,
+spacer rows, footer, and outside comments. The focus guide becomes the top boundary
+above the selected subtree, and the selected root rebases to depth zero while
+descendants keep their relative progressive indentation. Surface resolution
+fails closed against HN's expected `#hnmain`, `#bigbox`, direct comment-tree
+cell, and site-header row structure; if those relationships cannot be
+confirmed, the controller does not offer focus.
+
+Each explicit narrow or wide transition stores one complete page-local Focus
+View under `hnrCommentFocusView`. Safari Back restores the previous view and
+Forward reapplies it; `all` crosses the entire Focus session and restores the
+full-thread reading anchor. The state contains one root, the original return
+anchor, the current view's resume anchor, and a transition index. It does not
+assume roots only become deeper.
+
+The A1 guide keeps `all` in a 48 px leading activation region. It derives
+structural entries with `authorAncestryEntriesForRecord`: five authors or fewer
+remain complete, while a longer path shows the first author, an ellipsis, and
+the final three. The ellipsis expands the complete ancestry without changing
+Focus, URL, Safari History, or scroll position, and stays expanded until the
+Focus session ends. Separators use CSS-owned equal spacing around `/` so flex
+wrapping cannot collapse only one side, and the visible gap after `focused:` is
+also CSS-owned rather than trailing text whitespace. Compact and expanded paths
+align `all` with the first visual line and keep the final parent/current pair as
+one wrapping unit so the current author is never stranded alone. Ancestor links
+stay muted despite Hacker News' link specificity; only the current plain-text
+author uses the primary color. Ancestor authors are links that zoom to that
+exact comment. The story and story author are excluded. HN-explicit `[deleted]`
+steps remain in the chain; any other missing author makes that branch
+ineligible. There is no side handle or handedness preference.
+
+Scrolling never activates, creates, rebases, exits, or otherwise changes focus.
+Do not add
+scroll observers, scroll-event layout changes, or automatic viewport-offset
+compensation here. Physical-iPhone testing showed that changing subtree width
+and calling `scrollBy` during WebKit momentum scrolling interrupts the gesture
+and can oscillate at scope boundaries. Scope entry is intentionally an explicit
+user action.
+
+Keep `extension/content/deep-comments.js` as reviewable vanilla JavaScript for
+Safari/WebKit. It may read HN's `.comment-tree .comtr` order,
+`td.ind[indent]`, row IDs, `.hnuser`, an exact `[deleted]` marker, and existing
+navigation links. Do not add a framework, infer authors from ordinary comment
+prose, move rows, rewrite `href` values, or add compatibility code for Gecko or
+Blink.
+
+Original HN targets remain authoritative. A `root`, `parent`, `prev`, or `next`
+target inside the current subtree retains the current view. A target elsewhere
+in the same top-level comment tree uses `nearestCommonAncestorIndex` to widen
+only to the nearest common original comment ancestor. A target in another
+top-level tree exits Focus. In every case the original `root`, `parent`, `prev`,
+or `next` target remains unchanged; never reinterpret these links as the next
+visible item. Back returns to the previous narrower or wider view and Forward
+reapplies it. Cross-tree navigation does not restore an obsolete reading
+position.
+
+HN collapse and HN Refined scope are separate state layers. Scope may add only
+HN Refined data attributes and CSS variables. The focused-page mask does not
+move or reconstruct HN nodes. Never overwrite HN's `coll` class, inline
+display, `[–]` / `[n more]` text, or collapsed descendant count. Leaving focus
+must remove only HN Refined's page mask, comment mask, and rebase attributes.
+
+Real Safari checks must cover Thread Focus on and off on a genuinely deep item
+page, native uninterrupted long scrolling, direct and repeated nested focus,
+compact and expanded author ancestry, ancestor-link zoom, `all`, Safari Back
+and Forward, `[–]` and `[n more]`, every original comment navigation link,
+inside-target retention, nearest-common-ancestor widening, cross-tree exit, the
+hidden site header and fixed guide top boundary, restoration of the story /
+reply form / footer, portrait rotation, theme-aware divider colors, and
+immediate preference updates on an already-open HN tab. Keep
+`https://news.ycombinator.com/item?id=49098510#49101840` in the physical-iPhone
+regression pass.
 
 ## Signing
 

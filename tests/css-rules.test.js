@@ -165,6 +165,113 @@ test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });
 
+test("mobile comments preserve progressively compressed indentation through deep threads", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+
+  assert.match(
+    mobileCss,
+    /\.comment-tree\s+\.comtr\s+\.ind img\[width\]\s*{[^}]*width:\s*var\(--hnr-comment-base-indent\)/s,
+  );
+  assert.doesNotMatch(mobileCss, /\.ind img\[width="\d+"\]/);
+  assert.doesNotMatch(mobileCss, /\.ind img\s*\{[^}]*max-width:\s*32px/s);
+});
+
+test("deep-thread scope uses a separate restrained mobile presentation layer", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+  const focusMediaIndex = css.indexOf("@media (any-pointer: coarse)");
+  const baseRule = mobileCss.match(
+    /\.comment-tree\s+\.comtr\s+\.ind img\[width\]\s*{[^}]*width:\s*var\(--hnr-comment-base-indent\)/s,
+  );
+  const focusRule = mobileCss.match(
+    /\.comment-tree\s+\.comtr\[data-hnr-scope-row\]\s+\.ind\s+img\[width\]\s*{[^}]*width:\s*var\(--hnr-comment-indent\)/s,
+  );
+
+  assert.ok(baseRule);
+  assert.ok(focusRule);
+  assert.ok(focusRule.index > baseRule.index);
+  assert.notEqual(focusMediaIndex, -1);
+  assert.ok(
+    css.indexOf(".hnr-comment-scope-guide:not([hidden])", focusMediaIndex) > focusMediaIndex,
+  );
+  assert.match(mobileCss, /\.comtr\[data-hnr-focus-excluded\]\s*{[^}]*display:\s*none/s);
+  assert.match(mobileCss, /\[data-hnr-focus-page-excluded\]\s*{[^}]*display:\s*none/s);
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-guide:not\(\[hidden\]\)\s*{[^}]*position:\s*sticky[^}]*top:\s*env\(safe-area-inset-top\)[^}]*background:\s*var\(--hnr-content-background/s,
+  );
+  assert.match(mobileCss, /\.hnr-comment-scope-guide\s+a\s*{[^}]*color:\s*inherit/s);
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-guide:not\(\[hidden\]\)\s*{[^}]*display:\s*grid[^}]*grid-template-columns:\s*48px minmax\(0, 1fr\)[^}]*align-items:\s*baseline[^}]*white-space:\s*normal/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-path\s*{[^}]*display:\s*flex[^}]*flex-wrap:\s*wrap[^}]*min-height:\s*44px[^}]*overflow-wrap:\s*anywhere/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-step\s*{[^}]*display:\s*inline-flex[^}]*flex:\s*0 0 auto[^}]*max-width:\s*100%/s,
+  );
+  assert.match(mobileCss, /\.hnr-comment-scope-prefix\s*{[^}]*padding-inline-end:\s*0\.35em/s);
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-nearest\s*{[^}]*display:\s*inline-flex[^}]*flex:\s*0 0 auto/s,
+  );
+  assert.match(mobileCss, /\.hnr-comment-scope-separator\s*{[^}]*padding-inline:\s*0\.35em/s);
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-ellipsis\s*{[^}]*appearance:\s*none[^}]*border:\s*0[^}]*background:\s*transparent/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-step-current\s*{[^}]*color:\s*var\(--hnr-text-primary/s,
+  );
+  assert.match(
+    mobileCss,
+    /#hnmain\s+\.hnr-comment-scope-ancestor:link,[\s\S]*#hnmain\s+\.hnr-comment-scope-ancestor:visited\s*{[^}]*color:\s*var\(--hnr-text-muted/s,
+  );
+  assert.doesNotMatch(mobileCss, /\.hnr-comment-scope-path-(?:prior|current)/);
+  assert.doesNotMatch(mobileCss, /text-overflow:\s*ellipsis/);
+  assert.doesNotMatch(mobileCss, /max-width:\s*50%/);
+  assert.match(mobileCss, /scroll-margin-top:\s*calc\(40px \+ env\(safe-area-inset-top\)\)/);
+  assert.doesNotMatch(
+    mobileCss,
+    /\.hnr-comment-scope-guide[^}]*?(?:border-radius|box-shadow|transition):/s,
+  );
+});
+
+test("focus guide derives its divider from each active HN theme", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+
+  assert.match(
+    css,
+    /html\[data-hnr-theme="light"\][^{]*{[^}]*--hnr-focus-divider:\s*color-mix\([^;]*--hnr-top-bar-background[^;]*--hnr-content-background/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-theme="dark"\]\s*{[^}]*--hnr-focus-divider:\s*color-mix\([^;]*--hnr-top-bar-background[^;]*--hnr-content-background/s,
+  );
+  assert.match(
+    css,
+    /prefers-color-scheme:\s*dark[\s\S]*html\[data-hnr-theme="system"\]\s*{[^}]*--hnr-focus-divider:\s*color-mix\(/s,
+  );
+  assert.match(
+    css,
+    /prefers-contrast:\s*more[\s\S]*html\[data-hnr-theme\]\s*{[^}]*--hnr-focus-divider:\s*color-mix\([^;]*68%/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-exit\s*{[^}]*min-width:\s*48px[^}]*min-height:\s*44px/s,
+  );
+  assert.match(
+    mobileCss,
+    /\.hnr-comment-scope-guide:not\(\[hidden\]\)\s*{[^}]*border-bottom:\s*1px solid var\(--hnr-focus-divider\)/s,
+  );
+});
+
 test("mobile item pages wrap story text and preserve a right gutter", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const mobileMediaIndex = css.indexOf("@media (max-width: 700px)");

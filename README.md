@@ -7,8 +7,15 @@ HN Refined is a restrained Safari extension that improves Hacker News readabilit
 - Runs only on `news.ycombinator.com`.
 - Improves desktop readability with a comfortable default.
 - Improves iPhone and iPad Safari readability with responsive CSS.
-- Provides local preferences for theme, font, density, width, and external
-  story-link target behavior.
+- Provides local preferences for theme, font, density, width, Thread Focus, and
+  external story-link target behavior.
+- Keeps comment scrolling native. The default-on Thread Focus link lets readers
+  explicitly isolate any comment with replies in a full-width view whose
+  compact, wrapping author-ancestry guide replaces the site header. Long paths
+  keep the first and nearest authors visible behind one expandable ellipsis;
+  tapping an ancestor zooms back to that part of the conversation. Safari Back
+  and Forward traverse these reading views, while `all` returns to the complete
+  discussion. Turning Thread Focus off keeps progressive indentation only.
 - Does not collect data, load remote code, or modify Hacker News account actions.
 
 ## Enabling on iPhone and iPad

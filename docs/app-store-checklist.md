@@ -38,3 +38,22 @@ The current audit and metadata draft are in `docs/release-readiness.md` and
   unsupported; normal Safari is the supported mobile surface.
 - Confirm disabling the Safari extension restores the original Hacker News site behavior.
 - Confirm external story links open in the current tab by default and only change when the user enables the new-tab preference.
+- On iPhone Safari, verify a deeply nested comment chain with Thread Focus on
+  and off. Confirm ordinary scrolling never activates or rebases a scope and
+  progressive indentation remains when Focus is off. Confirm HN's `root`,
+  `parent`, `prev`, `next`, `[–]`, and `[n more]`
+  behavior remains authoritative while focus and Safari Back provide the
+  documented local reading scope. In focus, confirm the site header is hidden,
+  the guide is the top boundary, the root has zero indent, and only the selected
+  subtree remains. Rotate between portrait and landscape and confirm the same
+  Focus View remains active. Verify compact comment-author ancestry can expand without
+  moving the page: five authors or fewer stay complete, longer chains show the
+  first author, ellipsis, and final three, and slash spacing is symmetric. Tap
+  visible and newly revealed ancestor links and verify Back restores the
+  previous view and Forward reapplies it. Check inside-target retention,
+  nearest-common-ancestor widening, another-top-level-tree exit, and unchanged
+  original HN destinations. In compact and expanded paths, confirm `all` aligns
+  to the first line, ancestors remain muted, only the current author is primary,
+  `focused:` has a visible following gap, and the final parent/current pair does
+  not split across lines. Confirm `all` restores the story, reply form, spacers,
+  footer, and outside comments.

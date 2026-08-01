@@ -6,7 +6,7 @@ const allowedHostPattern = "https://news.ycombinator.com/*";
 const allowedHostLikeFields = new Set(["host_permissions", "optional_host_permissions"]);
 const requiredPermissions = ["storage", "activeTab"];
 const requiredContentScriptCss = ["generated/themes.css", "content/content.css"];
-const requiredContentScriptJs = ["content/content-script.js"];
+const requiredContentScriptJs = ["content/deep-comments.js", "content/content-script.js"];
 
 function equalsArray(actual, expected) {
   return Array.isArray(actual) && JSON.stringify(actual) === JSON.stringify(expected);

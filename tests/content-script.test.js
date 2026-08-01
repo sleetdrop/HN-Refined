@@ -8,6 +8,7 @@ const lightPreferences = {
   fontPreset: "system-sans",
   desktopDensity: "comfortable",
   readingWidth: "comfortable",
+  threadFocusEnabled: true,
   openStoryLinksInNewTabs: false,
 };
 
@@ -115,6 +116,7 @@ function createContentScriptContext(
   const documentListeners = new Map();
   const intervalCallbacks = new Map();
   const mediaQueryListeners = [];
+  const threadFocusUpdates = [];
   const runtimeMessageListeners = [];
   const storageChangeListeners = [];
   const mobileQuery = {
@@ -179,6 +181,18 @@ function createContentScriptContext(
         },
       },
     },
+    HNRefinedDeepComments: {
+      createController() {
+        return {
+          start(enabled) {
+            threadFocusUpdates.push(["start", enabled]);
+          },
+          setEnabled(enabled) {
+            threadFocusUpdates.push(["set", enabled]);
+          },
+        };
+      },
+    },
     setStoredPreferences(nextPreferences) {
       storedPreferences = nextPreferences;
     },
@@ -223,6 +237,9 @@ function createContentScriptContext(
     get runtimeMessageListenerCount() {
       return runtimeMessageListeners.length;
     },
+    get threadFocusUpdates() {
+      return [...threadFocusUpdates];
+    },
   };
 
   vm.createContext(context);
@@ -254,6 +271,8 @@ test("content script applies default attributes before async storage resolves", 
 
   assert.equal(context.document.documentElement.dataset.hnrTheme, "system");
   assert.equal(context.document.documentElement.dataset.hnrMobile, "auto");
+  assert.equal(context.document.documentElement.dataset.hnrDeepThreads, undefined);
+  assert.deepEqual(context.threadFocusUpdates, [["start", true]]);
 });
 
 test("content script ignores legacy mobile layout preferences", async () => {
@@ -264,6 +283,28 @@ test("content script ignores legacy mobile layout preferences", async () => {
   await nextMicrotask();
 
   assert.equal(context.document.documentElement.dataset.hnrMobile, "auto");
+  assert.equal(context.document.documentElement.dataset.hnrDeepThreads, undefined);
+  assert.deepEqual(context.threadFocusUpdates, [
+    ["start", true],
+    ["set", true],
+  ]);
+});
+
+test("content script migrates legacy indentation-only mode to disabled focus", async () => {
+  const { threadFocusEnabled: _removed, ...legacyPreferences } = darkPreferences;
+  const context = createContentScriptContext({
+    ...legacyPreferences,
+    deepThreadMode: "indentation-only",
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+  await nextMicrotask();
+
+  assert.deepEqual(context.threadFocusUpdates, [
+    ["start", true],
+    ["set", false],
+  ]);
 });
 
 test("mobile comment editors initialize at two rows and first focus expands once", () => {
@@ -401,9 +442,10 @@ test("content script accepts Safari storage change events without an area name",
   await nextMicrotask();
 
   assert.equal(context.document.documentElement.dataset.hnrTheme, "light");
-  context.dispatchStorageChange(darkPreferences, undefined);
+  context.dispatchStorageChange({ ...darkPreferences, threadFocusEnabled: false }, undefined);
 
   assert.equal(context.document.documentElement.dataset.hnrTheme, "dark");
+  assert.deepEqual(context.threadFocusUpdates.at(-1), ["set", false]);
 });
 
 test("content script periodically refreshes visible pages as a Safari fallback", async () => {
