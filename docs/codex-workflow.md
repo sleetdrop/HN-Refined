@@ -79,28 +79,25 @@ useful techniques at every size, scaled to the risk.
 Historical files under `docs/superpowers/` explain earlier decisions; they are
 not startup context and should not be copied forward mechanically.
 
-## Model and Agent Routing
+## Model and Agent Ownership
 
-The project defaults to `gpt-5.6-terra` at medium reasoning. This is the main
-implementation model for ordinary HN Refined work.
+HN Refined does not pin the main model. Choose Luna, Terra, or Sol in Codex when
+starting a task according to the work and available quota. A natural statement
+of the problem, desired result, and any boundary such as “do not commit” is
+enough; the maintainer should not have to write model-routing or orchestration
+instructions.
 
-- Use Sol (`gpt-5.6`) for ambiguous product interaction, architectural choices,
-  difficult state reasoning, or a final review where a mistake would be costly.
-- Use Terra for normal implementation, debugging, tests, documentation, and
-  Safari verification.
-- Use Luna for narrow read-heavy exploration or repetitive evidence gathering.
+The main Agent owns the complete outcome: investigation, implementation,
+testing, Safari/iOS Simulator verification, and reporting. This preserves the
+shared product and visual context that HN Refined's iterative work depends on.
 
-The project provides three optional custom agents:
-
-- `hn_explorer`: read-only code and documentation mapping with Luna.
-- `safari_verifier`: Terra-based runtime and visual verification; it reports
-  evidence and does not edit product code.
-- `hn_reviewer`: read-only Sol review for complex or release-sensitive changes.
-
-Subagents cost additional tokens. Do not use them for Tiny work or merely to
-imitate a team. Use them when they keep browser logs, repository exploration, or
-review noise out of the main decision task. Prefer one bounded agent at a time
-unless two investigations are genuinely independent.
+Project-specific custom subagents are intentionally not configured. Codex's
+built-in subagent capability remains available for exceptional side tasks that
+are independent, self-contained, and would otherwise flood the main context
+with search results, test logs, or other disposable output. Do not use
+subagents as a default development pipeline, for quick targeted changes, or
+when several phases need the same conversation context. Added token,
+delegation, and resynchronization cost must be justified by a clear benefit.
 
 ## Verification Ladder
 
@@ -141,8 +138,8 @@ the implementation; documentation records stable intent and current direction.
 - [Projects](https://learn.chatgpt.com/docs/projects): keep related work in one
   project and use separate tasks for distinct outcomes.
 - [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents):
-  custom agents, model routing, and keeping noisy supporting work out of the
-  main task.
+  when isolated supporting work can keep noise out of the main task and why it
+  costs additional tokens.
 - [Models](https://learn.chatgpt.com/docs/models): current Sol, Terra, Luna, and
   reasoning-effort guidance.
 - [AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md):

@@ -43,24 +43,25 @@ test("Codex workflow keeps graph-shaped work lightweight", () => {
   assert.match(workflow, /make format && make check/);
 });
 
-test("project Codex configuration routes ordinary work and bounded agents", () => {
-  const config = read(".codex/config.toml");
-  const explorer = read(".codex/agents/hn-explorer.toml");
-  const verifier = read(".codex/agents/safari-verifier.toml");
-  const reviewer = read(".codex/agents/hn-reviewer.toml");
+test("project leaves model choice and ordinary work with the main Agent", () => {
+  const agents = read("AGENTS.md");
+  const workflow = read("docs/codex-workflow.md");
 
-  assert.match(config, /model = "gpt-5\.6-terra"/);
-  assert.match(config, /model_reasoning_effort = "medium"/);
-  assert.match(config, /max_concurrent_threads_per_session = 3/);
-  assert.match(explorer, /name = "hn_explorer"/);
-  assert.match(explorer, /model = "gpt-5\.6-luna"/);
-  assert.match(explorer, /sandbox_mode = "read-only"/);
-  assert.match(verifier, /name = "safari_verifier"/);
-  assert.match(verifier, /model = "gpt-5\.6-terra"/);
-  assert.match(verifier, /Do not edit application source/);
-  assert.match(reviewer, /name = "hn_reviewer"/);
-  assert.match(reviewer, /model = "gpt-5\.6"/);
-  assert.match(reviewer, /sandbox_mode = "read-only"/);
+  for (const doc of [agents, workflow]) {
+    assert.match(doc, /does not pin|Do not pin/i);
+    assert.match(doc, /user chooses|Choose Luna, Terra, or Sol/i);
+    assert.match(doc, /main Agent owns/i);
+    assert.match(doc, /subagents.*(?:independent|exceptional)/is);
+  }
+
+  assert.equal(fs.existsSync(".codex/config.toml"), false);
+  for (const path of [
+    ".codex/agents/hn-explorer.toml",
+    ".codex/agents/safari-verifier.toml",
+    ".codex/agents/hn-reviewer.toml",
+  ]) {
+    assert.equal(fs.existsSync(path), false);
+  }
 });
 
 test("workflow docs and CI prefer Makefile entrypoints", () => {

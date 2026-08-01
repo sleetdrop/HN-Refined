@@ -29,21 +29,21 @@ user explicitly chooses a local preference.
   outcome is absorbed into normal docs and Git history.
 - After context compaction, ground the task again in Git status, the current
   diff, and any active handoff. Do not rely on the conversation summary alone.
-- Use the project default Terra model for ordinary implementation. Reserve Sol
-  for ambiguous design, difficult state reasoning, release-sensitive review, or
-  explicit user choice.
+- Do not pin the main model at project level. The user chooses Luna, Terra, or
+  Sol for each task; the harness must work without asking them to describe model
+  routing or agent orchestration.
 - Superpowers is selective here. Tiny work does not need brainstorming, a
   design document, or an implementation-plan document. Standard work normally
   uses a short in-task plan. Use the full workflow only for genuinely Complex
   work or when the user requests it.
-- Project custom agents may be used without another permission prompt when their
-  bounded role materially helps: `hn_explorer` for read-only mapping,
-  `safari_verifier` for runtime evidence, and `hn_reviewer` for complex or
-  release-sensitive review. Do not spawn them for Tiny work, duplicate work, or
-  performative parallelism. Return summaries to the main task instead of logs.
+- The main Agent owns investigation, implementation, testing, and Safari/iOS
+  verification end to end. Do not turn ordinary work into a subagent pipeline.
+  Use Codex's built-in subagents only when a side task is independent and its
+  search, logs, or other high-volume output would otherwise pollute the main
+  context. Their expected benefit must exceed added token and coordination cost.
 
-Read `docs/codex-workflow.md` when a task boundary, handoff, model choice, or
-verification scope needs more detail; it is not mandatory startup context.
+Read `docs/codex-workflow.md` when a task boundary, handoff, or verification
+scope needs more detail; it is not mandatory startup context.
 
 ## Development and Verification
 

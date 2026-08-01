@@ -1,6 +1,6 @@
 # Current State
 
-Last updated: 2026-08-01
+Last updated: 2026-08-02
 
 This is the short startup brief for new Codex tasks. Read the longer references
 only when the current outcome needs them.
@@ -39,10 +39,13 @@ two completed implementation branches under continued dogfooding:
 - Light/dark color semantics and mobile form refinements: accepted baseline
   `6f3f5b9`.
 
-Codex workflow harness v1 now uses this short startup brief, a Terra default,
-three bounded custom agents, graph-shaped task boundaries, selective
-Superpowers, and risk-scaled Safari verification. It will be refined from
-actual project use rather than expanded speculatively.
+Codex workflow harness v1 now uses this short startup brief, a user-selected
+main model, main-Agent ownership, graph-shaped task boundaries, selective
+Superpowers, and risk-scaled Safari verification. Project-specific custom
+subagents were removed after evaluation showed that this small, sequential,
+visual-feedback-heavy project did not justify their token and coordination
+cost. The harness will continue to be refined from actual use rather than
+expanded speculatively.
 
 ## Read on Demand
 

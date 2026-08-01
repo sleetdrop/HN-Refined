@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { test } from "node:test";
 
 const trackedFiles = execFileSync(
@@ -9,7 +9,7 @@ const trackedFiles = execFileSync(
   { encoding: "utf8" },
 )
   .split("\0")
-  .filter(Boolean);
+  .filter((file) => file && existsSync(file));
 
 test("tracked files exclude local build and IDE state", () => {
   for (const file of trackedFiles) {
