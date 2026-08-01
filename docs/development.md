@@ -65,8 +65,14 @@ format and lint checks without modifying files.
 
 ## Continuous Harness Maintenance
 
+Use `docs/codex-workflow.md` for task boundaries, model routing, handoffs, and
+the risk-scaled verification ladder. New Codex tasks start with
+`docs/current-state.md`; this document is a domain reference, not mandatory
+startup context for every change.
+
 Do not treat handoff docs, workflow docs, and tests as occasional cleanup work.
-Every change should include a quick docs-and-harness impact check.
+Every change should include a quick docs-and-harness impact check, but update
+only files whose durable truth changed.
 
 Update the relevant files in the same change when work affects:
 
@@ -78,10 +84,10 @@ Update the relevant files in the same change when work affects:
 - Known regressions or rules that future agents must preserve.
 - Remaining-work guidance that a fresh agent would use to pick up the project.
 
-Common files to review are `AGENTS.md`, `docs/project-status.md`,
-`docs/development.md`, `docs/privacy.md`, `docs/app-store-checklist.md`,
-`docs/safari.md`, `.github/workflows/ci.yml`, and tests that lock workflow or
-handoff behavior.
+Use the routing in `AGENTS.md` to choose the relevant owner. Do not mechanically
+edit `docs/project-status.md`, privacy, App Store, release, and workflow files
+for an isolated implementation change. Update `docs/current-state.md` when the
+release position, active outcomes, blockers, or next-task guidance changes.
 
 ## Safari Local Development
 

@@ -66,8 +66,9 @@ Run:
 make check
 ```
 
-Start with `docs/project-status.md`, then see `docs/development.md` and
-`docs/safari.md`.
+Start with `docs/current-state.md`. See `docs/codex-workflow.md` for the Codex
+workflow, then read `docs/development.md`, `docs/safari.md`, or the detailed
+`docs/project-status.md` only when the current work needs them.
 
 ## Contributing and security
 

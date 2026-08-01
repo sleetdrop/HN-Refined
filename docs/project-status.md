@@ -2,6 +2,10 @@
 
 Last updated: 2026-08-01
 
+This is the detailed product record and regression reference. New Codex tasks
+start with `docs/current-state.md` and read this file only when the current
+outcome needs historical or domain context.
+
 HN Refined is a CSS-first Safari WebExtension for Hacker News. The product goal
 is to improve readability, mobile ergonomics, and theme comfort while preserving
 Hacker News behavior and information architecture.
@@ -394,5 +398,6 @@ before choosing the public scope.
 
 Files under `docs/superpowers/` are historical specs and implementation plans.
 They explain product decisions, but some commands and checklist items predate
-the current Makefile workflow. Treat `docs/project-status.md` and
-`docs/development.md` as the current operational source of truth.
+the current Makefile workflow. Use `docs/current-state.md` for the short current
+position, `docs/codex-workflow.md` for agent workflow, and this file plus
+`docs/development.md` as detailed references.

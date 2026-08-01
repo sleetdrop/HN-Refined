@@ -4,15 +4,63 @@ import test from "node:test";
 
 const read = (path) => fs.readFileSync(path, "utf8");
 
-test("handoff docs point new agents at the current project status", () => {
+test("handoff docs give new agents a short current-state entrypoint", () => {
   const agents = read("AGENTS.md");
   const readme = read("README.md");
+  const currentState = read("docs/current-state.md");
   const status = read("docs/project-status.md");
 
+  assert.match(agents, /Start every new task with only/);
+  assert.match(agents, /docs\/current-state\.md/);
+  assert.match(agents, /Do not load `docs\/project-status\.md`.*by default/s);
+  assert.match(readme, /docs\/current-state\.md/);
   assert.match(agents, /docs\/project-status\.md/);
   assert.match(readme, /docs\/project-status\.md/);
+  assert.match(currentState, /Release Position/);
+  assert.match(currentState, /Read on Demand/);
   assert.match(status, /Remaining Work Candidates/);
   assert.match(status, /Historical Planning Docs/);
+});
+
+test("Codex workflow keeps graph-shaped work lightweight", () => {
+  const agents = read("AGENTS.md");
+  const workflow = read("docs/codex-workflow.md");
+
+  for (const doc of [agents, workflow]) {
+    assert.match(doc, /initiative/i);
+    assert.match(doc, /outcome/i);
+    assert.match(doc, /iteration/i);
+    assert.match(doc, /handoff/i);
+    assert.match(doc, /Tiny.*Standard.*Complex/is);
+    assert.match(doc, /Superpowers.*selective|Superpowers remains available/is);
+  }
+
+  assert.match(workflow, /Compaction is a recovery mechanism/);
+  assert.match(
+    workflow,
+    /Do not claim a visual or Safari behavior is fixed from code inspection alone/,
+  );
+  assert.match(workflow, /make format && make check/);
+});
+
+test("project Codex configuration routes ordinary work and bounded agents", () => {
+  const config = read(".codex/config.toml");
+  const explorer = read(".codex/agents/hn-explorer.toml");
+  const verifier = read(".codex/agents/safari-verifier.toml");
+  const reviewer = read(".codex/agents/hn-reviewer.toml");
+
+  assert.match(config, /model = "gpt-5\.6-terra"/);
+  assert.match(config, /model_reasoning_effort = "medium"/);
+  assert.match(config, /max_concurrent_threads_per_session = 3/);
+  assert.match(explorer, /name = "hn_explorer"/);
+  assert.match(explorer, /model = "gpt-5\.6-luna"/);
+  assert.match(explorer, /sandbox_mode = "read-only"/);
+  assert.match(verifier, /name = "safari_verifier"/);
+  assert.match(verifier, /model = "gpt-5\.6-terra"/);
+  assert.match(verifier, /Do not edit application source/);
+  assert.match(reviewer, /name = "hn_reviewer"/);
+  assert.match(reviewer, /model = "gpt-5\.6"/);
+  assert.match(reviewer, /sandbox_mode = "read-only"/);
 });
 
 test("workflow docs and CI prefer Makefile entrypoints", () => {
