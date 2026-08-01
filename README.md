@@ -72,6 +72,6 @@ workflow, then read `docs/development.md`, `docs/safari.md`, or the detailed
 
 ## Contributing and security
 
-HN Refined is open-source software licensed under the MIT License. See
-`CONTRIBUTING.md` for the development and pull request workflow. Report security
-issues using the private process in `SECURITY.md`, not a public issue.
+HN Refined is open-source software licensed under the [MIT License](LICENSE).
+See `CONTRIBUTING.md` for the development and pull request workflow. Report
+security issues using the private process in `SECURITY.md`, not a public issue.

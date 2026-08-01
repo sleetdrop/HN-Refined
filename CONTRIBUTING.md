@@ -30,6 +30,8 @@ workflow syncs it into the Xcode wrapper; do not edit mirrored resources under
 
 ## Pull requests
 
+- By submitting a contribution, you agree that it may be distributed under the
+  MIT License.
 - Keep changes narrowly scoped and readable.
 - Do not add remote code, analytics, arbitrary CSS, or broad host permissions.
 - Add focused tests for behavior changes.
