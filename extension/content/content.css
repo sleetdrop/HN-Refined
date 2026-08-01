@@ -358,6 +358,25 @@ html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) {
   padding: 16px;
 }
 
+html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) form {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+html[data-hnr-mobile="auto"] body:not(:has(#hnmain)):has(form) input[type="submit"] {
+  min-height: 32px;
+  padding-inline: 10px;
+  font-size: 16px;
+}
+
+body:not(:has(#hnmain)):has(form) a[href^="forgot"]:link {
+  color: var(--hnr-link-primary, #000);
+}
+
+body:not(:has(#hnmain)):has(form) a[href^="forgot"]:visited {
+  color: var(--hnr-link-visited, #828282);
+}
+
 :where(a[href], button):focus-visible {
   outline: 2px solid Highlight;
   outline-offset: 2px;

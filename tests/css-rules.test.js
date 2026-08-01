@@ -46,6 +46,19 @@ test("content CSS translates HN's unclassed application links without flattening
   assert.doesNotMatch(css, /(?:font\[color\]|\[style\*=[^\]]*color)/);
 });
 
+test("logged-out password recovery links use the extension's primary link color", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(
+    css,
+    /body:not\(:has\(#hnmain\)\):has\(form\)\s+a\[href\^="forgot"\]:link\s*{[^}]*color:\s*var\(--hnr-link-primary,\s*#000\)/s,
+  );
+  assert.match(
+    css,
+    /body:not\(:has\(#hnmain\)\):has\(form\)\s+a\[href\^="forgot"\]:visited\s*{[^}]*color:\s*var\(--hnr-link-visited,\s*#828282\)/s,
+  );
+});
+
 test("content CSS keeps top navigation links on the active header color", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
@@ -424,6 +437,19 @@ test("top-level interactive forms keep page spacing beyond the phone breakpoint"
   assert.ok(topLevelFormIndex < phoneMediaIndex);
   assert.match(css.slice(topLevelFormIndex, phoneMediaIndex), /padding:\s*16px/);
   assert.doesNotMatch(css, /display-mode:\s*standalone/);
+});
+
+test("mobile logged-out forms give labels and submit controls the reading scale", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(
+    css,
+    /html\[data-hnr-mobile="auto"\]\s+body:not\(:has\(#hnmain\)\):has\(form\)\s+form\s*{[^}]*font-size:\s*16px[^}]*line-height:\s*1\.4/s,
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-mobile="auto"\]\s+body:not\(:has\(#hnmain\)\):has\(form\)\s+input\[type="submit"\]\s*{[^}]*min-height:\s*32px[^}]*font-size:\s*16px/s,
+  );
 });
 
 test("increased contrast strengthens every faded level without changing its order", () => {
