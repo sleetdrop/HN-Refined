@@ -175,6 +175,70 @@ test("docs preserve automatic WebKit accessibility enhancements", () => {
   assert.match(development, /fragment navigation.*owned by Hacker News/is);
 });
 
+test("public docs preserve the Hacker News color semantic contract", () => {
+  const colorPath = "docs/color-semantics.md";
+  assert.ok(fs.existsSync(colorPath), "the public color semantic reference must exist");
+
+  const colors = read(colorPath);
+  const development = read("docs/development.md");
+  const status = read("docs/project-status.md");
+  const appStoreChecklist = read("docs/app-store-checklist.md");
+  const light = JSON.parse(read("extension/themes/hn-light.json")).tokens;
+  const dark = JSON.parse(read("extension/themes/hn-dark.json")).tokens;
+  const normalPairs = [
+    ["Page background", "pageBackground", "#f6f6ef", "#211f1a"],
+    ["Content background", "contentBackground", "#f6f6ef", "#27251f"],
+    ["Default top bar", "topBarBackground", "#ff6600", "#9a4315"],
+    ["Primary text", "textPrimary", "#000000", "#e6dcc5"],
+    ["Secondary text", "textSecondary", "#828282", "#a89b82"],
+    ["Visited link", "linkVisited", "#828282", "#a89b82"],
+    ["New-account username", "userNew", "#3c963c", "#73b56d"],
+    ["Own-item marker", "ownItemMarker", "#ff6600", "#dc8650"],
+    ["YC-alumni username", "ycAlumniUser", "#ff6600", "#dc8650"],
+    ["Thread Focus divider", "focusDivider", "#faba8b", "#63351a"],
+  ];
+
+  assert.match(colors, /official Hacker News.*light/is);
+  assert.match(colors, /dark.*semantic translation/is);
+  assert.match(colors, /new account.*own.*YC alumni/is);
+  assert.match(colors, /custom.*topcolor.*unchanged/is);
+  assert.match(colors, /\.c5a.*\.cdd/is);
+
+  for (const [label, token, lightValue, darkValue] of normalPairs) {
+    assert.equal(light[token], lightValue);
+    assert.equal(dark[token], darkValue);
+    assert.match(
+      colors,
+      new RegExp(`${label}[^\\n]*${lightValue}[^\\n]*${darkValue}`, "i"),
+      `${label} must document both canonical values`,
+    );
+  }
+
+  for (const [index, className] of [
+    "c5a",
+    "c73",
+    "c82",
+    "c88",
+    "c9c",
+    "cae",
+    "cbe",
+    "cce",
+    "cdd",
+  ].entries()) {
+    assert.match(
+      colors,
+      new RegExp(
+        `\\.${className}[^\\n]*${light[`commentFade${index + 1}`]}[^\\n]*${dark[`commentFade${index + 1}`]}`,
+        "i",
+      ),
+    );
+  }
+
+  assert.match(development, /saturate\(0\.78\).*opacity.*0\.82/is);
+  assert.match(status, /color semantics.*complete/is);
+  assert.match(appStoreChecklist, /custom `topcolor`.*unchanged/is);
+});
+
 test("docs preserve complete Hacker News font preset coverage", () => {
   const development = read("docs/development.md");
   const status = read("docs/project-status.md");

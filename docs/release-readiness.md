@@ -4,8 +4,9 @@ Last reviewed: 2026-08-01
 
 ## Release Gate
 
-Release preparation is deliberately paused while two HN-alignment corrections
-from the final pre-release article review are completed. The first correction,
+Release preparation is deliberately paused while the two HN-alignment
+corrections from the final pre-release article review complete physical-device
+burn-in. The first correction,
 deep mobile comment hierarchy and local reading scope, is implemented, covered
 by automated interaction tests, and visually checked in iPhone Simulator
 Safari. Physical-iPhone testing found that Automatic scope could interrupt and
@@ -27,39 +28,55 @@ ancestor or exits for another top-level tree. Back restores the previous view,
 Forward reapplies it, and History remains page-local. The guide now aligns
 `all` to its first visual line, keeps ancestors muted, keeps the final
 parent/current pair together, and preserves Focus through iPhone rotation. The
-complete 165-test local gate, iOS build, signed macOS Safari reinstall, and
+complete interaction-test gate, iOS build, signed macOS Safari reinstall, and
 package doctor pass. iPhone 17 Pro / iOS 26.3 Simulator checks cover compact and
 expanded ancestry, both themes, History navigation, collapse preservation, and
 portrait/landscape retention. A subsequent physical-iPhone pass confirmed that
 the current revision follows the intended interaction direction; multi-day use
 now serves as burn-in for smaller follow-up adjustments rather than leaving the
 hierarchy correction open.
-The second HN-alignment correction remains to be handled separately: audit HN
-Refined's overrides against Hacker News' own color semantics and restrained
-visual language, then correct semantic drift in both light and dark themes. Do
-not resume screenshots, final release copy, archive validation, or submission
-work until that correction is implemented, verified, and reflected in project
-status.
+The second correction preserves Hacker News color semantics in Light and
+translates those roles into a documented warm palette in Dark. Increased
+Contrast preserves the complete ordered comment-fade ladder,
+custom `topcolor` values fail open, and the default dark logo receives a
+CSS-only treatment. The prior 174-test gate, signed macOS Safari reinstall,
+package doctor, canonical resource sync, and iPhone 17 Pro / iOS 26.3 Simulator
+color matrix pass. The simulator matrix covers System Dark, fixed Dark over
+system Light, fixed Light over system Dark, and normal/Increase Contrast live
+HN pages. Do not resume screenshots, final release copy, archive validation, or
+submission work until physical-device color burn-in is complete and any
+resulting refinements are reflected in project status.
+
+The current refinement batch adds explicit field surface/border/focus tokens,
+fixes the later-loading HN default-link rule only within `#hnmain`, and gives
+the mobile submit text editor the same bounded height controls as comment
+editing without touching profile `about` fields. iPhone 17 Pro / iOS 26.3
+Simulator checks cover focused Light and Dark submit fields, normal Dark Jobs
+and profile surfaces, and the absence of submit controls from `about`. The
+current 178-test gate passes. A current macOS Safari reinstall remains blocked
+on this machine because its configured team has no valid Mac Development
+signing identity; iOS Simulator installation succeeds. Physical-device color
+burn-in remains the release gate.
 
 ## App Store Audit
 
-| Area               | Status       | Evidence or next action                                                                                                                                                  |
-| ------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Current SDK        | Ready        | Xcode 26.3 and iOS 26.3 SDK satisfy Apple's 2026 upload baseline.                                                                                                        |
-| Safari runtime     | Burn-in      | 165-test gate, signed install, package doctor, iOS build, simulator rotation pass, and initial physical-iPhone acceptance complete; continue multi-day Thread Focus use. |
-| Host onboarding    | Ready        | `HN Refined` shows `Settings > Apps > Safari > Extensions > HN Refined`, `Allow Extension`, and the `news.ycombinator.com` site permission requirement.                  |
-| Host permissions   | Ready        | Limited to `https://news.ycombinator.com/*`.                                                                                                                             |
-| Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                                                                                    |
-| Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                                                                                                |
-| Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                                                                                          |
-| Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                                                                                      |
-| App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.                                                                         |
-| Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                                                                                                |
-| Archive validation | Partial      | Unsigned iOS and macOS Release archives pass; signed App Store validation remains.                                                                                       |
-| Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                                                                                     |
-| Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                                                                                        |
-| Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                                                                                       |
-| Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                                                                                                |
+| Area               | Status       | Evidence or next action                                                                                                                                                                                                        |
+| ------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Current SDK        | Ready        | Xcode 26.3 and iOS 26.3 SDK satisfy Apple's 2026 upload baseline.                                                                                                                                                              |
+| Safari runtime     | Burn-in      | Current 178-test gate and iOS build/Simulator checks pass. The prior signed install and package doctor pass; current macOS reinstall is blocked by a missing local Mac Development identity. Continue physical-iPhone burn-in. |
+| Host onboarding    | Ready        | `HN Refined` shows `Settings > Apps > Safari > Extensions > HN Refined`, `Allow Extension`, and the `news.ycombinator.com` site permission requirement.                                                                        |
+| Host permissions   | Ready        | Limited to `https://news.ycombinator.com/*`.                                                                                                                                                                                   |
+| Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                                                                                                                                          |
+| Privacy answers    | Drafted      | Select “No, we do not collect data” in App Store Connect.                                                                                                                                                                      |
+| Privacy policy URL | Ready        | Public repository URL recorded in `docs/app-store-metadata.md`.                                                                                                                                                                |
+| Version alignment  | Ready        | WebExtension/package use `1.0.0`; Xcode uses marketing version `1.0` and build `1`.                                                                                                                                            |
+| App record         | Human action | Register `net.vetcafe.hnrefined` and its extension ID, then create the App Store Connect record.                                                                                                                               |
+| Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                                                                                                                                                      |
+| Archive validation | Partial      | Unsigned iOS and macOS Release archives pass; signed App Store validation remains.                                                                                                                                             |
+| Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                                                                                                                                           |
+| Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                                                                                                                                              |
+| Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                                                                                                                                             |
+| Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                                                                                                                                                      |
 
 Apple review requirements relevant to this project:
 

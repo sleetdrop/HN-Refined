@@ -6,12 +6,6 @@ function hexChannels(hex) {
   return [1, 3, 5].map((offset) => Number.parseInt(hex.slice(offset, offset + 2), 16));
 }
 
-function mixChannels(foreground, background, foregroundWeight) {
-  return foreground.map((channel, index) =>
-    Math.round(channel * foregroundWeight + background[index] * (1 - foregroundWeight)),
-  );
-}
-
 function relativeLuminance(channels) {
   const linear = channels.map((channel) => {
     const value = channel / 255;
@@ -31,17 +25,6 @@ function readTheme(path) {
   return JSON.parse(fs.readFileSync(path, "utf8")).tokens;
 }
 
-function contrastMixWeight(css, cssToken) {
-  const match = css.match(
-    new RegExp(
-      `--hnr-${cssToken}:\\s*color-mix\\(\\s*in srgb,\\s*var\\(--hnr-text-primary\\)\\s+(\\d+)%,\\s*var\\(--hnr-content-background\\)\\s*\\)`,
-    ),
-  );
-
-  assert.ok(match, `missing increased-contrast mix for ${cssToken}`);
-  return Number(match[1]) / 100;
-}
-
 test("content CSS overrides Hacker News title link colors", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
@@ -51,18 +34,36 @@ test("content CSS overrides Hacker News title link colors", () => {
   assert.match(css, /#hnmain\s+\.titleline\s+\.sitestr/);
 });
 
+test("content CSS translates HN's unclassed application links without flattening comment fades", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /#hnmain\s+a:link\s*{[^}]*color:\s*var\(--hnr-link-primary,\s*#000\)/s);
+  assert.match(css, /#hnmain\s+a:visited\s*{[^}]*color:\s*var\(--hnr-link-visited,\s*#828282\)/s);
+  assert.match(css, /#hnmain\s+\.subtext\s+a:link/);
+  assert.match(css, /#hnmain\s+\.comhead\s+a:visited/);
+  assert.match(css, /#hnmain\s+\.commtext\.c5a\s+a:link/);
+  assert.doesNotMatch(css, /#hnmain\s+td\s*{[^}]*color:/s);
+  assert.doesNotMatch(css, /(?:font\[color\]|\[style\*=[^\]]*color)/);
+});
+
 test("content CSS keeps top navigation links on the active header color", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
-  assert.match(css, /#hnmain\s+\.pagetop\s+a:link/);
-  assert.match(css, /#hnmain\s+\.pagetop\s+a:visited/);
+  assert.match(
+    css,
+    /td\[bgcolor="#ff6600" i\]\s+\.pagetop\s+a:link,[\s\S]*td\[bgcolor="#ff6600" i\]\s+\.pagetop\s+a:visited\s*{[^}]*color:\s*var\(--hnr-top-bar-link/s,
+  );
+  assert.match(
+    css,
+    /td\[bgcolor="#ff6600" i\]\s+\.topsel\s+a:link,[\s\S]*td\[bgcolor="#ff6600" i\]\s+\.topsel\s+a:visited\s*{[^}]*color:\s*var\(--hnr-top-bar-selected/s,
+  );
 });
 
 test("story submission text uses the primary reading color", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
   assert.match(css, /#hnmain\s+\.toptext\s*{[^}]*color:\s*var\(--hnr-text-primary,\s*#000\)/s);
-  assert.doesNotMatch(css, /\.toptext[^}]*color:\s*var\(--hnr-text-muted/s);
+  assert.doesNotMatch(css, /\.toptext[^}]*color:\s*var\(--hnr-text-secondary/s);
 });
 
 test("font presets override Hacker News reading and metadata fonts", () => {
@@ -165,6 +166,19 @@ test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });
 
+test("mobile comment metadata lets long new-comments story links wrap", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+  const inlineBlockSelectorLists = [
+    ...mobileCss.matchAll(/([^{}]+)\{[^{}]*display:\s*inline-block/g),
+  ].map(([, selectors]) => selectors);
+
+  assert.ok(
+    inlineBlockSelectorLists.every((selectors) => !selectors.includes(".comhead a")),
+    "long story-title links inside .comhead must stay inline so they cannot widen HN's table layout",
+  );
+});
+
 test("mobile comments preserve progressively compressed indentation through deep threads", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
@@ -230,7 +244,7 @@ test("deep-thread scope uses a separate restrained mobile presentation layer", (
   );
   assert.match(
     mobileCss,
-    /#hnmain\s+\.hnr-comment-scope-ancestor:link,[\s\S]*#hnmain\s+\.hnr-comment-scope-ancestor:visited\s*{[^}]*color:\s*var\(--hnr-text-muted/s,
+    /#hnmain\s+\.hnr-comment-scope-ancestor:link,[\s\S]*#hnmain\s+\.hnr-comment-scope-ancestor:visited\s*{[^}]*color:\s*var\(--hnr-text-secondary/s,
   );
   assert.doesNotMatch(mobileCss, /\.hnr-comment-scope-path-(?:prior|current)/);
   assert.doesNotMatch(mobileCss, /text-overflow:\s*ellipsis/);
@@ -242,25 +256,19 @@ test("deep-thread scope uses a separate restrained mobile presentation layer", (
   );
 });
 
-test("focus guide derives its divider from each active HN theme", () => {
+test("focus guide uses the explicit divider from each active HN theme", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const themesCss = fs.readFileSync("extension/generated/themes.css", "utf8");
   const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
 
   assert.match(
-    css,
-    /html\[data-hnr-theme="light"\][^{]*{[^}]*--hnr-focus-divider:\s*color-mix\([^;]*--hnr-top-bar-background[^;]*--hnr-content-background/s,
+    themesCss,
+    /html\[data-hnr-theme="light"\],[^{]*html\[data-hnr-theme="system"\]\s*{[^}]*--hnr-focus-divider:\s*#faba8b/s,
   );
+  assert.match(themesCss, /html\[data-hnr-theme="dark"\]\s*{[^}]*--hnr-focus-divider:\s*#63351a/s);
   assert.match(
-    css,
-    /html\[data-hnr-theme="dark"\]\s*{[^}]*--hnr-focus-divider:\s*color-mix\([^;]*--hnr-top-bar-background[^;]*--hnr-content-background/s,
-  );
-  assert.match(
-    css,
-    /prefers-color-scheme:\s*dark[\s\S]*html\[data-hnr-theme="system"\]\s*{[^}]*--hnr-focus-divider:\s*color-mix\(/s,
-  );
-  assert.match(
-    css,
-    /prefers-contrast:\s*more[\s\S]*html\[data-hnr-theme\]\s*{[^}]*--hnr-focus-divider:\s*color-mix\([^;]*68%/s,
+    themesCss,
+    /prefers-color-scheme:\s*dark[\s\S]*html\[data-hnr-theme="system"\]\s*{[^}]*--hnr-focus-divider:\s*#63351a/s,
   );
   assert.match(
     mobileCss,
@@ -313,7 +321,7 @@ test("mobile comment editors keep symmetric gutters and restrained size controls
   assert.doesNotMatch(desktopCss, /\.hnr-comment-editor-controls\s*{[^}]*display:\s*flex/s);
   assert.match(
     mobileCss,
-    /#hnmain\s+form\[action="comment"\]\s+textarea\[name="text"\]\s*{[^}]*width:\s*calc\(100% - 28px\)[^}]*max-width:\s*calc\(100% - 28px\)/s,
+    /#hnmain\s+form\[action="comment"\]\s+textarea\[name="text"\][\s\S]*?{[^}]*width:\s*calc\(100% - 28px\)[^}]*max-width:\s*calc\(100% - 28px\)/s,
   );
   assert.match(
     mobileCss,
@@ -339,6 +347,28 @@ test("mobile comment editors keep symmetric gutters and restrained size controls
   assert.doesNotMatch(mobileCss, /transition:/);
 });
 
+test("mobile submission editor preserves Hacker News field width while exposing controls", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px) and (any-pointer: coarse)"));
+
+  assert.match(mobileCss, /form:not\(\[action="comment"\]\)\s+\.hnr-comment-editor-controls/);
+  assert.match(
+    mobileCss,
+    /form:not\(\[action="comment"\]\)\s+textarea\[name="text"\]\s*{[^}]*box-sizing:\s*border-box[^}]*width:\s*calc\(100% - 4px\)[^}]*max-width:\s*calc\(100% - 4px\)/s,
+  );
+  assert.doesNotMatch(mobileCss, /textarea\[name="about"\][\s\S]*hnr-comment-editor-controls/);
+});
+
+test("mobile submission editor aligns its text label with the first textarea line", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px) and (any-pointer: coarse)"));
+
+  assert.match(
+    mobileCss,
+    /form:not\(\[action="comment"\]\)\s+tr:has\(textarea\[name="text"\]\)\s*>\s*td:first-child\s*{[^}]*vertical-align:\s*top/s,
+  );
+});
+
 test("content CSS covers comment page reading and reply affordances", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
@@ -362,9 +392,8 @@ test("content CSS covers forms without special-casing static Hacker News pages",
   assert.match(css, /input\[type="submit"\]/);
   assert.match(css, /select/);
   assert.match(css, /textarea/);
-  assert.match(css, /#hnmain\s+td\s+a:link/);
+  assert.doesNotMatch(css, /#hnmain\s+td\s+a:(?:link|visited)/);
   assert.match(css, /\.default\s+a:link/);
-  assert.match(css, /\.admin\s+a:link/);
   assert.match(css, /\.pagetop\s+a:visited/);
   assert.doesNotMatch(css, /body\s*>\s*center\s*>\s*table/);
   assert.doesNotMatch(css, /\[bgcolor="#ffffff"/);
@@ -373,6 +402,14 @@ test("content CSS covers forms without special-casing static Hacker News pages",
   assert.match(css, /width:\s*min\(100%,\s*22rem\)/);
   assert.match(css, /body:not\(:has\(#hnmain\)\):has\(form\)/);
   assert.match(css, /max-width:\s*calc\(100vw - 32px\)/);
+  assert.match(
+    css,
+    /input\[type="text"\],[\s\S]*textarea\s*{[^}]*background:\s*var\(--hnr-control-surface[^}]*border:\s*1px solid var\(--hnr-control-border/s,
+  );
+  assert.match(
+    css,
+    /input\[type="submit"\]\s*{[^}]*background:\s*var\(--hnr-control-surface[^}]*border:\s*1px solid var\(--hnr-control-border/s,
+  );
 });
 
 test("top-level interactive forms keep page spacing beyond the phone breakpoint", () => {
@@ -389,45 +426,159 @@ test("top-level interactive forms keep page spacing beyond the phone breakpoint"
   assert.doesNotMatch(css, /display-mode:\s*standalone/);
 });
 
-test("system increased contrast strengthens secondary theme colors", () => {
+test("increased contrast strengthens every faded level without changing its order", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const contrastMediaIndex = css.indexOf("@media (prefers-contrast: more)");
   const contrastMedia = css.slice(contrastMediaIndex);
-  const tokenPairs = [
-    ["text-muted", "textMuted"],
-    ["visited-link", "visitedLink"],
-    ["border-subtle", "borderSubtle"],
-    ["vote-arrow", "voteArrow"],
-  ];
+  const expected = {
+    light: [
+      "#3b3b39",
+      "#4b4b49",
+      "#555552",
+      "#585856",
+      "#656563",
+      "#71716e",
+      "#7c7c78",
+      "#868682",
+      "#90908c",
+    ],
+    dark: [
+      "#b9b09e",
+      "#aca493",
+      "#a49d8c",
+      "#a19a89",
+      "#979181",
+      "#8e8879",
+      "#868072",
+      "#7e786b",
+      "#767164",
+    ],
+  };
 
   assert.ok(contrastMediaIndex >= 0);
 
-  for (const themePath of ["extension/themes/hn-light.json", "extension/themes/hn-dark.json"]) {
+  for (const mode of ["light", "dark"]) {
+    const themePath = `extension/themes/hn-${mode}.json`;
     const tokens = readTheme(themePath);
-    const primary = hexChannels(tokens.textPrimary);
     const background = hexChannels(tokens.contentBackground);
+    const selector =
+      mode === "light"
+        ? /html\[data-hnr-theme="light"\],\s*html\[data-hnr-theme="system"\]\s*{([^}]*)}/s
+        : /html\[data-hnr-theme="dark"\]\s*{([^}]*)}/s;
+    const block = contrastMedia.match(selector);
 
-    for (const [cssToken, themeToken] of tokenPairs) {
-      const original = hexChannels(tokens[themeToken]);
-      const mixed = mixChannels(primary, background, contrastMixWeight(contrastMedia, cssToken));
-      assert.ok(
-        contrastRatio(mixed, background) > contrastRatio(original, background),
-        `${themePath} ${themeToken} contrast should increase`,
+    assert.ok(block, `missing ${mode} increased-contrast block`);
+    const values = Array.from({ length: 9 }, (_, index) => {
+      const match = block[1].match(
+        new RegExp(`--hnr-comment-fade${index + 1}:\\s*(#[0-9a-f]{6})`, "i"),
       );
-    }
+      assert.ok(match, `missing ${mode} increased-contrast fade ${index + 1}`);
+      return match[1].toLowerCase();
+    });
+    assert.deepEqual(values, expected[mode]);
+
+    const normalRatios = Array.from({ length: 9 }, (_, index) =>
+      contrastRatio(hexChannels(tokens[`commentFade${index + 1}`]), background),
+    );
+    const contrastRatios = values.map((value) => contrastRatio(hexChannels(value), background));
+    assert.ok(contrastRatios.every((ratio, index) => ratio > normalRatios[index]));
+    assert.ok(
+      contrastRatios.every((ratio, index) => index === 0 || ratio < contrastRatios[index - 1]),
+    );
+    assert.ok(
+      contrastRatios.at(-1) < contrastRatio(hexChannels(tokens.textPrimary), background),
+      `${mode} deepest comment should remain faded`,
+    );
   }
 });
 
-test("content CSS exposes keyboard focus without pointer-only focus styling", () => {
+test("content CSS preserves exact HN semantic signals and custom colors", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /\.hnuser\s*>\s*font\[color="#3c963c"\s+i\]\s*{[^}]*--hnr-user-new/s);
+  assert.match(css, /\.hnuser\s*>\s*font\[color="#ff6600"\s+i\]\s*{[^}]*--hnr-yc-alumni-user/s);
+  assert.match(css, /\.votelinks\s+font\[color="#ff6600"\s+i\]\s*{[^}]*--hnr-own-item-marker/s);
+  assert.doesNotMatch(css, /font\[color\]\s*{/);
+  assert.doesNotMatch(css, /\[bgcolor\]\s*{/);
+});
+
+test("content CSS maps only the default top bar and quiets its dark logo", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const defaultHeader = 'td[bgcolor="#ff6600" i]';
+
+  assert.match(
+    css,
+    new RegExp(
+      `${defaultHeader.replace("[", "\\[").replace("]", "\\]")}\\s*\\{[^}]*--hnr-top-bar-background`,
+      "s",
+    ),
+  );
+  assert.match(
+    css,
+    /html\[data-hnr-theme="dark"\][\s\S]*td\[bgcolor="#ff6600" i\][\s\S]*img\[src="y18\.svg"\][^{]*{[^}]*filter:\s*saturate\(0\.78\) brightness\(0\.9\)[^}]*opacity:\s*0\.82/s,
+  );
+  assert.match(
+    css,
+    /prefers-color-scheme:\s*dark[\s\S]*html\[data-hnr-theme="system"\][\s\S]*img\[src="y18\.svg"\][^{]*{[^}]*filter:\s*saturate\(0\.78\) brightness\(0\.9\)[^}]*opacity:\s*0\.82/s,
+  );
+  assert.doesNotMatch(css, /html\[data-hnr-theme="light"\][^{]*img\[src="y18\.svg"\]/s);
+  assert.doesNotMatch(css, /\.votearrow\s*{[^}]*color|\.votearrow\s*{[^}]*border-bottom-color/s);
+});
+
+test("every HN faded-comment class has its own semantic color", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const classes = ["c5a", "c73", "c82", "c88", "c9c", "cae", "cbe", "cce", "cdd"];
+
+  for (const [index, className] of classes.entries()) {
+    assert.match(
+      css,
+      new RegExp(
+        `\\.commtext\\.${className}[\\s\\S]*?color:\\s*var\\(--hnr-comment-fade${index + 1}`,
+        "s",
+      ),
+    );
+  }
+});
+
+test("content CSS keeps secondary HN links secondary", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(css, /\.hnmore\s+a:link,[\s\S]*\.hnmore\s+a:visited\s*{[^}]*--hnr-link-secondary/s);
+  assert.doesNotMatch(css, /#hnmain\s+td\s+a:(?:link|visited)/);
+});
+
+test("content CSS uses semantic focus for fields and system focus for links and buttons", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
   assert.match(
     css,
-    /:where\(a\[href\], button, input, select, textarea\):focus-visible\s*{[^}]*outline:\s*2px solid Highlight[^}]*outline-offset:\s*2px/s,
+    /:where\(input, select, textarea\):focus-visible\s*{[^}]*outline:\s*2px solid var\(--hnr-control-focus\)[^}]*outline-offset:\s*1px/s,
+  );
+  assert.match(
+    css,
+    /:where\(a\[href\], button\):focus-visible\s*{[^}]*outline:\s*2px solid Highlight[^}]*outline-offset:\s*2px/s,
   );
   assert.doesNotMatch(
     css,
     /:where\(a\[href\], button, input, select, textarea\):focus(?!-visible)/,
+  );
+});
+
+test("increased contrast strengthens semantic form boundaries", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const contrastCss = css.slice(css.indexOf("@media (prefers-contrast: more)"));
+
+  assert.match(
+    contrastCss,
+    /html\[data-hnr-theme="light"\],[\s\S]*--hnr-control-surface:\s*#ffffff[^}]*--hnr-control-border:\s*#706a57[^}]*--hnr-control-focus:\s*#9c480d/s,
+  );
+  assert.match(
+    contrastCss,
+    /html\[data-hnr-theme="dark"\]\s*{[^}]*--hnr-control-surface:\s*#302d25[^}]*--hnr-control-border:\s*#9b917d[^}]*--hnr-control-focus:\s*#e29a58/s,
+  );
+  assert.match(
+    contrastCss,
+    /prefers-color-scheme:\s*dark[\s\S]*html\[data-hnr-theme="system"\]\s*{[^}]*--hnr-control-focus:\s*#e29a58/s,
   );
 });
 

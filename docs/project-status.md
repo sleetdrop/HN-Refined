@@ -59,11 +59,48 @@ Hacker News behavior and information architecture.
   Hacker News. Real Safari acceptance passed on macOS for Increase Contrast and
   keyboard focus, and on the iPhone simulator for Increase Contrast and ordinary
   touch behavior.
+- Hacker News color semantics are complete in the canonical extension source.
+  Normal Light now keeps HN's official role values, including selected
+  navigation, secondary links, and the full `.c5a` through `.cdd` downvote
+  ladder. Dark uses an explicit warm semantic translation rather than flattening
+  those roles, and Increased Contrast strengthens every fade level without
+  erasing its order. Exact new-account, own-item, and YC-alumni markers map to
+  separate roles; unknown inline colors fail open to HN. A custom `topcolor`
+  remains unchanged with original navigation/logo treatment. The original
+  `y18.svg` is filtered only on the recognized default dark header. The stable
+  light/dark mapping is published in `docs/color-semantics.md`. The prior
+  174-test gate, signed macOS Safari reinstall, package doctor, and canonical
+  resource sync passed. A rebuilt iPhone 17 Pro / iOS 26.3 Simulator Safari pass
+  checked the live item page in System Dark, fixed Dark while iOS stayed Light,
+  fixed Light while iOS stayed Dark, and normal/Increase Contrast variants.
+  Primary reading text, metadata, links, the default header, and the CSS-filtered
+  logo remained visually distinct and coordinated. Rare account-only signals
+  and every server-assigned downvote fade level remain covered structurally and
+  contrast-tested rather than forced on a live account. Physical-device color
+  burn-in remains the final acceptance step before release work resumes.
+- The color contract also gives editable HN fields a distinct control surface,
+  border, and restrained warm focus ring while preserving Safari's native caret
+  and select treatment. Ordinary HN application links are scoped through
+  `#hnmain` so HN's later `a:link` rule cannot leave Jobs, account, or footer
+  links pure black in Dark; metadata and each faded comment selector retain
+  their more-specific semantic roles. iPhone 17 Pro / iOS 26.3 Simulator checks
+  cover Light and Dark submit, Jobs, and profile surfaces, including focused
+  fields and no added controls on `about`; the current 178-test gate passes.
+  The macOS reinstall retry is blocked on this development machine because its
+  configured team has no valid Mac Development signing identity, not by the
+  extension source or resources.
 - Mobile comment editors keep the original Hacker News form visible in a
   two-row compact state, expand to six rows on first focus, and expose small
   equal-size CSS triangle controls that adjust by four rows between 2 and 22.
   The enhancement requires a narrow viewport and a coarse pointer; desktop
   comment textareas retain Hacker News' original rows and mouse resizing.
+- The mobile submit text editor uses the same tiny CSS-triangle controls but
+  starts at HN's native six rows and does not auto-expand on focus. It adjusts
+  by four rows between 2 and 22, measures title's rendered field width to keep
+  its outer edge exactly aligned with title and URL, replaces stale controls on
+  Safari reinjection, and restores its original row count off the narrow
+  coarse-pointer breakpoint. The selector excludes comment and profile `about`
+  textareas.
 - Mobile layout is automatic instead of exposed as a first-version setting.
   Preference normalization discards the legacy `mobileLayout` state, while the
   content script always applies the existing `data-hnr-mobile="auto"` CSS
@@ -118,21 +155,27 @@ Hacker News behavior and information architecture.
   current accepted revision derives structural author ancestry,
   compacts only long chains, offers explicit expansion and ancestor zoom, and
   coordinates original HN destinations through the nearest common ancestor.
-  The revision passes the complete 165-test local gate, iOS build, signed macOS
+  The revision passes the complete interaction-test gate, iOS build, signed macOS
   Safari reinstall, and package doctor. iPhone 17 Pro / iOS 26.3 Simulator
   checks cover complete, compact, and expanded ancestry; light and dark themes;
   Back/Forward, `all`, collapse preservation, and Focus retention through
   portrait/landscape rotation. A subsequent physical iPhone pass confirmed that
   this revision now follows the intended interaction direction. Multi-day
   device use remains the burn-in path for smaller follow-up adjustments rather
-  than a blocker on the hierarchy correction itself. Release preparation stays
-  paused for the second HN-alignment correction: audit HN Refined's color use
-  against Hacker News' own color semantics and restrained visual language, then
-  correct places where readability enhancements changed that meaning.
+  than a blocker on the hierarchy correction itself. The second HN-alignment
+  correction now restores Hacker News' color semantics in Light and translates
+  those roles into a documented warm Dark palette. Release preparation stays
+  paused only for physical-device color burn-in and any resulting refinements.
 - Narrow item pages wrap long author-supplied `.toptext` content before it can
   widen Hacker News' nested tables. The `#bigbox` content cell also reserves a
   12 px inline-end gutter from Safari's overlay scroll indicator without
   changing Hacker News' table layout or hiding overflow.
+- Mobile `newcomments` keeps `.comhead` links inline because each entry can put
+  a full story title after `on:` inside that link. Physical iPhone 17 testing
+  exposed that the former shared `inline-block` touch-target rule widened HN's
+  nested comment table beyond the viewport. A focused CSS regression test and
+  an iPhone 17 Pro / iOS 26.3 Simulator pass now confirm long titles wrap, the
+  account navigation stays visible, and comment prose uses the viewport width.
 - The narrow footer Algolia search preserves Hacker News' centered two-line
   presentation. Its input is block-level and centered inside 12 px inline form
   gutters so font presets cannot force the field beyond the viewport.
@@ -235,7 +278,13 @@ Mobile comment-editor behavior binds to
 `#hnmain form[action="comment"] textarea[name="text"]`. Keep its row controls
 inside the narrow coarse-pointer breakpoint, preserve textarea focus during
 touch adjustments, restore Hacker News' original rows outside that breakpoint,
-and do not read comment text or intercept the original form.
+and do not read comment text or intercept the original form. The submit page
+may use the same controls only through
+`form:not([action="comment"]) textarea[name="text"]`: it starts at native six
+rows, never auto-expands on focus, and measures `input[name="title"]` on mobile
+so WebKit keeps its outer width exactly aligned across the three fields. Do not
+include profile `about` textareas or leave duplicate controls after Safari
+reinjection.
 
 Mobile item overflow handling binds to `.toptext` and the direct content cell of
 `#bigbox`. Keep its wrapping and inline-end gutter inside the width-based mobile
@@ -305,11 +354,13 @@ points for a fresh context:
   direct and nested focus, `all`, and Safari Back/Forward. Treat observations as
   follow-up refinement unless they reveal a regression in the accepted
   direction.
-- Complete the second HN-alignment correction identified in the pre-release
-  article review: analyze where HN's colors carry meaning, compare HN Refined's
-  overrides in light and dark themes, and correct semantic drift without adding
-  decorative color. Release work remains paused until this correction is
-  implemented and verified.
+- Complete physical-device burn-in for the second HN-alignment correction.
+  The signed macOS Safari reinstall, package doctor, and iPhone Simulator color
+  matrix already pass. Check the published Hacker News color semantics in
+  fixed Light, fixed Dark, System, and Increased Contrast, including a custom
+  `topcolor`, selected navigation, secondary links, the complete comment fade
+  ladder, and default-header logo treatment. Release work remains paused until
+  this correction is verified on the supported Safari surfaces.
 - Run real Safari visual checks across front page, item/comment pages, forms,
   light theme, and dark theme after each style change. Static information pages
   can be sanity-checked for breakage, but they are not a required styling target.

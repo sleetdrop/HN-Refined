@@ -240,6 +240,13 @@ cell of `#bigbox` keeps a 12 px inline-end gutter clear of Safari's overlay
 scroll indicator. Keep both rules mobile-only; do not replace them with global
 overflow clipping or fixed table layout.
 
+On `newcomments`, Hacker News puts the full linked story title after `on:`
+inside `.comhead`. Keep mobile `.comhead` anchors inline so that title can wrap
+as ordinary metadata. Making every metadata link `inline-block` gives a long
+title an intrinsic width that can widen the enclosing comment table and the
+entire page. Verify this surface separately from item pages; their `.comhead`
+links are usually too short to expose the regression.
+
 The mobile footer search keeps Hacker News' established centered two-line
 presentation. Bind only to the semantic Algolia form action, keep `Search:`
 centered, and give its block-level input 12 px inline form gutters. Do not let
@@ -273,7 +280,10 @@ HN Refined keeps system accessibility behavior automatic and CSS-only. The
 `prefers-contrast: more` media query strengthens secondary colors for System,
 Light, and Dark themes without adding a user preference. A shared
 `:focus-visible` rule exposes keyboard focus without forcing focus rings after
-ordinary pointer or touch interaction.
+ordinary pointer or touch interaction. Editable Hacker News controls use the
+documented control surface, border, and warm focus tokens; links and ordinary
+buttons retain the system keyboard-focus indication. Leave Safari's caret and
+native select treatment intact.
 
 Comment fragment navigation and its target visuals remain owned by Hacker News.
 Do not add `:target` styling, fragment observers, timers, or DOM mutation to
@@ -284,7 +294,48 @@ IDs.
 Real Safari checks must cover macOS keyboard navigation and Increase Contrast
 across all three theme choices, plus Increase Contrast on iPhone or iPad.
 
-## Mobile Comment Editor
+## Hacker News Color Semantics
+
+Normal Light preserves official Hacker News colors for HN-defined roles. Dark
+is an explicit semantic translation documented in `docs/color-semantics.md`;
+do not derive it by inversion or flatten secondary roles into one accent. Keep
+visited links, metadata, `.hnmore`, `.topsel`, new-account usernames, own-item
+markers, YC-alumni usernames, and every `.c5a` through `.cdd` comment level on
+their separate semantic variables.
+
+HN's stylesheet can win the low-specificity global `a:link` rule because its
+page stylesheet loads after the extension resource. Keep the semantic fallback
+for ordinary HN application links scoped to `#hnmain`, then give metadata,
+footer, and each comment fade an even more specific semantic selector. This
+translates unclassed links on jobs, account, and footer surfaces without
+flattening visited links or the downvote ladder. Do not replace this with a
+broad table-cell color override or a generic inline-color selector.
+
+Only the exact default `td[bgcolor="#ff6600" i]` header may use the mapped dark
+top bar. A custom `topcolor` keeps its original background, dark navigation
+text, selected white state, and unfiltered logo. Unknown inline colors pass
+through unchanged. Known account and ownership colors may be translated only
+through an exact structural selector and exact source color; do not add a
+generic `font[color]` rule.
+
+The original `y18.svg` remains the only logo asset. In Dark or System-dark on
+the recognized default header, apply `saturate(0.78) brightness(0.9)` and
+`opacity: 0.82`. Light and custom headers remain unfiltered. Leave HN's original
+SVG voting triangle unchanged.
+
+`prefers-contrast: more` uses explicit Light and Dark values for secondary
+roles and every comment fade level. Tests must verify that each level gains
+contrast against its background, the ladder stays strictly ordered, and `.cdd`
+never becomes equivalent to ordinary `.c00` text.
+
+After color changes, check fixed Light, fixed Dark, and System on story lists,
+item/comment pages, forms, and Thread Focus. Also check visited links, active
+top navigation, `.hnmore`, the full faded-comment ladder, a custom `topcolor`,
+the default-header logo, macOS Increase Contrast, and Increase Contrast on
+iPhone or iPad. Account-only new/own/YC signals require a suitable logged-in
+account or retained fixture coverage.
+
+## Mobile Text Editors
 
 The mobile comment-editor enhancement binds to the semantic Hacker News form
 selector:
@@ -300,6 +351,17 @@ adjustments preserve an active textarea's focus and keyboard. CSS presents the
 controls on the Hacker News help row inside the phone breakpoint and uses a
 shared 28 px right gutter for the textarea and controls.
 
+The submit page uses the separate semantic selector
+`#hnmain form:not([action="comment"]) textarea[name="text"]`. It keeps Hacker
+News' native six-row mobile starting height, does not expand on first focus, and
+otherwise shares the same controls and 2 through 22 range. Its main textarea
+measures the title field's rendered width so it remains exactly aligned with
+the title and URL fields as WebKit's native textarea box model changes; only
+comment editors reserve the 28 px control gutter. A Safari reinjection must
+replace rather than duplicate the adjacent control pair. Do not broaden this
+to arbitrary `textarea`: account `about` fields and other forms must remain
+untouched.
+
 Both JavaScript behavior and comment-editor CSS require
 `(max-width: 700px) and (any-pointer: coarse)`. Do not reduce this to a width-only
 query: narrow macOS Safari windows must retain Hacker News' native rows and
@@ -311,9 +373,10 @@ optional Hacker News `?` help link, or intercept the original form. Viewports
 outside the narrow coarse-pointer query must restore Hacker News' original row
 count.
 
-Real Safari checks must cover iPhone virtual-keyboard behavior, symmetric
-textarea gutters, all row limits, preserved text and focus during size changes,
-and an unchanged desktop item page.
+Real Safari checks must cover iPhone virtual-keyboard behavior, semantic control
+surfaces and warm focus rings in Light and Dark, symmetric textarea gutters,
+all row limits, preserved text and focus during size changes, the submit page's
+unchanged six-row initial state, and unchanged desktop item and submit pages.
 
 ## Mobile Comment Threads
 

@@ -46,6 +46,28 @@ Keep the Safari popup preference refresh guard intact:
 - Content scripts tolerate Safari storage change events without `areaName`.
 - The visible-page preference refresh fallback is intentional.
 
+Keep Hacker News color meaning intact:
+
+- Normal Light preserves official HN colors; Dark translates the same semantic
+  roles using the contract in `docs/color-semantics.md`.
+- Keep `.topsel`, `.hnmore`, visited links, metadata, known account/ownership
+  signals, and every `.c5a` through `.cdd` level distinct.
+- Only the exact default `#ff6600` header receives the dark mapping and filtered
+  `y18.svg`. Custom `topcolor` and unknown inline colors remain HN-owned.
+- Increased Contrast improves every faded level without flattening or reversing
+  the ladder. Leave HN's SVG vote arrow unchanged.
+- HN's unclassed application links need a `#hnmain`-scoped semantic fallback;
+  metadata and faded comments must keep more-specific role selectors. Do not
+  replace this with a generic table-cell or inline-color override.
+
+Keep long comment metadata links compatible with Hacker News' table layout:
+
+- On mobile, `.comhead` links must remain inline. `newcomments` places the full
+  story title after `on:` inside such a link, and `inline-block` can widen the
+  nested table beyond the viewport.
+- Preserve natural wrapping; do not mask this regression with global overflow
+  clipping or fixed table layout.
+
 Keep deep-thread scope compatible with Hacker News navigation and collapse:
 
 - Thread Focus is a default-on Boolean preference. When enabled, every comment

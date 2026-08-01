@@ -37,6 +37,25 @@ The current audit and metadata draft are in `docs/release-readiness.md` and
 - App Store copy must disclose that iOS/iPadOS Home Screen web apps are
   unsupported; normal Safari is the supported mobile surface.
 - Confirm disabling the Safari extension restores the original Hacker News site behavior.
+- On iPhone Safari, open `newcomments` with an entry whose `on:` story title is
+  long enough to wrap. Confirm the metadata link, account navigation, and
+  comment prose stay within the viewport without horizontal clipping or a
+  widened page.
+- Verify the color-semantic contract in fixed Light, fixed Dark, and System.
+  Confirm visited links, selected top navigation, `.hnmore`, every `.c5a`
+  through `.cdd` comment level, Thread Focus hierarchy, and Increase Contrast
+  retain their documented meaning. Confirm a custom `topcolor` stays unchanged
+  with dark navigation text and an unfiltered logo, while the default dark
+  header uses the restrained original-`y18.svg` treatment. Check new-account,
+  own-item, and YC-alumni colors when the test account exposes them.
+- In Light and Dark, verify generic HN application links on Jobs, account, and
+  footer surfaces use the documented primary/visited link roles, while metadata
+  and every faded comment level remain distinct. Check editable fields have a
+  subtle control surface and border, a restrained warm focus ring, and native
+  Safari caret/select behavior. On iPhone, confirm comment controls start at 2
+  rows and expand on first focus, whereas the submit text editor starts at 6
+  rows without auto-expanding; both retain text and focus while their height is
+  adjusted.
 - Confirm external story links open in the current tab by default and only change when the user enables the new-tab preference.
 - On iPhone Safari, verify a deeply nested comment chain with Thread Focus on
   and off. Confirm ordinary scrolling never activates or rebases a scope and

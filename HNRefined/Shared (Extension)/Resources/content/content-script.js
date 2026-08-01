@@ -14,6 +14,7 @@ const PREFERENCE_REFRESH_INTERVAL_MS = 1000;
 const TITLELINE_STORY_ANCHOR_SELECTOR = ".titleline a[href]";
 const STORY_ROW_ANCHOR_SELECTOR = ".athing:not(.comtr) a[href]";
 const COMMENT_EDITOR_SELECTOR = '#hnmain form[action="comment"] textarea[name="text"]';
+const SUBMISSION_EDITOR_SELECTOR = '#hnmain form:not([action="comment"]) textarea[name="text"]';
 const MOBILE_COMMENT_EDITOR_QUERY = "(max-width: 700px) and (any-pointer: coarse)";
 const COMMENT_EDITOR_MIN_ROWS = 2;
 const COMMENT_EDITOR_FOCUS_ROWS = 6;
@@ -21,6 +22,18 @@ const COMMENT_EDITOR_ROW_STEP = 4;
 const COMMENT_EDITOR_MAX_ROWS = 22;
 const commentEditorStates = new WeakMap();
 const mobileCommentEditorQuery = window.matchMedia(MOBILE_COMMENT_EDITOR_QUERY);
+const COMMENT_EDITOR_PROFILE = Object.freeze({
+  initialMobileRows: COMMENT_EDITOR_MIN_ROWS,
+  focusRows: COMMENT_EDITOR_FOCUS_ROWS,
+  label: "comment editor",
+  widthReferenceSelector: null,
+});
+const SUBMISSION_EDITOR_PROFILE = Object.freeze({
+  initialMobileRows: COMMENT_EDITOR_FOCUS_ROWS,
+  focusRows: null,
+  label: "submission editor",
+  widthReferenceSelector: 'input[name="title"]',
+});
 
 const ALLOWED = {
   theme: ["system", "light", "dark"],
@@ -297,10 +310,30 @@ function clampCommentEditorRows(rows) {
   return Math.min(COMMENT_EDITOR_MAX_ROWS, Math.max(COMMENT_EDITOR_MIN_ROWS, rows));
 }
 
+function syncEditorWidth(editor, state) {
+  if (!state.widthReferenceSelector) {
+    return;
+  }
+
+  if (!mobileCommentEditorQuery.matches) {
+    editor.style.width = state.originalWidth;
+    editor.style.maxWidth = state.originalMaxWidth;
+    return;
+  }
+
+  const reference = editor.form?.querySelector(state.widthReferenceSelector);
+  const width = reference?.getBoundingClientRect?.().width;
+  if (Number.isFinite(width) && width > 0) {
+    editor.style.width = `${width}px`;
+    editor.style.maxWidth = `${width}px`;
+  }
+}
+
 function applyCommentEditorRows(editor, state) {
   editor.rows = mobileCommentEditorQuery.matches ? state.mobileRows : state.originalRows;
   state.decreaseButton.disabled = state.mobileRows <= COMMENT_EDITOR_MIN_ROWS;
   state.increaseButton.disabled = state.mobileRows >= COMMENT_EDITOR_MAX_ROWS;
+  syncEditorWidth(editor, state);
 }
 
 function changeCommentEditorRows(editor, delta) {
@@ -328,40 +361,54 @@ function createCommentEditorSizeButton(editor, direction, label, delta) {
   return button;
 }
 
-function createCommentEditorControls(editor) {
+function createCommentEditorControls(editor, profile) {
   const controls = document.createElement("span");
   controls.className = "hnr-comment-editor-controls";
   controls.append(
     createCommentEditorSizeButton(
       editor,
       "decrease",
-      "Decrease comment editor height",
+      `Decrease ${profile.label} height`,
       -COMMENT_EDITOR_ROW_STEP,
     ),
     createCommentEditorSizeButton(
       editor,
       "increase",
-      "Increase comment editor height",
+      `Increase ${profile.label} height`,
       COMMENT_EDITOR_ROW_STEP,
     ),
   );
   return controls;
 }
 
-function enhanceCommentEditor(editor) {
+function removeStaleCommentEditorControls(editor) {
+  let controls = editor.nextElementSibling;
+  while (controls?.classList?.contains("hnr-comment-editor-controls")) {
+    const nextControls = controls.nextElementSibling;
+    controls.remove();
+    controls = nextControls;
+  }
+}
+
+function enhanceCommentEditor(editor, profile) {
   if (commentEditorStates.has(editor)) {
     return;
   }
 
-  const controls = createCommentEditorControls(editor);
+  removeStaleCommentEditorControls(editor);
+  const controls = createCommentEditorControls(editor, profile);
   const [decreaseButton, increaseButton] = controls.children;
   const state = {
     originalRows: editor.rows,
-    mobileRows: COMMENT_EDITOR_MIN_ROWS,
+    mobileRows: profile.initialMobileRows,
+    focusRows: profile.focusRows,
     focusedOnce: false,
     controls,
     decreaseButton,
     increaseButton,
+    originalWidth: editor.style.width,
+    originalMaxWidth: editor.style.maxWidth,
+    widthReferenceSelector: profile.widthReferenceSelector,
   };
 
   commentEditorStates.set(editor, state);
@@ -371,19 +418,23 @@ function enhanceCommentEditor(editor) {
 
 function enhanceCommentEditors() {
   for (const editor of document.querySelectorAll(COMMENT_EDITOR_SELECTOR)) {
-    enhanceCommentEditor(editor);
+    enhanceCommentEditor(editor, COMMENT_EDITOR_PROFILE);
+  }
+
+  for (const editor of document.querySelectorAll(SUBMISSION_EDITOR_SELECTOR)) {
+    enhanceCommentEditor(editor, SUBMISSION_EDITOR_PROFILE);
   }
 }
 
 function handleCommentEditorFocus(event) {
   const editor = event.target;
   const state = commentEditorStates.get(editor);
-  if (!state || state.focusedOnce || !mobileCommentEditorQuery.matches) {
+  if (!state || state.focusedOnce || !state.focusRows || !mobileCommentEditorQuery.matches) {
     return;
   }
 
   state.focusedOnce = true;
-  state.mobileRows = Math.max(state.mobileRows, COMMENT_EDITOR_FOCUS_ROWS);
+  state.mobileRows = Math.max(state.mobileRows, state.focusRows);
   applyCommentEditorRows(editor, state);
 }
 
@@ -394,11 +445,19 @@ function refreshCommentEditorViewports() {
       applyCommentEditorRows(editor, state);
     }
   }
+
+  for (const editor of document.querySelectorAll(SUBMISSION_EDITOR_SELECTOR)) {
+    const state = commentEditorStates.get(editor);
+    if (state) {
+      applyCommentEditorRows(editor, state);
+    }
+  }
 }
 
 function observeCommentEditors() {
   document.addEventListener("focusin", handleCommentEditorFocus);
   mobileCommentEditorQuery.addEventListener("change", refreshCommentEditorViewports);
+  window.addEventListener("resize", refreshCommentEditorViewports);
 }
 
 function start() {

@@ -91,13 +91,18 @@ function createElement(tagName) {
   };
 }
 
-function createTextarea({ isCommentEditor = false, rows = 6 } = {}) {
+function createTextarea({ isCommentEditor = false, isSubmissionEditor = false, rows = 6 } = {}) {
   return {
     rows,
     dataset: {},
+    style: { width: "", maxWidth: "" },
     insertedElement: null,
     matches(selector) {
-      return isCommentEditor && selector === '#hnmain form[action="comment"] textarea[name="text"]';
+      return (
+        (isCommentEditor && selector === '#hnmain form[action="comment"] textarea[name="text"]') ||
+        (isSubmissionEditor &&
+          selector === '#hnmain form:not([action="comment"]) textarea[name="text"]')
+      );
     },
     insertAdjacentElement(position, element) {
       assert.equal(position, "afterend");
@@ -418,6 +423,92 @@ test("comment editors restore original rows outside the mobile breakpoint", () =
 
   context.setMobileMatches(true);
   assert.equal(textarea.rows, 10);
+});
+
+test("mobile submission editor keeps its native six rows and shares restrained size controls", () => {
+  const textarea = createTextarea({ isSubmissionEditor: true, rows: 8 });
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form:not([action="comment"]) textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  assert.equal(textarea.rows, 6);
+  context.dispatchDocumentEvent("focusin", { target: textarea });
+  assert.equal(textarea.rows, 6);
+
+  const [decreaseButton, increaseButton] = textarea.insertedElement.children;
+  assert.equal(decreaseButton.getAttribute("aria-label"), "Decrease submission editor height");
+  assert.equal(increaseButton.getAttribute("aria-label"), "Increase submission editor height");
+
+  increaseButton.dispatch("click");
+  assert.equal(textarea.rows, 10);
+  context.setMobileMatches(false);
+  assert.equal(textarea.rows, 8);
+});
+
+test("mobile submission editor matches the title field's rendered width", () => {
+  const textarea = createTextarea({ isSubmissionEditor: true });
+  const titleInput = {
+    getBoundingClientRect() {
+      return { width: 276.5 };
+    },
+  };
+  textarea.form = {
+    querySelector(selector) {
+      assert.equal(selector, 'input[name="title"]');
+      return titleInput;
+    },
+  };
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form:not([action="comment"]) textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  assert.equal(textarea.style.width, "276.5px");
+  assert.equal(textarea.style.maxWidth, "276.5px");
+
+  context.setMobileMatches(false);
+
+  assert.equal(textarea.style.width, "");
+  assert.equal(textarea.style.maxWidth, "");
+});
+
+test("mobile editors replace stale controls when Safari reinjects the content script", () => {
+  const textarea = createTextarea({ isSubmissionEditor: true });
+  const staleControls = {
+    classList: {
+      contains(className) {
+        return className === "hnr-comment-editor-controls";
+      },
+    },
+    remove() {
+      this.removed = true;
+      textarea.nextElementSibling = null;
+    },
+  };
+  textarea.nextElementSibling = staleControls;
+  const context = createContentScriptContext(lightPreferences, {
+    mobileMatches: true,
+    selectorMatches: {
+      '#hnmain form:not([action="comment"]) textarea[name="text"]': [textarea],
+    },
+  });
+  const script = fs.readFileSync("extension/content/content-script.js", "utf8");
+
+  vm.runInContext(script, context);
+
+  assert.equal(staleControls.removed, true);
+  assert.ok(textarea.insertedElement);
 });
 
 test("content script ignores unrelated textareas", () => {
