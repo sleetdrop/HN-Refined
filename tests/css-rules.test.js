@@ -152,14 +152,10 @@ test("desktop comfortable CSS refines story and comment reading rhythm", () => {
   );
 });
 
-test("mobile CSS raises reading size and touch targets", () => {
+test("mobile CSS preserves touch targets and bottom breathing room", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
-  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.titleline\s*{[^}]*font-size:\s*16px/s);
-  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.subtext,[\s\S]*?font-size:\s*13px/s);
-  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.comment,[\s\S]*?font-size:\s*14px/s);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.titleline\s+a,[\s\S]*?min-height:\s*32px/s);
-  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.pagetop\s*{[^}]*font-size:\s*14px/s);
   assert.match(
     css,
     /html\[data-hnr-mobile="auto"\]\s+body\s*{[^}]*padding-bottom:\s*calc\(72px \+ env\(safe-area-inset-bottom\)\)/s,
@@ -170,11 +166,37 @@ test("mobile CSS raises reading size and touch targets", () => {
   );
 });
 
+test("mobile typography scales every Hacker News text role by the same ratio", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+
+  assert.match(
+    mobileCss,
+    /html\[data-hnr-mobile="auto"\]\s+body,\s*html\[data-hnr-mobile="auto"\]\s+td,\s*html\[data-hnr-mobile="auto"\]\s+\.title,\s*html\[data-hnr-mobile="auto"\]\s+\.titleline,\s*html\[data-hnr-mobile="auto"\]\s+\.pagetop\s*{[^}]*font-size:\s*12pt/s,
+  );
+  assert.match(
+    mobileCss,
+    /html\[data-hnr-mobile="auto"\]\s+\.admin,\s*html\[data-hnr-mobile="auto"\]\s+\.admin\s+td\s*{[^}]*font-size:\s*10\.2pt/s,
+  );
+  assert.match(
+    mobileCss,
+    /html\[data-hnr-mobile="auto"\]\s+\.subtext\s*{[^}]*font-size:\s*8\.4pt/s,
+  );
+  assert.match(
+    mobileCss,
+    /html\[data-hnr-mobile="auto"\]\s+\.yclinks,\s*html\[data-hnr-mobile="auto"\]\s+\.comhead\s*{[^}]*font-size:\s*9\.6pt/s,
+  );
+  assert.match(
+    mobileCss,
+    /html\[data-hnr-mobile="auto"\]\s+\.default,\s*html\[data-hnr-mobile="auto"\]\s+\.comment,\s*html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*font-size:\s*10\.8pt/s,
+  );
+});
+
 test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.sitebit\s*{[^}]*display:\s*block/s);
-  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.sitebit\s*{[^}]*font-size:\s*12px/s);
+  assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.sitebit\s*{[^}]*font-size:\s*9\.6pt/s);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.subtext\s+a,[\s\S]*?padding-block:\s*4px/s);
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });

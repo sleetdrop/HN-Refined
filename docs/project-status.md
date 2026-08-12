@@ -180,6 +180,12 @@ Hacker News behavior and information architecture.
   nested comment table beyond the viewport. A focused CSS regression test and
   an iPhone 17 Pro / iOS 26.3 Simulator pass now confirm long titles wrap, the
   account navigation stays visible, and comment prose uses the viewport width.
+- Mobile typography now applies one 1.2x scale to Hacker News' existing text
+  roles across functional pages. Titles, base table/form copy, admin text,
+  subtext, footer/comment metadata, and comment prose retain HN's relative
+  hierarchy instead of receiving unrelated page-specific sizes. The CSS guard
+  covers every role and cross-page Simulator checks include list, comment,
+  jobs, and submit surfaces.
 - The narrow footer Algolia search preserves Hacker News' centered two-line
   presentation. Its input is block-level and centered inside 12 px inline form
   gutters so font presets cannot force the field beyond the viewport.

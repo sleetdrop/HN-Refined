@@ -275,6 +275,14 @@ must continue to cover each explicit site font selector. Native form editing
 fonts and HN Refined's Popup and Options UI remain independent of the reading
 preset.
 
+Mobile reading sizes preserve Hacker News' native hierarchy with one shared
+1.2x scale rather than independently enlarging selected pages. The 10 pt base
+roles become 12 pt; admin, subtext, footer/comment metadata, and comment prose
+keep their original relative steps. Verify navigation plus the primary body on
+`newest`, `threads`, `front`, `newcomments`, `ask`, `show`, `jobs`, and `submit`
+together so a local readability change cannot make one functional page appear
+zoomed relative to another.
+
 Mobile layout is automatic and is not a user preference. The content script
 always applies `data-hnr-mobile="auto"` for the responsive CSS binding. Shared
 and content-script normalization must discard the legacy `mobileLayout` state,

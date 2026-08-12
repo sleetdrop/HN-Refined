@@ -491,6 +491,36 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
     margin-bottom: calc(72px + env(safe-area-inset-bottom));
   }
 
+  html[data-hnr-mobile="auto"] body,
+  html[data-hnr-mobile="auto"] td,
+  html[data-hnr-mobile="auto"] .title,
+  html[data-hnr-mobile="auto"] .titleline,
+  html[data-hnr-mobile="auto"] .pagetop {
+    font-size: 12pt;
+  }
+
+  html[data-hnr-mobile="auto"] .admin,
+  html[data-hnr-mobile="auto"] .admin td {
+    font-size: 10.2pt;
+  }
+
+  html[data-hnr-mobile="auto"] .subtext {
+    font-size: 8.4pt;
+    line-height: 1.5;
+  }
+
+  html[data-hnr-mobile="auto"] .yclinks,
+  html[data-hnr-mobile="auto"] .comhead {
+    font-size: 9.6pt;
+    line-height: 1.5;
+  }
+
+  html[data-hnr-mobile="auto"] .default,
+  html[data-hnr-mobile="auto"] .comment,
+  html[data-hnr-mobile="auto"] .commtext {
+    font-size: 10.8pt;
+  }
+
   html[data-hnr-mobile="auto"] #bigbox > td {
     box-sizing: border-box;
     padding-inline-end: 12px;
@@ -503,21 +533,14 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
   html[data-hnr-mobile="auto"] .titleline {
     display: inline-block;
     padding-block: 7px;
-    font-size: 16px;
     line-height: 1.42;
   }
 
   html[data-hnr-mobile="auto"] .sitebit {
     display: block;
     margin-top: 2px;
-    font-size: 12px;
+    font-size: 9.6pt;
     line-height: 1.35;
-  }
-
-  html[data-hnr-mobile="auto"] .subtext,
-  html[data-hnr-mobile="auto"] .comhead {
-    font-size: 13px;
-    line-height: 1.5;
   }
 
   html[data-hnr-mobile="auto"] .titleline a,
@@ -540,13 +563,11 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
   }
 
   html[data-hnr-mobile="auto"] .pagetop {
-    font-size: 14px;
     line-height: 1.6;
   }
 
   html[data-hnr-mobile="auto"] .comment,
   html[data-hnr-mobile="auto"] .commtext {
-    font-size: 14px;
     line-height: 1.55;
   }
 
