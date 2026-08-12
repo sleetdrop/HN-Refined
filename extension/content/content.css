@@ -580,6 +580,36 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
     overflow-wrap: anywhere;
   }
 
+  html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .comtr .default {
+    padding-bottom: 16px;
+  }
+
+  html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .comment {
+    margin-top: 3px;
+  }
+
+  html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .comhead {
+    line-height: 1.65;
+  }
+
+  html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .comhead a {
+    padding-block: 5px;
+  }
+
+  html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .votelinks a {
+    position: relative;
+  }
+
+  html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .votelinks a::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 32px;
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
   html[data-hnr-mobile="auto"] .comment-tree .comtr .ind img[width] {
     width: var(--hnr-comment-base-indent);
     max-width: none;

@@ -214,6 +214,70 @@ test("mobile comment metadata lets long new-comments story links wrap", () => {
   );
 });
 
+test("mobile new-comments feed enlarges vote targets without widening HN's table layout", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+  const scope = 'html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"])';
+
+  assert.match(
+    mobileCss,
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.comtr\s+\.default\s*{[^}]*padding-bottom:\s*16px/s,
+  );
+  assert.match(
+    mobileCss,
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.comment\s*{[^}]*margin-top:\s*3px/s,
+  );
+  assert.match(
+    mobileCss,
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.comhead\s*{[^}]*line-height:\s*1\.65/s,
+  );
+  assert.match(
+    mobileCss,
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.comhead\s+a\s*{[^}]*padding-block:\s*5px/s,
+  );
+  assert.match(
+    mobileCss,
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.votelinks\s+a\s*{[^}]*position:\s*relative/s,
+  );
+  const voteTargetRule = mobileCss.match(
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.votelinks\s+a::before\s*{([^}]*)}/s,
+  );
+  assert.ok(voteTargetRule);
+  assert.match(voteTargetRule[1], /content:\s*""/);
+  assert.match(voteTargetRule[1], /position:\s*absolute/);
+  assert.match(voteTargetRule[1], /width:\s*24px/);
+  assert.match(voteTargetRule[1], /height:\s*32px/);
+  assert.match(voteTargetRule[1], /top:\s*50%/);
+  assert.match(voteTargetRule[1], /left:\s*50%/);
+  assert.match(voteTargetRule[1], /transform:\s*translate\(-50%,\s*-50%\)/);
+
+  const scopedDeclarations = [...mobileCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(([, selectors]) => selectors.includes(scope))
+    .map(([, , declarations]) => declarations);
+
+  assert.ok(scopedDeclarations.length >= 6, "new-comments refinements must stay page-scoped");
+  assert.ok(
+    scopedDeclarations.every(
+      (declarations) =>
+        !/\bfont-size\s*:|\bbackground(?:-[\w-]+)?\s*:|\bborder(?:-[\w-]+)?\s*:/.test(declarations),
+    ),
+    "new-comments grouping must not create a separate type scale or card treatment",
+  );
+
+  const voteLayoutDeclarations = [...mobileCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(([, selectors]) => selectors.includes(scope) && selectors.includes(".votelinks"))
+    .filter(([, selectors]) => !selectors.includes("::before"))
+    .map(([, , declarations]) => declarations);
+
+  assert.ok(
+    voteLayoutDeclarations.every(
+      (declarations) =>
+        !/(?:^|;)\s*(?:display|width|min-width|padding(?:-[\w-]+)?)\s*:/.test(declarations),
+    ),
+    "the larger vote target must not change the intrinsic width of HN's new-comments table",
+  );
+});
+
 test("mobile comments preserve progressively compressed indentation through deep threads", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));

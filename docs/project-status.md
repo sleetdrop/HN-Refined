@@ -180,6 +180,10 @@ Hacker News behavior and information architecture.
   nested comment table beyond the viewport. A focused CSS regression test and
   an iPhone 17 Pro / iOS 26.3 Simulator pass now confirm long titles wrap, the
   account navigation stays visible, and comment prose uses the viewport width.
+  A subsequent mobile-only refinement keeps the same type scale and colors
+  while adding modest entry rhythm and a larger invisible vote target that does
+  not widen HN's table cell, scoped to the selected `newcomments` feed without
+  cards or dividers.
 - Mobile typography now applies one 1.2x scale to Hacker News' existing text
   roles across functional pages. Titles, base table/form copy, admin text,
   subtext, footer/comment metadata, and comment prose retain HN's relative

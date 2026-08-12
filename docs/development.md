@@ -253,6 +253,15 @@ title an intrinsic width that can widen the enclosing comment table and the
 entire page. Verify this surface separately from item pages; their `.comhead`
 links are usually too short to expose the regression.
 
+The selected mobile `newcomments` feed uses restrained rhythm rather than a
+title treatment: keep the established type scale and colors, add only modest
+space between metadata, prose, and adjacent entries, and enlarge the vote
+target with a non-layout pseudo-element without enlarging its triangle or
+widening the `.votelinks` table cell. Scope these refinements through the
+selected `newcomments` navigation state so item discussions and user threads
+keep their accepted hierarchy. Do not introduce cards, backgrounds, dividers,
+or block-level `.comhead` links.
+
 The mobile footer search keeps Hacker News' established centered two-line
 presentation. Bind only to the semantic Algolia form action, keep `Search:`
 centered, and give its block-level input 12 px inline form gutters. Do not let
