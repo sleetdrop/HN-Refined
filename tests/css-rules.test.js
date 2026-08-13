@@ -201,6 +201,34 @@ test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });
 
+test("mobile top bar anchors the logo and account independently of navigation wrapping", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+  const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));
+  const headerRow = "#hnmain > tbody > tr:first-child > td > table > tbody > tr";
+
+  const logoCellRule = mobileCss.match(
+    /#hnmain\s*>\s*tbody\s*>\s*tr:first-child\s*>\s*td\s*>\s*table\s*>\s*tbody\s*>\s*tr\s*>\s*td:has\(>\s*a\s*>\s*img\[src="y18\.svg"\]\)\s*{([^}]*)}/s,
+  );
+  const accountCellRule = mobileCss.match(
+    /#hnmain\s*>\s*tbody\s*>\s*tr:first-child\s*>\s*td\s*>\s*table\s*>\s*tbody\s*>\s*tr\s*>\s*td:last-child\s*{([^}]*)}/s,
+  );
+
+  assert.ok(logoCellRule, "the mobile logo cell must have a dedicated alignment rule");
+  assert.match(logoCellRule[1], /vertical-align:\s*top/);
+  assert.match(logoCellRule[1], /padding-top:\s*7px/);
+  assert.ok(accountCellRule, "the mobile account cell must have a dedicated alignment rule");
+  assert.match(accountCellRule[1], /vertical-align:\s*top/);
+
+  const headerLayoutDeclarations = [...mobileCss.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .filter(([, selectors]) => selectors.replace(/\s+/g, " ").trim().includes(headerRow))
+    .map(([, , declarations]) => declarations)
+    .join("\n");
+
+  assert.doesNotMatch(headerLayoutDeclarations, /position:\s*(?:absolute|fixed)/);
+  assert.doesNotMatch(headerLayoutDeclarations, /display:\s*(?:flex|grid)/);
+  assert.doesNotMatch(headerLayoutDeclarations, /white-space:\s*nowrap/);
+});
+
 test("mobile comment metadata lets long new-comments story links wrap", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));

@@ -292,6 +292,14 @@ keep their original relative steps. Verify navigation plus the primary body on
 together so a local readability change cannot make one functional page appear
 zoomed relative to another.
 
+On the narrow top bar, keep Hacker News' table structure and natural navigation
+wrapping. Top-align the account cell, and top-align the logo cell with only the
+small inset needed to place `y18.svg` beside the `Hacker News` title row. Font
+presets may change where the navigation links wrap, but must not make the logo
+or account control move with the middle cell's height. Do not replace the header
+row with flex/grid, position its edge cells absolutely, or force the navigation
+onto a fixed number of lines.
+
 Mobile layout is automatic and is not a user preference. The content script
 always applies `data-hnr-mobile="auto"` for the responsive CSS binding. Shared
 and content-script normalization must discard the legacy `mobileLayout` state,

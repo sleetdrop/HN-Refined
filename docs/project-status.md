@@ -190,6 +190,10 @@ Hacker News behavior and information architecture.
   hierarchy instead of receiving unrelated page-specific sizes. The CSS guard
   covers every role and cross-page Simulator checks include list, comment,
   jobs, and submit surfaces.
+- The narrow top bar keeps Hacker News' native table and natural navigation
+  wrapping, while independently top-aligning the logo and account cells. The
+  logo receives a small title-row inset so changing among HN Classic, System
+  Sans, Serif, and Mono-ish cannot make it drift with the wrapped navigation.
 - The narrow footer Algolia search preserves Hacker News' centered two-line
   presentation. Its input is block-level and centered inside 12 px inline form
   gutters so font presets cannot force the field beyond the viewport.

@@ -491,6 +491,31 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
     margin-bottom: calc(72px + env(safe-area-inset-bottom));
   }
 
+  html[data-hnr-mobile="auto"]
+    #hnmain
+    > tbody
+    > tr:first-child
+    > td
+    > table
+    > tbody
+    > tr
+    > td:has(> a > img[src="y18.svg"]) {
+    padding-top: 7px;
+    vertical-align: top;
+  }
+
+  html[data-hnr-mobile="auto"]
+    #hnmain
+    > tbody
+    > tr:first-child
+    > td
+    > table
+    > tbody
+    > tr
+    > td:last-child {
+    vertical-align: top;
+  }
+
   html[data-hnr-mobile="auto"] body,
   html[data-hnr-mobile="auto"] td,
   html[data-hnr-mobile="auto"] .title,
