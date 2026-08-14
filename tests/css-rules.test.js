@@ -201,6 +201,15 @@ test("mobile CSS keeps Hacker News dense while improving reading rhythm", () => 
   assert.match(css, /html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*line-height:\s*1\.6/s);
 });
 
+test("mobile comment prose breaks long URLs before they widen Hacker News tables", () => {
+  const css = fs.readFileSync("extension/content/content.css", "utf8");
+
+  assert.match(
+    css,
+    /html\[data-hnr-mobile="auto"\]\s+\.comment,\s*html\[data-hnr-mobile="auto"\]\s+\.commtext\s*{[^}]*overflow-wrap:\s*anywhere/s,
+  );
+});
+
 test("mobile top bar anchors the logo and account independently of navigation wrapping", () => {
   const css = fs.readFileSync("extension/content/content.css", "utf8");
   const mobileCss = css.slice(css.indexOf("@media (max-width: 700px)"));

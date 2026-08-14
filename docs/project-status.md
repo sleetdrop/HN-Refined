@@ -180,6 +180,10 @@ Hacker News behavior and information architecture.
   nested comment table beyond the viewport. A focused CSS regression test and
   an iPhone 17 Pro / iOS 26.3 Simulator pass now confirm long titles wrap, the
   account navigation stays visible, and comment prose uses the viewport width.
+  Later physical iPhone 17 testing exposed the second intrinsic-width trigger:
+  long URLs used as visible comment link text. Mobile `.commtext` now receives
+  `overflow-wrap: anywhere` directly so its global `break-word` declaration
+  cannot keep widening the nested table.
   A subsequent mobile-only refinement keeps the same type scale and colors
   while adding modest entry rhythm and a larger invisible vote target that does
   not widen HN's table cell, scoped to the selected `newcomments` feed without

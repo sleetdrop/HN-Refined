@@ -602,6 +602,10 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
 
   html[data-hnr-mobile="auto"] .comment {
     max-width: none;
+  }
+
+  html[data-hnr-mobile="auto"] .comment,
+  html[data-hnr-mobile="auto"] .commtext {
     overflow-wrap: anywhere;
   }
 

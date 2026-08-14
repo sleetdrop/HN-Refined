@@ -253,6 +253,13 @@ title an intrinsic width that can widen the enclosing comment table and the
 entire page. Verify this surface separately from item pages; their `.comhead`
 links are usually too short to expose the regression.
 
+Comment prose on the same feed can contain a long URL as visible link text.
+Apply mobile `overflow-wrap: anywhere` directly to `.commtext` as well as its
+`.comment` wrapper: the global `.commtext` declaration otherwise keeps
+`break-word`, whose min-content width can still widen Hacker News' nested
+tables in Safari. Keep this as a wrapping correction rather than hiding
+overflow or changing the table layout.
+
 The selected mobile `newcomments` feed uses restrained rhythm rather than a
 title treatment: keep the established type scale and colors, add only modest
 space between metadata, prose, and adjacent entries, and enlarge the vote
