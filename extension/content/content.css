@@ -610,7 +610,7 @@ html[data-hnr-theme="dark"] #hnmain > tr:first-child > td[bgcolor="#ff6600" i] i
   }
 
   html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .comtr .default {
-    padding-bottom: 16px;
+    padding-bottom: 20px;
   }
 
   html[data-hnr-mobile="auto"] body:has(.topsel a[href="newcomments"]) .comment {

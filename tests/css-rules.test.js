@@ -258,7 +258,7 @@ test("mobile new-comments feed enlarges vote targets without widening HN's table
 
   assert.match(
     mobileCss,
-    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.comtr\s+\.default\s*{[^}]*padding-bottom:\s*16px/s,
+    /body:has\(\.topsel a\[href="newcomments"\]\)\s+\.comtr\s+\.default\s*{[^}]*padding-bottom:\s*20px/s,
   );
   assert.match(
     mobileCss,
