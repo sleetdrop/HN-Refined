@@ -3,12 +3,16 @@
 Date: 2026-07-05
 Status: Approved for planning
 
+Revision: 2026-08-14. The original `e` badge direction is superseded because it
+came from an accidental Enhanced/Refined naming mix-up. The current badge uses
+the custom S1 uppercase `R` described below.
+
 ## Purpose
 
 This spec refines two presentation surfaces for HN Refined:
 
 - The Safari toolbar popup should feel like a small native control surface, not a full settings panel.
-- The app and extension icon should communicate "Hacker News, gently enhanced" while remaining visually distinct from official Hacker News or Y Combinator assets.
+- The app and extension icon should communicate "Hacker News, carefully refined" while remaining visually distinct from official Hacker News or Y Combinator assets.
 
 These changes must preserve the existing product direction: HN Refined is a restrained readability and touch-ergonomics extension, not a replacement Hacker News client.
 
@@ -63,16 +67,20 @@ The implementation should avoid an "airplane cockpit" of granular controls. The 
 
 ## Icon Direction
 
-Use the original C composition selected during visual exploration, with the C4 badge color treatment:
+Keep the original C composition selected during visual exploration and replace
+its badge letter with the custom S1 uppercase `R`:
 
 - Rounded-square HN orange base.
 - Slightly rotated warm paper page.
 - `HN` text on the page as the primary identity signal.
 - Two warm gray reading lines below `HN`.
-- A small upper-right `e` badge as the enhancement modifier.
+- A small upper-right custom vector `R` badge as the refinement modifier.
 - The badge uses warm ink gray, not near-black, so it aligns with the `HN` text and reading-line gray scale.
 
-The `e` badge means "enhanced" and loosely evokes natural `e`. It is a visual metaphor, not a strict mathematical statement.
+The `R` is purpose-drawn rather than rendered from a font. Its stable stem and
+compact bowl stay grounded in the original HN experience; its humanist leg
+opens outward in one controlled, graceful step. This expresses Refined as
+selective polish and better fit, not as adding more for its own sake.
 
 The icon should not precisely reproduce the official Hacker News or Y Combinator favicon geometry. It may reference Hacker News through orange, `HN`, and page structure, but the exact proportions, typography, radius, and composition should be original.
 
@@ -102,7 +110,7 @@ Safari extension toolbar icon:
 
 - Use a simplified form derived from the same composition.
 - Prioritize legibility over fidelity at toolbar scale.
-- If the full `HN + e + lines` mark is too dense at toolbar size, simplify while keeping the orange/page/HN identity.
+- If the full `HN + R + lines` mark is too dense at toolbar size, simplify while keeping the orange/page/HN identity.
 
 iOS readiness:
 
@@ -130,7 +138,7 @@ Design checks:
 
 Icon checks:
 
-- App icon follows the selected C4 direction.
+- App icon keeps the selected C composition with the custom S1 `R` badge.
 - Badge gray does not overpower the `HN` page mark.
 - App icon is readable at macOS Dock, Finder, and Launchpad sizes.
 - Toolbar icon is readable in Safari's toolbar and extension settings surfaces.

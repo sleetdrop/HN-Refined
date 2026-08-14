@@ -13,11 +13,11 @@
   </g>
   <g transform="translate(676 216)">
     <circle cx="0" cy="0" r="104" fill="#3a342d"/>
-    <text x="-31" y="42"
-      fill="#fff8ea"
-      font-family="Georgia, 'Times New Roman', serif"
-      font-size="152"
-      font-style="italic"
-      font-weight="700">e</text>
+    <g data-mark="refined-r-s1" fill="#fff8ea">
+      <path fill-rule="evenodd"
+        d="M-47-81H0C42-81 63-59 63-29C63-2 47 15 19 20H-15V81H-47ZM-15-53V-6H0C20-6 31-14 31-29C31-45 20-53 0-53Z"/>
+      <path
+        d="M2 3C24 18 44 48 68 76C72 80 69 82 65 82H45C27 54 10 34-12 22Z"/>
+    </g>
   </g>
 </svg>

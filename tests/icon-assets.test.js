@@ -13,6 +13,7 @@ const packageJson = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const makefile = fs.readFileSync("Makefile", "utf8");
 const generateIconsScript = fs.readFileSync("scripts/generate-icons.js", "utf8");
 const developmentDoc = fs.readFileSync("docs/development.md", "utf8");
+const appIconSource = fs.readFileSync("assets/icon/hn-refined-icon.svg", "utf8");
 const toolbarIconSource = fs.readFileSync("assets/icon/hn-refined-toolbar-icon.svg", "utf8");
 
 const requiredExtensionIcons = [
@@ -78,7 +79,7 @@ test("generated icon files are present in committed asset locations", () => {
   }
 });
 
-test("toolbar icon source uses the approved B3f-2 small-size geometry", () => {
+test("toolbar icon source keeps the simplified small-size geometry", () => {
   assert.match(
     toolbarIconSource,
     /<rect x="128" y="128" width="768" height="768" rx="170" fill="#ff6600"\/>/,
@@ -86,7 +87,17 @@ test("toolbar icon source uses the approved B3f-2 small-size geometry", () => {
   assert.match(toolbarIconSource, /<rect width="752" height="474" rx="108" fill="#fff8ea"\/>/);
   assert.match(toolbarIconSource, /letter-spacing="8">HN<\/text>/);
   assert.match(toolbarIconSource, /<circle cx="746" cy="290" r="104" fill="#3a342d"\/>/);
-  assert.match(toolbarIconSource, /font-size="150"/);
+});
+
+test("app and toolbar badges render the custom S1 R without a font glyph", () => {
+  for (const source of [appIconSource, toolbarIconSource]) {
+    const textElements = source.match(/<text\b/g) ?? [];
+    const badge = source.match(/<g\b[^>]*data-mark="refined-r-s1"[^>]*>([\s\S]*?)<\/g>/)?.[1] ?? "";
+
+    assert.equal(textElements.length, 1, "only the HN identity should use a font glyph");
+    assert.match(badge, /<path\b/);
+    assert.doesNotMatch(badge, /<text\b/);
+  }
 });
 
 test("Xcode app icon catalog references all generated macOS icon files", () => {

@@ -215,8 +215,11 @@ Hacker News behavior and information architecture.
 - Full settings are grouped by where preferences apply: shared appearance,
   reading layout, and link behavior. Reading layout names Mac and wider iPad
   layouts rather than implying that every density effect is desktop-only.
-- App icon uses the full C4 design. Safari toolbar icons use the simplified
-  B3f-2 small-size mark.
+- App icon keeps the established orange, warm-paper, and `HN` composition while
+  its upper-right badge uses the custom S1 uppercase `R`. The stable stem and
+  open, humanist leg express Refined as a restrained step forward from Hacker
+  News rather than an additive "Enhanced" layer. Safari toolbar icons keep the
+  simplified small-size composition with the same vector `R` badge.
 - The containing app uses the user-visible name `HN Refined` while preserving
   existing Xcode target names, wrapper/executable paths, Swift modules, and
   bundle identifiers. Its iPhone/iPad help page
