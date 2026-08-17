@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-08-01
+Last updated: 2026-08-17
 
 This is the detailed product record and regression reference. New Codex tasks
 start with `docs/current-state.md` and read this file only when the current
@@ -89,7 +89,7 @@ Hacker News behavior and information architecture.
   links pure black in Dark; metadata and each faded comment selector retain
   their more-specific semantic roles. iPhone 17 Pro / iOS 26.3 Simulator checks
   cover Light and Dark submit, Jobs, and profile surfaces, including focused
-  fields and no added controls on `about`; the current 178-test gate passes.
+  fields and no added controls on `about`; the current 193-test gate passes.
   The macOS reinstall retry is blocked on this development machine because its
   configured team has no valid Mac Development signing identity, not by the
   extension source or resources.
@@ -219,7 +219,9 @@ Hacker News behavior and information architecture.
   its upper-right badge uses the custom S1 uppercase `R`. The stable stem and
   open, humanist leg express Refined as a restrained step forward from Hacker
   News rather than an additive "Enhanced" layer. Safari toolbar icons keep the
-  simplified small-size composition with the same vector `R` badge.
+  simplified small-size composition with the same vector `R` badge. Icon
+  generation renders the iOS App Store asset onto an opaque orange canvas while
+  retaining transparent corners for the native macOS icon set.
 - The containing app uses the user-visible name `HN Refined` while preserving
   existing Xcode target names, wrapper/executable paths, Swift modules, and
   bundle identifiers. Its iPhone/iPad help page

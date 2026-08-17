@@ -35,7 +35,9 @@ make build-icons
 ```
 
 Icon generation uses the committed SVG sources in `assets/icon/` and requires
-`rsvg-convert` from `librsvg`.
+`rsvg-convert` from `librsvg`. The iOS App Store icon is rendered onto an opaque
+orange canvas so its PNG has no alpha channel; macOS app icons retain their
+transparent corners for the native Mac presentation.
 
 Run tests:
 

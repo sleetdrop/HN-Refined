@@ -15,7 +15,7 @@ Connect before submission.
 
 ## Subtitle
 
-`A calmer way to read Hacker News`
+`A calmer way to read HN`
 
 ## Description
 
@@ -69,6 +69,32 @@ advertising, remote configuration, remote code, or third-party SDKs.
 - Tracking: No.
 - Privacy choices URL: Not required because the app collects no data.
 - Privacy policy URL: `https://github.com/sleetdrop/HN-Refined/blob/master/docs/privacy.md`
+
+## Export Compliance
+
+- HN Refined does not implement or bundle proprietary or non-Apple encryption.
+- HTTPS and other cryptographic behavior are provided by Safari, WebKit, and
+  Apple operating-system frameworks.
+- The iOS and macOS containing apps declare
+  `ITSAppUsesNonExemptEncryption = false` because the current build uses only
+  exempt operating-system encryption.
+- Confirm this determination in App Store Connect for the submitted build. If
+  the implementation or dependencies change, reassess it before upload.
+
+## Content Rights
+
+HN Refined is an independent Safari extension that modifies the presentation of
+Hacker News pages in the user's browser. It does not redistribute, archive, or
+sell Hacker News content. The non-affiliation statement above avoids an
+endorsement claim but is not itself authorization.
+
+Because the extension accesses third-party Hacker News pages, treat App Store
+Connect Content Rights as applicable; do not answer as though the app has no
+third-party content. Before attesting that the app has the necessary rights or
+lawful permission, the maintainer must confirm and record the basis covering
+use of the Hacker News service, the `HN` name, and related visual references.
+Be prepared to provide that basis to App Review if requested; do not mark this
+item ready solely because the app is free or open source.
 
 ## Screenshot Plan
 

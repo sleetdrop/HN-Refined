@@ -16,6 +16,14 @@ const developmentDoc = fs.readFileSync("docs/development.md", "utf8");
 const appIconSource = fs.readFileSync("assets/icon/hn-refined-icon.svg", "utf8");
 const toolbarIconSource = fs.readFileSync("assets/icon/hn-refined-toolbar-icon.svg", "utf8");
 
+function readPngColorType(iconPath) {
+  const png = fs.readFileSync(iconPath);
+
+  assert.equal(png.subarray(1, 4).toString("ascii"), "PNG");
+  assert.equal(png.subarray(12, 16).toString("ascii"), "IHDR");
+  return png[25];
+}
+
 const requiredExtensionIcons = [
   "extension/icons/icon-16.png",
   "extension/icons/icon-19.png",
@@ -118,4 +126,13 @@ test("Xcode app icon catalog references all generated macOS icon files", () => {
     "mac-icon-512@1x.png",
     "mac-icon-512@2x.png",
   ]);
+});
+
+test("iOS App Store icon is RGB without an alpha channel", () => {
+  assert.equal(
+    readPngColorType(
+      "HNRefined/Shared (App)/Assets.xcassets/AppIcon.appiconset/universal-icon-1024@1x.png",
+    ),
+    2,
+  );
 });

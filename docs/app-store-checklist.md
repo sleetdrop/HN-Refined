@@ -15,6 +15,15 @@ The current audit and metadata draft are in `docs/release-readiness.md` and
 - Verify the extension does not load remote code, remote configuration, remote themes, analytics, or third-party runtime resources.
 - Confirm preferences are local extension preferences only.
 - Prepare privacy labels and review copy that match `docs/privacy.md`.
+- Confirm the submitted iOS and macOS containing apps declare
+  `ITSAppUsesNonExemptEncryption = false`, then complete App Store Connect's
+  export-compliance determination. Reassess this if any dependency or
+  cryptographic behavior changes.
+- Treat App Store Connect Content Rights as applicable because the extension
+  accesses third-party Hacker News pages. Before making the rights attestation,
+  confirm and record the basis covering the Hacker News service, the `HN` name,
+  and related visual references. Keep the non-affiliation statement, but do not
+  treat it as proof of authorization.
 - Prepare App Store description text that discloses the Hacker News HTML
   structure dependency, the lightweight compatibility posture, and the GitHub
   issue or pull request feedback path for future site changes.

@@ -1,6 +1,6 @@
 # Release Readiness
 
-Last reviewed: 2026-08-01
+Last reviewed: 2026-08-17
 
 ## Release Gate
 
@@ -53,7 +53,7 @@ the mobile submit text editor the same bounded height controls as comment
 editing without touching profile `about` fields. iPhone 17 Pro / iOS 26.3
 Simulator checks cover focused Light and Dark submit fields, normal Dark Jobs
 and profile surfaces, and the absence of submit controls from `about`. The
-current 178-test gate passes. A current macOS Safari reinstall remains blocked
+current 193-test gate passes. A current macOS Safari reinstall remains blocked
 on this machine because its configured team has no valid Mac Development
 signing identity; iOS Simulator installation succeeds. Physical-device color
 burn-in remains the release gate.
@@ -63,7 +63,7 @@ burn-in remains the release gate.
 | Area               | Status       | Evidence or next action                                                                                                                                                                                                        |
 | ------------------ | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Current SDK        | Ready        | Xcode 26.3 and iOS 26.3 SDK satisfy Apple's 2026 upload baseline.                                                                                                                                                              |
-| Safari runtime     | Burn-in      | Current 178-test gate and iOS build/Simulator checks pass. The prior signed install and package doctor pass; current macOS reinstall is blocked by a missing local Mac Development identity. Continue physical-iPhone burn-in. |
+| Safari runtime     | Burn-in      | Current 193-test gate and iOS build/Simulator checks pass. The prior signed install and package doctor pass; current macOS reinstall is blocked by a missing local Mac Development identity. Continue physical-iPhone burn-in. |
 | Host onboarding    | Ready        | `HN Refined` shows `Settings > Apps > Safari > Extensions > HN Refined`, `Allow Extension`, and the `news.ycombinator.com` site permission requirement.                                                                        |
 | Host permissions   | Ready        | Limited to `https://news.ycombinator.com/*`.                                                                                                                                                                                   |
 | Data collection    | Ready        | No collection, tracking, analytics, remote code, or third-party SDKs.                                                                                                                                                          |
@@ -74,7 +74,9 @@ burn-in remains the release gate.
 | Signing            | Human action | Select the distribution team and App Store distribution signing in Xcode.                                                                                                                                                      |
 | Archive validation | Partial      | Unsigned iOS and macOS Release archives pass; signed App Store validation remains.                                                                                                                                             |
 | Physical iPhone    | Pending      | Install with a free Xcode Personal Team and complete a multi-day first-user burn-in.                                                                                                                                           |
-| Store metadata     | Drafted      | Public support and privacy URLs are set; review the final copy before submission.                                                                                                                                              |
+| Store metadata     | Drafted      | Public support and privacy URLs are set, and the subtitle fits Apple's 30-character limit; review the final copy before submission.                                                                                            |
+| Export compliance  | Prepared     | iOS and macOS containing apps declare no non-exempt encryption. Confirm the current operating-system-only determination in App Store Connect for the submitted build.                                                          |
+| Content rights     | Human action | Treat Content Rights as applicable because the extension accesses third-party Hacker News pages. Confirm and record the rights or lawful-permission basis before making the App Store Connect attestation.                     |
 | Screenshots        | Pending      | Capture current iPhone, iPad, and macOS release-build screenshots.                                                                                                                                                             |
 | Review notes       | Drafted      | Use the enablement steps in `docs/app-store-metadata.md`.                                                                                                                                                                      |
 
@@ -84,6 +86,9 @@ Apple review requirements relevant to this project:
   UI, and request only necessary website access.
 - Extension functionality must be accurately disclosed in marketing text.
 - A privacy policy URL and App Privacy answers are required in App Store Connect.
+- Export-compliance and Content Rights answers must match the submitted build
+  and the maintainer's documented basis for third-party service and branding
+  use.
 - App Store uploads after April 28, 2026 must use the iOS/iPadOS 26 SDK or later.
 - App Store screenshots require one to ten accepted images per required platform
   set.
